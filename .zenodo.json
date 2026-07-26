@@ -25,6 +25,6 @@
       "resource_type": "software"
     }
   ],
-  "version": "0.1.1",
+  "version": "0.1.2",
   "notes": "Packaging hotfix: scikit-learn is now declared as a core dependency and release publishing smoke-tests the built wheel before upload. Canonical validation ledger: 10 scientific validated + 3 contract_validated = 13 multi-dataset evidence packages."
 }
