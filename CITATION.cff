@@ -4,12 +4,12 @@ title: "HistoWeave: reproducible spatial transcriptomics orchestration and evalu
 type: software
 authors:
   - name: "HistoWeave contributors"
-    website: "https://github.com/histoweave-spatial/histoweave"
-version: 0.1.0
-date-released: 2026-07-18
+    website: "https://github.com/HERRY423/Histoweave"
+version: 0.1.1
+date-released: 2026-07-25
 license: BSD-3-Clause
-repository-code: "https://github.com/histoweave-spatial/histoweave"
-url: "https://histoweave-spatial.github.io/histoweave"
+repository-code: "https://github.com/HERRY423/Histoweave"
+url: "https://HERRY423.github.io/Histoweave"
 # Zenodo mints a version DOI when the GitHub release is archived; paste it here.
 # doi: 10.5281/zenodo.XXXXXXX
 abstract: >

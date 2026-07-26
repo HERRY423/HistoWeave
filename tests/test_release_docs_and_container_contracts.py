@@ -25,6 +25,11 @@ def test_pypi_release_uses_trusted_publishing_with_least_privilege() -> None:
     assert "name: pypi" in workflow
     assert "id-token: write" in workflow
     assert "pypa/gh-action-pypi-publish@release/v1" in workflow
+    assert "Install and smoke-test built wheel" in workflow
+    assert "python -m pip install --force-reinstall dist/*.whl" in workflow
+    assert "python -m pip check" in workflow
+    assert "import histoweave" in workflow
+    assert "histoweave version" in workflow
     assert "PYPI_TOKEN" not in workflow
     assert "password:" not in workflow
 
@@ -104,7 +109,12 @@ def test_spatialtable_runtime_dependencies_are_core_dependencies() -> None:
     pyproject = _read(ROOT / "pyproject.toml")
     core_dependencies = pyproject.split("[project.optional-dependencies]", maxsplit=1)[0]
 
-    for dependency in ("anndata>=0.10", "scipy>=1.10", "spatialdata>=0.1"):
+    for dependency in (
+        "anndata>=0.10",
+        "scikit-learn>=1.3",
+        "scipy>=1.10",
+        "spatialdata>=0.1",
+    ):
         assert f'"{dependency}"' in core_dependencies
 
 
