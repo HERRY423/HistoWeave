@@ -1,0 +1,52 @@
+{
+  "schema_version": "histoweave.independence_audit.v4",
+  "audit_date_utc": "2026-07-29",
+  "candidate_study": {
+    "name": "Valdeolivas CRC",
+    "paper_doi": "10.1038/s41698-023-00488-4",
+    "data_doi": "10.5281/zenodo.7760264",
+    "expected_patients": 7,
+    "expected_sections": 14
+  },
+  "prelock_workspace_search": {
+    "roots": [
+      "C:/Spatial Transcriptomics/histoweave",
+      "C:/Spatial Transcriptomics/histoweave-preregistration"
+    ],
+    "terms": [
+      "7553463",
+      "7760264",
+      "Valdeolivas",
+      "A121573",
+      "A416371",
+      "A551763",
+      "A595688",
+      "A798015",
+      "A938797",
+      "A120838",
+      "Pathology_SpotAnnotations"
+    ],
+    "matches": 0
+  },
+  "metadata_seen_before_lock": [
+    "paper title, DOI, abstract, methods, patient and section counts",
+    "Table 1 mapping between public sample numbers and seven patient aliases",
+    "Zenodo record metadata containing filenames, sizes, URLs, and checksums",
+    "the statement that two serial sections per patient are technical replicates",
+    "the statement that a pathologist assigned each spot to an anatomical compartment"
+  ],
+  "outcome_bearing_material_not_seen_before_lock": [
+    "any CRC count matrix",
+    "any CRC tissue image",
+    "Pathology_SpotAnnotations.zip or any spot-level annotation",
+    "any method prediction on the CRC cohort",
+    "any clustering score or policy outcome on the CRC cohort"
+  ],
+  "metadata_receipt": {
+    "source": "https://zenodo.org/api/records/7760264",
+    "sha256": "A27F9F6C5A2C92D544CF0095FA707C02ACC3071F274BF8C5B0928AB7660AD2F7"
+  },
+  "assessment": "eligible_as_outcome_untouched_external_study_subject_to_public_protocol_timestamp",
+  "contamination_rule": "Any evidence that an expression matrix, image, spot annotation, method result, or derived outcome from this cohort was accessed before the public protocol timestamp changes the status to retrospective_contaminated."
+}
+
