@@ -1,0 +1,14 @@
+{
+  "schema_version": "histoweave.prospective_validation.registration_receipt.v1",
+  "protocol_id": "histoweave-her2st-donor-nonoracle-2026-07",
+  "protocol_commit": "a1ea59e2a8e305f86ef3bb3c118721786868fc60",
+  "protocol_sha256": "2fe030ddd11656bfd43a9f399bd1a82e361bc8b881a51c31fd7550a629c0c7dc",
+  "annotated_tag": "prospective-her2st-v3-locked",
+  "public_timestamp_service": "GitHub public issue",
+  "public_registration_url": "https://github.com/HERRY423/HistoWeave/issues/19",
+  "public_timestamp_utc": "2026-07-29T05:34:31Z",
+  "verified_publicly_visible": true,
+  "outcome_access_permitted_after_utc": "2026-07-29T05:34:31Z",
+  "execution_permitted": true,
+  "receipt_scope": "This receipt unlocks execution of the unchanged protocol at protocol_commit. It does not permit changing endpoints, the unit of analysis, the method panel, K policy, thresholds, or failure rules."
+}
