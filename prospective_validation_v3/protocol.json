@@ -1,0 +1,302 @@
+{
+  "schema_version": "histoweave.prospective_validation.v3",
+  "protocol_id": "histoweave-her2st-donor-nonoracle-2026-07",
+  "status": "locked_before_outcome_access_pending_public_receipt",
+  "prepared_utc": "2026-07-29T05:29:52Z",
+  "claim_boundary": "This protocol can test transport of a method-selection and abstention policy to one untouched external study. It cannot establish universal method superiority, clinical utility, or biological validity.",
+  "registration_gate": {
+    "execution_permitted": false,
+    "outcome_access_permitted": false,
+    "unlock_rule": "Both the protocol commit and a public GitHub issue containing its commit SHA and SHA-256 must be independently visible before any HER2ST count matrix, spot-level annotation, image, result table, or derived outcome is downloaded or opened.",
+    "receipt_file": "registration_receipt.json"
+  },
+  "external_study": {
+    "name": "HER2ST",
+    "paper_doi": "10.1038/s41467-021-26271-2",
+    "data_doi": "10.5281/zenodo.5511762",
+    "source_repository": "https://github.com/almaan/her2st",
+    "source_repository_head_observed_before_lock": "85df7411b987a7dec3feff9718b869a7a82091ec",
+    "technology": "legacy Spatial Transcriptomics",
+    "organ": "human breast",
+    "disease_context": "HER2-positive breast cancer",
+    "expected_sections_from_public_metadata": 36,
+    "expected_donors_from_public_metadata": 8,
+    "ground_truth": "pathologist-authored spot-region labels distributed by the source study",
+    "metadata_only_checks_before_lock": [
+      "study title, DOI, public repository, and section/donor counts",
+      "existence of count, spot-selection, image, and pathologist-label directories",
+      "no file listing below those outcome-bearing directories"
+    ]
+  },
+  "independence_contract": {
+    "development_sources_excluded": [
+      "HER2ST count matrices",
+      "HER2ST spot-level labels",
+      "HER2ST images",
+      "HER2ST method outputs",
+      "HER2ST performance values"
+    ],
+    "allowed_prelock_knowledge": "Bibliographic citation and repository-level metadata only.",
+    "known_prelock_contact": "The HistoWeave manuscript cited the HER2ST paper in its bibliography, but the repository audit found no HER2ST data bundle or HER2ST benchmark result in the project.",
+    "prohibited_until_unlock": [
+      "clone or archive download of almaan/her2st",
+      "Zenodo payload download",
+      "opening count, label, image, or result files",
+      "inspecting any HER2ST clustering score or recommendation outcome"
+    ],
+    "audit_file": "independence_audit.json",
+    "deviation_rule": "Any evidence that HER2ST outcome-bearing data or method performance was accessed before public registration changes the confirmatory status to retrospective_contaminated; results must still be retained but cannot satisfy the independent-validation claim."
+  },
+  "analysis_unit": {
+    "primary_unit": "donor",
+    "section_role": "technical or within-donor replicate",
+    "donor_parser": "For every included section identifier, donor_id is the leading uppercase Latin letter A through H. Any identifier that cannot be mapped uniquely causes that section to be excluded with reason; fewer than five evaluable donors returns evidence_required.",
+    "section_inclusion": "Include every source-study section with a count matrix, a spot-selection table, spatial coordinates, and a pathologist-label file.",
+    "section_exclusion": [
+      "fewer than 50 labelled tissue spots",
+      "fewer than 100 genes with nonzero counts",
+      "non-unique spot identifiers",
+      "coordinates missing for any retained spot",
+      "no one-to-one join between retained spots and pathologist labels"
+    ],
+    "aggregation": "Compute ARI per section and seed, average seeds within section, then average sections within donor. Bootstrap and hypothesis tests resample donors only.",
+    "minimum_evaluable_donors": 5,
+    "pseudoreplication_forbidden": true
+  },
+  "task_contract": {
+    "task": "spatial_domain",
+    "metric": "adjusted_rand_score",
+    "higher_is_better": true,
+    "ground_truth_access": "sealed during fitting; loaded only by a separate scoring process after prediction files and their hashes are final",
+    "oracle_k_allowed": false,
+    "oracle_method_selection_allowed": false,
+    "label_derived_features_allowed": false,
+    "histology_input_allowed": false,
+    "cluster_proxy_labels_allowed": false
+  },
+  "common_input_contract": {
+    "spot_set": "The intersection of source tissue spots with finite coordinates and pathologist labels, fixed once per section and reused for every method.",
+    "count_input": "raw nonnegative integer counts",
+    "gene_filter": "genes expressed in at least 3 retained spots",
+    "method_internal_preprocessing": "official method preprocessing is allowed and logged; no method may receive a different spot set, labels, true K, or histology",
+    "subsampling": "none when n_spots <= 4000; otherwise sample exactly 4000 spots without replacement using seed 20260729, stratified only by a 10 by 10 coordinate grid and never by labels",
+    "shared_seeds": [
+      42,
+      1,
+      2
+    ]
+  },
+  "non_oracle_k": {
+    "implementation": "histoweave.benchmark.k_selection.estimate_n_domains",
+    "source_commit": "8f21153279fa601ae416fb4f3b2f6b30082dfcaa",
+    "method": "ensemble",
+    "k_min": 2,
+    "k_max": 12,
+    "n_pcs": 15,
+    "random_state": 0,
+    "max_obs": 4000,
+    "knn": 6,
+    "spatial_weight": 0.75,
+    "one_k_per_section": true,
+    "same_k_for_all_methods": true,
+    "truth_k_logged_after_scoring_only": true,
+    "failure_rule": "If K estimation fails, the section is unavailable for every method and is not repaired with truth K."
+  },
+  "fixed_method_panel": [
+    {
+      "id": "spagcn",
+      "implementation": "official SpaGCN 1.2.7",
+      "clustering": "native SpaGCN clustering constrained to shared estimated K",
+      "image_features": false
+    },
+    {
+      "id": "stagate",
+      "implementation": "official QIFEIDKN/STAGATE_pyG commit ae1158ca8cf1eb6bb8ee198298552d44c9ac21db",
+      "clustering": "full-covariance Gaussian mixture on learned embedding at shared estimated K"
+    },
+    {
+      "id": "graphst",
+      "implementation": "official GraphST 1.1.1",
+      "clustering": "full-covariance Gaussian mixture on learned embedding at shared estimated K"
+    },
+    {
+      "id": "bayesspace",
+      "implementation": "official Bioconductor BayesSpace; installed version and Bioconductor snapshot must be recorded before execution",
+      "platform": "ST",
+      "nrep": 10000,
+      "burn_in": 1000,
+      "clustering": "native spatialCluster at shared estimated K"
+    },
+    {
+      "id": "banksy",
+      "implementation": "official Bioconductor Banksy; installed version and Bioconductor snapshot must be recorded before execution",
+      "lambda": 0.2,
+      "k_geom": 15,
+      "clustering": "official clusterBanksy constrained to shared estimated K"
+    },
+    {
+      "id": "spectral",
+      "implementation": "scikit-learn SpectralClustering",
+      "representation": "15-PC log1p library-size-normalized expression",
+      "clustering": "shared estimated K"
+    },
+    {
+      "id": "gaussian_mixture",
+      "implementation": "scikit-learn GaussianMixture full covariance",
+      "representation": "15-PC log1p library-size-normalized expression",
+      "clustering": "shared estimated K"
+    },
+    {
+      "id": "kmeans",
+      "implementation": "scikit-learn KMeans n_init=20",
+      "representation": "15-PC log1p library-size-normalized expression",
+      "clustering": "shared estimated K"
+    },
+    {
+      "id": "agglomerative",
+      "implementation": "scikit-learn AgglomerativeClustering ward linkage",
+      "representation": "15-PC log1p library-size-normalized expression",
+      "clustering": "shared estimated K"
+    }
+  ],
+  "backend_failure_policy": {
+    "official_backend_required": true,
+    "silent_substitution_forbidden": true,
+    "minimum_panel_for_primary_analysis": "All nine methods must succeed for at least five donors after donor aggregation.",
+    "missing_method_results_imputed": false,
+    "partial_failure": "A donor-method score is available only when at least half of that donor's eligible sections and at least one section succeed. The same availability mask is applied to every policy comparison.",
+    "failed_primary_panel": "If the minimum panel is not met, report coverage and failures, retain all outputs, and mark the confirmatory decision endpoint evidence_required."
+  },
+  "development_evidence": {
+    "target_outcomes_allowed": false,
+    "source": "HistoWeave development panels available before this registration",
+    "required_contract_match": [
+      "spatial_domain task",
+      "ARI",
+      "non-oracle K",
+      "same method implementation family",
+      "study or donor-level split"
+    ],
+    "global_default": "Highest donor-weighted mean ARI in admissible development evidence; ties resolve by fixed method-panel order.",
+    "target_free_features": [
+      "log_n_obs",
+      "log_n_vars",
+      "sparsity",
+      "mean_library_size",
+      "library_size_cv",
+      "mean_gene_detection_rate",
+      "spatial_knn_distance_cv",
+      "expression_pc1_fraction",
+      "moran_pc1"
+    ],
+    "normalization": "z-score each feature using development evidence only",
+    "nearest_neighbours": 3
+  },
+  "decision_policies": [
+    {
+      "id": "always_global",
+      "action": "Use the locked development global default on every donor.",
+      "coverage_definition": 0.0
+    },
+    {
+      "id": "existing_knn_top1",
+      "action": "Use the top-1 method from the existing target-free three-nearest-neighbour weighted recommender on every donor, without the HistoWeave evidence gate.",
+      "coverage_definition": 1.0
+    },
+    {
+      "id": "published_srtbenchmark_2025",
+      "source": "Chen et al. 2025, iMeta, DOI 10.1002/imt2.70084, Supplementary Table S2",
+      "action": "Use the first published recommended method for the ST, breast, biological-replicate scenario that appears in the fixed panel. If no fixed-panel method is recommended or the rule is ambiguous, fall back to always_global and record zero personalisation coverage.",
+      "tie_break": "published table order, then fixed method-panel order"
+    },
+    {
+      "id": "histoweave_gated",
+      "action": "Start with existing_knn_top1; personalise only when every locked evidence gate passes, otherwise use always_global."
+    }
+  ],
+  "histoweave_gate": {
+    "minimum_local_support": 2,
+    "minimum_rank_support_score": 0.25,
+    "require_declared_non_oracle_k": true,
+    "require_task_metric_method_contract_match": true,
+    "require_grouped_heldout_validation": true,
+    "heldout_validation_rule": "Upper 95 percent donor-bootstrap confidence bound of mean(candidate regret minus global regret) is at most 0.02 on admissible development evidence.",
+    "require_positive_reference_advantage": true,
+    "confidence_threshold_grid": [
+      0.0,
+      0.1,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "locked_primary_threshold": 0.25,
+    "abstention_semantics": "At the decision-protocol level, abstention from personalisation means deployment of the global default. If no task-valid global evidence exists, return evidence_required instead of selecting a method."
+  },
+  "risk_coverage_endpoints": {
+    "unit_regret": "best available fixed-panel ARI for that donor minus policy-selected method ARI",
+    "coverage": "fraction of evaluable donors on which a policy selects a method different from always_global",
+    "selective_risk": "mean regret among covered donors; undefined and reported as NA at zero coverage",
+    "deployed_risk": "mean regret across all donors after global fallback on uncovered donors",
+    "primary_contrast": "histoweave_gated minus always_global in deployed donor-level regret at threshold 0.25",
+    "primary_success_margin_ari": 0.02,
+    "primary_noninferiority": "upper 95 percent donor-bootstrap confidence bound of the mean paired regret difference is at most 0.02",
+    "superiority": "upper 95 percent donor-bootstrap confidence bound of the mean paired regret difference is below 0",
+    "risk_coverage_increment": [
+      "coverage gain at deployed risk no greater than always_global risk plus 0.02",
+      "deployed-risk difference versus existing_knn_top1 at matched or higher coverage",
+      "deployed-risk difference versus published_srtbenchmark_2025 at matched or higher coverage",
+      "area under the deployed risk-coverage curve using trapezoidal integration over the locked grid"
+    ],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260729,
+    "multiple_testing": "Only the primary contrast is confirmatory. All other policy and threshold contrasts are descriptive with percentile intervals and no multiplicity-adjusted claim."
+  },
+  "positive_control": {
+    "status": "synthetic_construct_validity_only",
+    "purpose": "Demonstrate that the implementation can personalise when a reliable target-free signal exists; this is not evidence of biological personalisation.",
+    "generator_seed": 20260729,
+    "training_units": 120,
+    "test_units": 60,
+    "independent_feature": "x_signal sampled Uniform(-1, 1); all other target-free features are standard normal noise",
+    "conditional_performance": {
+      "x_signal_below_zero": "spectral mean ARI 0.78, stagate mean ARI 0.48",
+      "x_signal_at_least_zero": "stagate mean ARI 0.78, spectral mean ARI 0.48",
+      "other_methods": "mean ARI 0.35",
+      "noise": "independent Normal(0, 0.03), clipped to [0, 1]"
+    },
+    "split": "training and test units are generated independently; no test outcome enters fitting or threshold selection",
+    "success_conditions": [
+      "histoweave_gated coverage is at least 0.50 on the 60 test units",
+      "at least spectral and stagate are selected on covered test units",
+      "upper 95 percent bootstrap confidence bound of mean(histoweave_gated regret minus always_global regret) is below 0"
+    ],
+    "failure_interpretation": "Failure is an implementation or gate-calibration failure and must be retained; parameters may not be changed in the confirmatory run."
+  },
+  "reporting": {
+    "required_outputs": [
+      "source_manifest.json with hashes and access timestamps",
+      "environment_manifest.json with package versions",
+      "k_estimates.json",
+      "prediction_manifest.json with pre-scoring hashes",
+      "section_scores.csv",
+      "donor_scores.csv",
+      "policy_actions.csv",
+      "risk_coverage.csv",
+      "bootstrap_intervals.json",
+      "positive_control_results.json",
+      "deviations.md",
+      "REPORT.md"
+    ],
+    "all_negative_results_retained": true,
+    "all_backend_failures_retained": true,
+    "raw_spot_labels_not_committed": true,
+    "no_claim_if_less_than_five_donors": true
+  }
+}

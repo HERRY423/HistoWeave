@@ -1,0 +1,47 @@
+{
+  "schema_version": "histoweave.independence_audit.v3",
+  "audit_utc": "2026-07-29T05:29:52Z",
+  "candidate": {
+    "study": "HER2ST",
+    "paper_doi": "10.1038/s41467-021-26271-2",
+    "data_doi": "10.5281/zenodo.5511762",
+    "upstream_repository": "https://github.com/almaan/her2st",
+    "upstream_head": "85df7411b987a7dec3feff9718b869a7a82091ec"
+  },
+  "histoweave_sources": {
+    "public_registration_base_commit": "8f21153279fa601ae416fb4f3b2f6b30082dfcaa",
+    "local_development_head_examined": "139ee103b3f2ba4ce3274d3cd58c7013c8478958"
+  },
+  "search_terms": [
+    "HER2ST",
+    "almaan/her2st",
+    "s41467-021-26271-2",
+    "zenodo.5511762"
+  ],
+  "findings": [
+    {
+      "path": "manuscript/HistoWeave_manuscript (1).md",
+      "kind": "bibliographic_only",
+      "detail": "The Andersson et al. paper appears as reference 22. No HER2ST result, data path, score, label, or method recommendation was found."
+    }
+  ],
+  "outcome_bearing_local_files_found": false,
+  "her2st_benchmark_results_found": false,
+  "her2st_dataset_cache_found": false,
+  "prelock_external_access": [
+    "public article/repository metadata",
+    "repository README statements that the study has 36 sections and pathologist labels",
+    "git ls-remote HEAD only"
+  ],
+  "prelock_external_access_excluded": [
+    "repository clone",
+    "Zenodo archive",
+    "count matrices",
+    "spot-level annotations",
+    "images",
+    "result tables",
+    "interactive app"
+  ],
+  "assessment": "eligible_as_outcome_untouched_external_study_subject_to_public_registration",
+  "limitation": "The study is not bibliographically novel to the authors because its paper was already cited. Independence here means no outcome-bearing data or performance result was used in development, not ignorance of the study's existence."
+}
