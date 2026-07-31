@@ -19,6 +19,7 @@ from histoweave.benchmark import (
     extract_features,
     feature_vector,
 )
+from histoweave.benchmark.decision import VerifiedEvidence, load_decision_evidence
 from histoweave.benchmark.features import RECOMMENDATION_FEATURE_ORDER
 from histoweave.cli import main
 from histoweave.datasets import make_synthetic
@@ -65,27 +66,54 @@ def _recommendation(
                 "similarity": 0.9,
                 "task": "spatial_domain",
                 "ground_truth_kind": ground_truth_kind,
+                "k_policy": "estimate",
+                "oracle_k": False,
             },
             {
                 "name": "ref_b",
                 "similarity": 0.8,
                 "task": "spatial_domain",
                 "ground_truth_kind": ground_truth_kind,
+                "k_policy": "estimate",
+                "oracle_k": False,
             },
         ],
         global_best_method="global",
         global_best_score=0.79,
         beats_global_best_baseline=beats,
         selection_regret_vs_global_best=-0.03 if beats else 0.03,
+        evidence_contract={
+            "task": "spatial_domain",
+            "metric": "ARI",
+            "higher_is_better": True,
+            "ground_truth_kinds": ["spatial_domain"],
+            "k_policies": ["estimate"],
+            "method_panel": ["global", "local@sw0.8"],
+        },
     )
 
 
-def _heldout(beats: bool = True) -> dict[str, object]:
-    return {
+def _heldout(beats: bool = True) -> VerifiedEvidence:
+    payload = {
+        "schema_version": "histoweave.validation_evidence.v2",
         "protocol": "external_holdout",
         "n_queries": 12,
         "beats_global_best": beats,
+        "task": "spatial_domain",
+        "ground_truth_kind": "spatial_domain",
+        "k_policy": "estimate",
+        "metric": "ARI",
+        "higher_is_better": True,
+        "method_panel": ["global", "local@sw0.8"],
+        "split_unit": "study",
+        "training_exclusion_verified": True,
+        "source_artifacts": [{"path": "unit.json", "sha256": "0" * 64}],
     }
+    return VerifiedEvidence(
+        payload,
+        source_path=Path("unit-validation.json"),
+        verified_artifacts=["unit.json"],
+    )
 
 
 def test_negative_baseline_returns_global_default_and_json_is_safe():
@@ -95,7 +123,7 @@ def test_negative_baseline_returns_global_default_and_json_is_safe():
     assert "local@sw0.8" in card.comparison_set
     assert card.can_personalise is False
     payload = card.to_dict()
-    assert payload["protocol"] == "histoweave.evidence_decision.v1"
+    assert payload["protocol"] == "histoweave.evidence_decision.v2"
     json.dumps(payload, allow_nan=False)
 
 
@@ -181,10 +209,12 @@ def test_bundled_external_negative_result_cannot_unlock_personalisation():
         / "benchmark_external_validation"
         / "decision_validation.json"
     )
-    validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    validation = load_decision_evidence(validation_path)
     card = build_decision_card(_recommendation(beats=True), validation=validation)
     assert validation["beats_global_best"] is False
-    assert card.action is DecisionAction.GLOBAL_DEFAULT
+    assert card.action is DecisionAction.EVIDENCE_REQUIRED
+    heldout = next(check for check in card.checks if check.name == "heldout_validation")
+    assert "non-oracle" in heldout.detail
     assert card.can_personalise is False
 
 
@@ -193,6 +223,7 @@ def _knowledge_base(tmp_path):
         "spatial_a": make_synthetic(n_cells=60, n_genes=16, seed=1),
         "spatial_b": make_synthetic(n_cells=70, n_genes=16, seed=2),
         "proxy": make_synthetic(n_cells=80, n_genes=16, seed=3),
+        "oracle_ref": make_synthetic(n_cells=90, n_genes=16, seed=4),
     }
     features = {
         name: feature_vector(
@@ -206,21 +237,45 @@ def _knowledge_base(tmp_path):
             "spatial_a": {"kmeans": 0.8, "spectral": 0.7},
             "spatial_b": {"kmeans": 0.7, "spectral": 0.8},
             "proxy": {"kmeans": 0.1, "spectral": 0.95},
+            "oracle_ref": {"kmeans": 0.0, "spectral": 1.0},
         },
         features=features,
         embedding={},
-        best_method={"spatial_a": "kmeans", "spatial_b": "spectral", "proxy": "spectral"},
-        niches={"kmeans": ["spatial_a"], "spectral": ["spatial_b", "proxy"]},
+        best_method={
+            "spatial_a": "kmeans",
+            "spatial_b": "spectral",
+            "proxy": "spectral",
+            "oracle_ref": "spectral",
+        },
+        niches={"kmeans": ["spatial_a"], "spectral": ["spatial_b", "proxy", "oracle_ref"]},
         timings={},
         feature_order=list(RECOMMENDATION_FEATURE_ORDER),
         method_count=2,
-        dataset_count=3,
+        dataset_count=4,
         task="spatial_domain",
         metric="ARI",
         dataset_meta={
-            "spatial_a": {"task": "spatial_domain", "ground_truth_kind": "spatial_domain"},
-            "spatial_b": {"task": "spatial_domain", "ground_truth_kind": "spatial_domain"},
-            "proxy": {"task": "cell_type", "ground_truth_kind": "cluster_proxy"},
+            "spatial_a": {
+                "task": "spatial_domain",
+                "ground_truth_kind": "spatial_domain",
+                "k_policy": "estimate",
+            },
+            "spatial_b": {
+                "task": "spatial_domain",
+                "ground_truth_kind": "spatial_domain",
+                "k_policy": "estimate",
+            },
+            "proxy": {
+                "task": "cell_type",
+                "ground_truth_kind": "cluster_proxy",
+                "k_policy": "estimate",
+            },
+            "oracle_ref": {
+                "task": "spatial_domain",
+                "ground_truth_kind": "spatial_domain",
+                "k_policy": "oracle",
+                "oracle_k": True,
+            },
         },
     )
     path = tmp_path / "knowledge.json"
@@ -239,6 +294,11 @@ def test_decision_engine_hard_filters_cross_task_evidence(tmp_path):
     )
     neighbour_names = {item["name"] for item in card.recommendation["neighbours"]}
     assert "proxy" not in neighbour_names
+    assert "oracle_ref" not in neighbour_names
+    excluded = card.recommendation["excluded_evidence"]
+    oracle_row = next(item for item in excluded if item["name"] == "oracle_ref")
+    assert "oracle_k_forbidden" in oracle_row["reasons"]
+    assert card.recommendation["baselines"]["global_best_method"] == "kmeans"
 
 
 def test_decide_cli_writes_identical_json(tmp_path, capsys):

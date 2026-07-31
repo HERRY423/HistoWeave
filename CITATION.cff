@@ -10,8 +10,7 @@ date-released: 2026-07-25
 license: BSD-3-Clause
 repository-code: "https://github.com/HERRY423/Histoweave"
 url: "https://HERRY423.github.io/Histoweave"
-# Zenodo mints a version DOI when the GitHub release is archived; paste it here.
-# doi: 10.5281/zenodo.XXXXXXX
+doi: 10.5281/zenodo.21586217
 abstract: >
   HistoWeave is an open-source orchestration and evaluation platform for
   reproducible spatial transcriptomics analysis. It unifies 80+ analysis

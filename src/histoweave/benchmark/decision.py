@@ -21,6 +21,8 @@ used here as a target-free gate or as a predictor of method improvement.
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import asdict, dataclass, field
 from enum import StrEnum
 from pathlib import Path
@@ -31,9 +33,14 @@ from .failure_fingerprint import FailureFingerprintAtlas
 from .isus import ISUSResult, compute_isus_from_table
 from .pareto import ObjectiveTable, ParetoDatasetResult, analyze_dataset
 from .recommend import MethodRecommender, Recommendation
-from .task_contract import AnalysisTask, is_domain_partition_task, tasks_admissible
+from .task_contract import (
+    AnalysisTask,
+    ground_truth_admissible,
+    is_domain_partition_task,
+    tasks_admissible,
+)
 
-DECISION_SCHEMA_VERSION = 1
+DECISION_SCHEMA_VERSION = 2
 CORE_RESEARCH_QUESTION = (
     "Given an explicit spatial-analysis task and incomplete benchmark evidence, "
     "which method set is justified, and when should the workflow fall back or abstain?"
@@ -62,6 +69,24 @@ class EvidenceStatus(StrEnum):
     NOT_EVALUATED = "not_evaluated"
 
 
+class VerifiedEvidence(dict[str, Any]):
+    """JSON evidence loaded from disk with source-artifact hashes verified."""
+
+    source_path: Path
+    verified_artifacts: tuple[str, ...]
+
+    def __init__(
+        self,
+        payload: dict[str, Any],
+        *,
+        source_path: Path,
+        verified_artifacts: list[str],
+    ) -> None:
+        super().__init__(payload)
+        self.source_path = source_path
+        self.verified_artifacts = tuple(verified_artifacts)
+
+
 @dataclass(frozen=True)
 class DecisionPolicy:
     """Predeclared thresholds for turning evidence into an action."""
@@ -72,6 +97,9 @@ class DecisionPolicy:
     severe_failure_threshold: float = 0.65
     require_baseline_advantage: bool = True
     require_heldout_validation: bool = True
+
+    require_declared_k_policy: bool = True
+    allow_oracle_k_evidence: bool = False
 
     def __post_init__(self) -> None:
         if self.shortlist_size < 1:
@@ -143,7 +171,7 @@ class DecisionCard:
     def to_dict(self) -> dict[str, Any]:
         return {
             "schema_version": self.schema_version,
-            "protocol": "histoweave.evidence_decision.v1",
+            "protocol": "histoweave.evidence_decision.v2",
             "research_question": self.research_question,
             "dataset_name": self.dataset_name,
             "task": self.task,
@@ -177,8 +205,7 @@ class DecisionCard:
             "  evidence checks:",
         ]
         lines.extend(
-            f"    - {check.name}: {check.status.value} -- {check.detail}"
-            for check in self.checks
+            f"    - {check.name}: {check.status.value} -- {check.detail}" for check in self.checks
         )
         if self.required_controls:
             lines.append("  required controls:")
@@ -199,8 +226,13 @@ class DecisionEngine:
         failure_atlas: FailureFingerprintAtlas | dict[str, Any] | None = None,
         validation: dict[str, Any] | None = None,
     ) -> None:
-        self.recommender = MethodRecommender(knowledge_base, k_neighbours=k_neighbours)
         self.policy = policy or DecisionPolicy()
+        self.recommender = MethodRecommender(
+            knowledge_base,
+            k_neighbours=k_neighbours,
+            require_declared_k_policy=self.policy.require_declared_k_policy,
+            allow_oracle_k_evidence=self.policy.allow_oracle_k_evidence,
+        )
         self.failure_atlas = failure_atlas
         self.validation = validation
 
@@ -277,6 +309,12 @@ def build_decision_card(
     top = ranked[0] if ranked else None
 
     task_failure, task_detail = _task_evidence_status(recommendation)
+
+    k_status, k_detail = _k_evidence_status(recommendation, resolved_policy)
+    checks.append(EvidenceCheck("oracle_k_admissibility", k_status, k_detail))
+
+    metric_status, metric_detail = _metric_evidence_status(recommendation)
+    checks.append(EvidenceCheck("metric_contract", metric_status, metric_detail))
     checks.append(EvidenceCheck("task_compatibility", task_failure, task_detail))
 
     if top is None or not recommendation.neighbours:
@@ -334,7 +372,7 @@ def build_decision_card(
         EvidenceCheck("reference_neighbour_baseline_proxy", baseline_status, baseline_detail)
     )
 
-    validation_status, validation_detail = _validation_status(validation)
+    validation_status, validation_detail = _validation_status(validation, recommendation)
     checks.append(EvidenceCheck("heldout_validation", validation_status, validation_detail))
 
     pareto_payload, pareto_frontier, pareto_matches = _pareto_payload(
@@ -358,9 +396,7 @@ def build_decision_card(
         warnings.append(pareto_detail)
     else:
         pareto_status = EvidenceStatus.PASS
-        pareto_detail = (
-            f"{len(pareto_shortlist)} ranked configuration(s) remain non-dominated."
-        )
+        pareto_detail = f"{len(pareto_shortlist)} ranked configuration(s) remain non-dominated."
     checks.append(EvidenceCheck("pareto_tradeoffs", pareto_status, pareto_detail))
 
     spatial_payload: dict[str, Any] | None = None
@@ -416,8 +452,8 @@ def build_decision_card(
         failure_detail = "The supplied atlas does not cover the ranked shortlist."
     elif severe_methods:
         failure_status = EvidenceStatus.WARN
-        failure_detail = (
-            "Synthetic failure evidence flags severe modes for: " + ", ".join(severe_methods)
+        failure_detail = "Synthetic failure evidence flags severe modes for: " + ", ".join(
+            severe_methods
         )
         required_controls.append(
             "Inspect fragmentation, merge, noise, and structural failure modes for every "
@@ -428,7 +464,12 @@ def build_decision_card(
         failure_detail = "Covered candidates are below the predeclared severe-mode threshold."
     checks.append(EvidenceCheck("failure_phenotypes", failure_status, failure_detail))
 
-    hard_failure = task_failure is EvidenceStatus.FAIL or coverage_status is EvidenceStatus.FAIL
+    hard_failure = (
+        task_failure is EvidenceStatus.FAIL
+        or k_status is EvidenceStatus.FAIL
+        or metric_status is EvidenceStatus.FAIL
+        or coverage_status is EvidenceStatus.FAIL
+    )
     weak_local_evidence = (
         task_failure is EvidenceStatus.WARN
         or coverage_status is EvidenceStatus.WARN
@@ -534,9 +575,7 @@ def _task_evidence_status(recommendation: Recommendation) -> tuple[EvidenceStatu
         )
     declared = [item for item in recommendation.neighbours if item.get("task")]
     compatible = [
-        item
-        for item in declared
-        if tasks_admissible(recommendation.task, item.get("task"))
+        item for item in declared if tasks_admissible(recommendation.task, item.get("task"))
     ]
     if declared and not compatible:
         return EvidenceStatus.FAIL, "No declared query-local reference matches the analysis task."
@@ -549,12 +588,133 @@ def _task_evidence_status(recommendation: Recommendation) -> tuple[EvidenceStatu
     return EvidenceStatus.PASS, f"Evidence is compatible with task={recommendation.task!r}."
 
 
-def _validation_status(validation: dict[str, Any] | None) -> tuple[EvidenceStatus, str]:
+def _k_evidence_status(
+    recommendation: Recommendation,
+    policy: DecisionPolicy,
+) -> tuple[EvidenceStatus, str]:
+    """Check that domain evidence declares a compatible non-oracle K policy."""
+    if not is_domain_partition_task(recommendation.task):
+        return (
+            EvidenceStatus.PASS,
+            "K-policy is not applicable to this non-domain analysis task.",
+        )
+
+    neighbours = list(recommendation.neighbours)
+    if not neighbours:
+        return EvidenceStatus.FAIL, "No admitted domain evidence remains after K-policy gating."
+
+    missing = [
+        str(item.get("name")) for item in neighbours if not str(item.get("k_policy") or "").strip()
+    ]
+    oracle = [
+        str(item.get("name"))
+        for item in neighbours
+        if (
+            str(item.get("k_policy") or "").strip().lower() in {"oracle", "dual", "fixed_oracle"}
+            or item.get("oracle_k") is True
+        )
+    ]
+    incompatible = [
+        str(item.get("name"))
+        for item in neighbours
+        if str(item.get("k_policy") or "").strip()
+        and str(item.get("k_policy") or "").strip().lower()
+        not in {"estimate", "estimated", "non_oracle"}
+    ]
+    if oracle and not policy.allow_oracle_k_evidence:
+        return (
+            EvidenceStatus.FAIL,
+            "Oracle-K evidence reached the admitted neighbour set: " + ", ".join(oracle),
+        )
+    if missing and policy.require_declared_k_policy:
+        return (
+            EvidenceStatus.FAIL,
+            "K-policy is undeclared for admitted domain evidence: " + ", ".join(missing),
+        )
+    if incompatible and not policy.allow_oracle_k_evidence:
+        return (
+            EvidenceStatus.FAIL,
+            "Only explicitly non-oracle K evidence is admissible: " + ", ".join(incompatible),
+        )
+
+    excluded_oracle = [
+        item
+        for item in recommendation.excluded_evidence
+        if "oracle_k_forbidden" in item.get("reasons", [])
+    ]
+    detail = "All admitted domain references use an explicitly non-oracle K policy."
+    if excluded_oracle:
+        detail += f" Rejected {len(excluded_oracle)} oracle-K reference(s) before aggregation."
+    return EvidenceStatus.PASS, detail
+
+
+def _metric_evidence_status(recommendation: Recommendation) -> tuple[EvidenceStatus, str]:
+    contract = recommendation.evidence_contract
+    metric = str(contract.get("metric") or "").strip()
+    if not metric:
+        return EvidenceStatus.FAIL, "The admitted evidence does not declare an evaluation metric."
+    if "higher_is_better" not in contract:
+        return EvidenceStatus.FAIL, "The admitted evidence does not declare metric direction."
+    return EvidenceStatus.PASS, f"Metric contract is {metric!r} with declared direction."
+
+
+def _validation_status(
+    validation: dict[str, Any] | None,
+    recommendation: Recommendation,
+) -> tuple[EvidenceStatus, str]:
     if validation is None:
         return (
             EvidenceStatus.NOT_EVALUATED,
             "No study- or dataset-grouped held-out validation was supplied.",
         )
+    if not isinstance(validation, VerifiedEvidence):
+        return (
+            EvidenceStatus.WARN,
+            "Validation JSON was not loaded through the hash-verifying evidence loader.",
+        )
+    if validation.get("schema_version") != "histoweave.validation_evidence.v2":
+        return EvidenceStatus.WARN, "Validation evidence does not use the v2 bound schema."
+    if not validation.verified_artifacts:
+        return EvidenceStatus.WARN, "Validation evidence has no verified source artifact."
+
+    expected = recommendation.evidence_contract
+    validation_task = str(validation.get("task") or "")
+    if validation_task != recommendation.task:
+        return EvidenceStatus.WARN, "Validation task does not match the recommendation task."
+    ground_truth_kind = validation.get("ground_truth_kind")
+    try:
+        truth_ok = ground_truth_admissible(recommendation.task, ground_truth_kind)
+    except (TypeError, ValueError):
+        truth_ok = False
+    if not truth_ok:
+        return EvidenceStatus.WARN, "Validation ground-truth semantics are incompatible."
+
+    k_policy = str(validation.get("k_policy") or "").strip().lower()
+    if is_domain_partition_task(recommendation.task) and k_policy not in {
+        "estimate",
+        "estimated",
+        "non_oracle",
+    }:
+        return EvidenceStatus.WARN, "Validation is not bound to an explicitly non-oracle K policy."
+
+    metric = str(validation.get("metric") or "").strip()
+    if metric.casefold() != str(expected.get("metric") or "").strip().casefold():
+        return EvidenceStatus.WARN, "Validation metric does not match the admitted evidence."
+    if bool(validation.get("higher_is_better")) is not bool(expected.get("higher_is_better")):
+        return EvidenceStatus.WARN, "Validation metric direction does not match the evidence."
+
+    expected_panel = sorted(str(value) for value in expected.get("method_panel", []))
+    validation_panel = sorted(str(value) for value in validation.get("method_panel", []))
+    if not validation_panel:
+        return EvidenceStatus.WARN, "Validation method panel is undeclared."
+    if validation_panel != expected_panel:
+        return EvidenceStatus.WARN, "Validation method panel does not match the recommender."
+
+    split_unit = str(validation.get("split_unit") or "").strip().lower()
+    if split_unit not in {"study", "dataset", "donor"}:
+        return EvidenceStatus.WARN, "Validation split unit is not study, dataset, or donor."
+    if validation.get("training_exclusion_verified") is not True:
+        return EvidenceStatus.WARN, "Validation does not verify training/test exclusion."
     protocol = str(validation.get("protocol") or "").lower()
     accepted = {"study_grouped_holdout", "dataset_grouped_holdout", "external_holdout"}
     if protocol not in accepted:
@@ -605,9 +765,7 @@ def _ordered_frontier_intersection(ranked: list[str], frontier: list[str]) -> li
     exact = set(frontier)
     base = {_base_method(name) for name in frontier}
     return [
-        name
-        for name in ranked
-        if name in exact or ("@" not in name and _base_method(name) in base)
+        name for name in ranked if name in exact or ("@" not in name and _base_method(name) in base)
     ]
 
 
@@ -642,15 +800,43 @@ def _failure_evidence(
     return selected, severe
 
 
-def load_decision_evidence(path: str | Path) -> dict[str, Any]:
-    """Load a JSON evidence artifact for CLI and workflow composition."""
-    import json
-
-    with Path(path).open("r", encoding="utf-8") as handle:
+def load_decision_evidence(path: str | Path) -> VerifiedEvidence:
+    """Load JSON evidence and verify every declared source-artifact hash."""
+    source = Path(path).resolve()
+    with source.open("r", encoding="utf-8") as handle:
         payload = json.load(handle)
     if not isinstance(payload, dict):
         raise ValueError("decision evidence JSON must contain an object")
-    return payload
+    verified: list[str] = []
+    raw_artifacts = payload.get("source_artifacts", [])
+    if raw_artifacts is None:
+        raw_artifacts = []
+    if not isinstance(raw_artifacts, list):
+        raise ValueError("source_artifacts must be a list")
+    for index, item in enumerate(raw_artifacts):
+        if not isinstance(item, dict):
+            raise ValueError(f"source_artifacts[{index}] must be an object")
+        relative = str(item.get("path") or "")
+        expected = str(item.get("sha256") or "").lower()
+        if not relative or len(expected) != 64:
+            raise ValueError(f"source_artifacts[{index}] requires path and sha256")
+        artifact_rel = Path(relative)
+        if artifact_rel.is_absolute():
+            raise ValueError("source artifact paths must be relative to the evidence JSON")
+        artifact = (source.parent / artifact_rel).resolve()
+        if not artifact.is_relative_to(source.parent):
+            raise ValueError(f"source artifact escapes the evidence directory: {relative}")
+        if not artifact.is_file():
+            raise ValueError(f"source artifact does not exist: {relative}")
+        digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
+        if digest != expected:
+            raise ValueError(f"source artifact hash mismatch: {relative}")
+        verified.append(relative)
+    return VerifiedEvidence(
+        payload,
+        source_path=source,
+        verified_artifacts=verified,
+    )
 
 
 def _base_method(name: str) -> str:

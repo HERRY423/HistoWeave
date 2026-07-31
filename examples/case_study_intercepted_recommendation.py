@@ -9,8 +9,8 @@ to deploy them.
 Scenarios
 ---------
 A. High local rank-support, **no held-out validation** → ``evidence_required``
-B. Local rank looks strong, but **grouped holdout fails** the global gate
-   (uses the bundled external negative control) → ``global_default``
+B. Local rank looks strong, but the bundled holdout uses **oracle K**
+   and cannot validate non-oracle deployment -> ``evidence_required``
 C. Ranking built on **Leiden / cluster_proxy** "domains" → ``abstain``
 D. Landscape polluted with **cross-task** (cell-type) evidence → hard-filtered
    neighbours; engine does not personalise on incompatible references
@@ -48,6 +48,7 @@ from histoweave.benchmark import (
     build_decision_card,
     extract_features,
     feature_vector,
+    load_decision_evidence,
 )
 from histoweave.benchmark.features import RECOMMENDATION_FEATURE_ORDER
 from histoweave.datasets import make_synthetic
@@ -119,18 +120,28 @@ def _ranked_pair(
                 "similarity": 0.93,
                 "task": neighbour_task,
                 "ground_truth_kind": ground_truth_kind,
+                "k_policy": "estimate",
             },
             {
                 "name": "ref_mid",
                 "similarity": 0.81,
                 "task": neighbour_task,
                 "ground_truth_kind": ground_truth_kind,
+                "k_policy": "estimate",
             },
         ],
         global_best_method=global_name,
         global_best_score=global_score,
         beats_global_best_baseline=beats,
         selection_regret_vs_global_best=(None if beats is None else (-0.05 if beats else 0.04)),
+        evidence_contract={
+            "task": "spatial_domain",
+            "metric": "ARI",
+            "higher_is_better": True,
+            "ground_truth_kinds": [ground_truth_kind],
+            "k_policies": ["estimate"],
+            "method_panel": [local_name, global_name],
+        },
     )
 
 
@@ -174,18 +185,18 @@ def scenario_a_missing_holdout() -> ScenarioResult:
 
 
 def scenario_b_negative_holdout() -> ScenarioResult:
-    """Local proxy looks good; bundled external holdout fails the gate → global_default."""
+    """Bundled oracle-K holdout cannot validate non-oracle personalisation."""
     if not BUNDLED_NEGATIVE_HOLDOUT.is_file():
         raise FileNotFoundError(f"Bundled negative holdout missing: {BUNDLED_NEGATIVE_HOLDOUT}")
-    validation = json.loads(BUNDLED_NEGATIVE_HOLDOUT.read_text(encoding="utf-8"))
+    validation = load_decision_evidence(BUNDLED_NEGATIVE_HOLDOUT)
     rec = _ranked_pair(beats=True)
     card = build_decision_card(rec, validation=validation)
     payload = card.to_dict()
-    assert card.action is DecisionAction.GLOBAL_DEFAULT
+    assert card.action is DecisionAction.EVIDENCE_REQUIRED
     assert validation.get("beats_global_best") is False
     return ScenarioResult(
         scenario_id="B",
-        title="Negative grouped holdout blocks personalisation",
+        title="Oracle-K grouped holdout cannot unlock non-oracle personalisation",
         naive_promotion=(
             f"Personalise to {rec.ranked_methods[0].method} because neighbours favour it"
         ),
@@ -268,14 +279,17 @@ def scenario_d_cross_task_landscape(tmp_dir: Path) -> ScenarioResult:
             "spatial_a": {
                 "task": "spatial_domain",
                 "ground_truth_kind": "spatial_domain",
+                "k_policy": "estimate",
             },
             "spatial_b": {
                 "task": "spatial_domain",
                 "ground_truth_kind": "spatial_domain",
+                "k_policy": "estimate",
             },
             "proxy_celltype": {
                 "task": "cell_type",
                 "ground_truth_kind": "cluster_proxy",
+                "k_policy": "estimate",
             },
         },
     )
@@ -430,7 +444,7 @@ def main(argv: list[str] | None = None) -> int:
     json_path.write_text(
         json.dumps(
             {
-                "protocol": "histoweave.case_study.intercepted_recommendation.v1",
+                "protocol": "histoweave.case_study.intercepted_recommendation.v2",
                 "n_scenarios": len(results),
                 "scenarios": [
                     {
@@ -460,7 +474,7 @@ def main(argv: list[str] | None = None) -> int:
 
     expected = {
         "A": DecisionAction.EVIDENCE_REQUIRED.value,
-        "B": DecisionAction.GLOBAL_DEFAULT.value,
+        "B": DecisionAction.EVIDENCE_REQUIRED.value,
         "C": DecisionAction.ABSTAIN.value,
     }
     for r in results:

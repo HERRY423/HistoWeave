@@ -145,7 +145,7 @@ def test_recommend_cli_json_and_output_file(tmp_path, capsys):
     )
     assert rc == 0
     payload = json.loads(capsys.readouterr().out)
-    assert payload["schema_version"] == 3
+    assert payload["schema_version"] == 4
     assert payload["dataset_name"] == "held_out"
     assert payload["feature_order"] == RECOMMENDATION_FEATURE_ORDER
     assert payload["neighbours"][0]["name"] == "small_clean"

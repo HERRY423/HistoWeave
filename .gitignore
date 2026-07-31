@@ -102,6 +102,12 @@ Thumbs.db
 .vscode/
 *.swp
 
+# Session-local Claude configuration (may contain local settings / keys — never commit)
+.claude/
+
+# Manuscript TIFF artwork — regenerable via manuscript/make_submission_assets.py
+manuscript/figures/*.tif
+
 # Failure-boundary mapping generated artifacts (keep source scripts trackable)
 /failure_boundary_mapping/figures/
 /failure_boundary_mapping/results/

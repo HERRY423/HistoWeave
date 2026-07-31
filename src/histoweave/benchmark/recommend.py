@@ -37,6 +37,7 @@ from .task_contract import (
     AnalysisTask,
     classify_platform,
     default_spatial_context_policy,
+    ground_truth_admissible,
     is_domain_partition_task,
     normalize_task,
     split_method_policy,
@@ -92,7 +93,11 @@ class Recommendation:
     # Active-learning calibration (filled when global-best is not beaten).
     evidence_todo: list[dict[str, Any]] = field(default_factory=list)
     calibration: dict[str, Any] | None = None
-    schema_version: int = 3
+    # Machine-readable trace of rows rejected before score aggregation.
+    excluded_evidence: list[dict[str, Any]] = field(default_factory=list)
+    # Contract of the evidence that was actually allowed to influence ranking.
+    evidence_contract: dict[str, Any] = field(default_factory=dict)
+    schema_version: int = 4
 
     def top(self, n: int = 3) -> list[MethodScore]:
         return self.ranked_methods[:n]
@@ -125,6 +130,8 @@ class Recommendation:
                 "reference_proxy_beats_global_best": self.beats_global_best_baseline,
             },
             "evidence_todo": list(self.evidence_todo),
+            "excluded_evidence": _json_safe(self.excluded_evidence),
+            "evidence_contract": _json_safe(self.evidence_contract),
             "calibration": self.calibration,
         }
         return payload
@@ -187,6 +194,8 @@ class MethodRecommender:
         k_neighbours: int = 3,
         platform_prior_weight: float = 1.35,
         task_prior_weight: float = 1.5,
+        require_declared_k_policy: bool = False,
+        allow_oracle_k_evidence: bool = False,
     ) -> None:
         if k_neighbours < 1:
             raise ValueError("k_neighbours must be at least 1")
@@ -198,6 +207,8 @@ class MethodRecommender:
         self._k = int(k_neighbours)
         self._platform_prior_weight = float(platform_prior_weight)
         self._task_prior_weight = float(task_prior_weight)
+        self._require_declared_k_policy = bool(require_declared_k_policy)
+        self._allow_oracle_k_evidence = bool(allow_oracle_k_evidence)
         raw_task = str(getattr(knowledge_base, "task", "spatial_domain"))
         # Accept legacy task names from older knowledge bases.
         self._task = normalize_task(raw_task) or AnalysisTask.SPATIAL_DOMAIN.value
@@ -244,7 +255,26 @@ class MethodRecommender:
         self._ref_matrix = _transform_feature_space(
             raw_reference, self._impute, self._mean, self._std
         )
-        self._global_best_method, self._global_best_score = _global_best_baseline(self._kb)
+        baseline_datasets = [
+            name
+            for name in self._ref_names
+            if _reference_admissibility(
+                query_task=self._task,
+                reference_task=normalize_task(
+                    self._dataset_meta.get(name, {}).get("task") or self._task
+                )
+                or self._task,
+                ground_truth_kind=self._dataset_meta.get(name, {}).get("ground_truth_kind"),
+                k_policy=self._dataset_meta.get(name, {}).get("k_policy"),
+                oracle_k=self._dataset_meta.get(name, {}).get("oracle_k"),
+                require_declared_k_policy=self._require_declared_k_policy,
+                allow_oracle_k_evidence=self._allow_oracle_k_evidence,
+            )[0]
+        ]
+        self._global_best_method, self._global_best_score = _global_best_baseline(
+            self._kb,
+            datasets=baseline_datasets,
+        )
 
     # ------------------------------------------------------------------
     def recommend(
@@ -322,7 +352,7 @@ class MethodRecommender:
         vec_2d = vec.reshape(1, -1)
         vec_std = _transform_feature_space(vec_2d, self._impute, self._mean, self._std)
 
-        neighbours = self._find_neighbours(
+        neighbours, excluded_evidence = self._find_neighbours(
             vec_std.ravel(),
             query_task=query_task,
             query_platform=query_platform,
@@ -363,6 +393,25 @@ class MethodRecommender:
             ),
             selection_regret_vs_global_best=diagnostics.get("selection_regret_vs_global_best"),
             beats_global_best_baseline=diagnostics.get("beats_global_best_baseline"),
+            excluded_evidence=excluded_evidence,
+            evidence_contract={
+                "task": query_task,
+                "metric": str(getattr(self._kb, "metric", "score")),
+                "higher_is_better": bool(getattr(self._kb, "higher_is_better", True)),
+                "ground_truth_kinds": sorted(
+                    {
+                        str(item.get("ground_truth_kind"))
+                        for item in neighbours
+                        if item.get("ground_truth_kind")
+                    }
+                ),
+                "k_policies": sorted(
+                    {str(item.get("k_policy")) for item in neighbours if item.get("k_policy")}
+                ),
+                "method_panel": list(self._kb.method_order()),
+                "oracle_k_evidence_allowed": self._allow_oracle_k_evidence,
+                "declared_k_policy_required": self._require_declared_k_policy,
+            },
         )
         try:
             from .active_calibration import attach_calibration
@@ -381,16 +430,17 @@ class MethodRecommender:
         *,
         query_task: str,
         query_platform: str | None,
-    ) -> list[dict[str, Any]]:
+    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
         """Return the *k* nearest reference datasets with prior-adjusted weights."""
         if self._ref_matrix is None:
-            return []
+            return [], []
 
         cosine = _cosine_similarity(query_vec, self._ref_matrix)
         similarities = np.clip((cosine + 1.0) / 2.0, 0.0, 1.0)
 
         adjusted = similarities.copy()
         meta_rows: list[dict[str, Any]] = []
+        excluded: list[dict[str, Any]] = []
         for i, name in enumerate(self._ref_names):
             meta = self._dataset_meta.get(name, {})
             ref_platform = classify_platform(meta.get("platform") or meta.get("assay"))
@@ -413,8 +463,18 @@ class MethodRecommender:
             # Task and ground-truth semantics are admissibility contracts, not
             # soft priors. Cross-modal domain evidence (e.g. protein → RNA) is
             # never soft-weighted into a ranking score.
+            reference_ok, reasons = _reference_admissibility(
+                query_task=query_task,
+                reference_task=ref_task,
+                ground_truth_kind=ground_truth_kind,
+                k_policy=meta.get("k_policy"),
+                oracle_k=meta.get("oracle_k"),
+                require_declared_k_policy=self._require_declared_k_policy,
+                allow_oracle_k_evidence=self._allow_oracle_k_evidence,
+            )
+
             task_ok = tasks_admissible(query_task, ref_task)
-            admissible = bool(task_ok and not invalid_truth)
+            admissible = bool(reference_ok and task_ok and not invalid_truth)
             boost = 1.0 if admissible else 0.0
             if admissible and query_platform and ref_platform and query_platform == ref_platform:
                 boost *= self._platform_prior_weight
@@ -429,15 +489,26 @@ class MethodRecommender:
                     "platform": ref_platform,
                     "task": ref_task,
                     "ground_truth_kind": meta.get("ground_truth_kind"),
+                    "k_policy": meta.get("k_policy"),
+                    "oracle_k": meta.get("oracle_k"),
                     "admissible": admissible,
                     "prior_boost": round(boost, 4),
                 }
             )
+            if not admissible:
+                excluded.append(
+                    {
+                        "name": name,
+                        "task": ref_task,
+                        "ground_truth_kind": meta.get("ground_truth_kind"),
+                        "k_policy": meta.get("k_policy"),
+                        "oracle_k": meta.get("oracle_k"),
+                        "reasons": reasons,
+                    }
+                )
 
         admissible_indices = np.flatnonzero(adjusted > 0.0)
-        ordered = admissible_indices[
-            np.argsort(adjusted[admissible_indices], kind="stable")[::-1]
-        ]
+        ordered = admissible_indices[np.argsort(adjusted[admissible_indices], kind="stable")[::-1]]
         top_k = ordered[: min(self._k, len(ordered))]
 
         neighbours: list[dict[str, Any]] = []
@@ -453,7 +524,7 @@ class MethodRecommender:
             }
             row.update(meta_rows[idx])
             neighbours.append(row)
-        return neighbours
+        return neighbours, excluded
 
     # ------------------------------------------------------------------
     def _rank_methods(
@@ -735,19 +806,72 @@ def _load_knowledge_base(path: Path) -> LandscapeResult:
     )
 
 
-def _global_best_baseline(kb: LandscapeResult) -> tuple[str | None, float | None]:
+def _reference_admissibility(
+    *,
+    query_task: str,
+    reference_task: str,
+    ground_truth_kind: Any,
+    k_policy: Any,
+    oracle_k: Any,
+    require_declared_k_policy: bool,
+    allow_oracle_k_evidence: bool,
+) -> tuple[bool, list[str]]:
+    """Return a fail-closed, pre-aggregation evidence decision and reasons."""
+    reasons: list[str] = []
+    if not tasks_admissible(query_task, reference_task):
+        reasons.append("task_mismatch")
+
+    if not str(ground_truth_kind or "").strip() and not require_declared_k_policy:
+        # Legacy standalone recommender mode may read v1/v2 landscapes that
+        # predate evidence-contract metadata. DecisionEngine always enables
+        # the strict flag and therefore remains fail-closed.
+        truth_ok = True
+    else:
+        try:
+            truth_ok = ground_truth_admissible(query_task, ground_truth_kind)
+        except (TypeError, ValueError):
+            truth_ok = False
+    if not truth_ok:
+        reasons.append("ground_truth_incompatible_or_missing")
+
+    if is_domain_partition_task(query_task):
+        policy = str(k_policy or "").strip().lower()
+        oracle_flag = policy in {"oracle", "dual", "fixed_oracle"} or oracle_k is True
+        if require_declared_k_policy and not policy:
+            reasons.append("k_policy_missing")
+        elif oracle_flag and not allow_oracle_k_evidence:
+            reasons.append("oracle_k_forbidden")
+        elif (
+            require_declared_k_policy
+            and not allow_oracle_k_evidence
+            and policy not in {"estimate", "estimated", "non_oracle"}
+        ):
+            reasons.append("k_policy_not_non_oracle")
+
+    return not reasons, reasons
+
+
+def _global_best_baseline(
+    kb: LandscapeResult,
+    *,
+    datasets: list[str] | None = None,
+) -> tuple[str | None, float | None]:
     """Return the method with the best mean score across all datasets."""
     method_names = kb.method_order()
     if not method_names:
         return None, None
+    allowed = set(datasets) if datasets is not None else set(kb.performance)
     higher = bool(getattr(kb, "higher_is_better", True))
     best_name: str | None = None
     best_score = -np.inf if higher else np.inf
     for method in method_names:
         values = [
             float(row[method])
-            for row in kb.performance.values()
-            if method in row and row[method] is not None and np.isfinite(row[method])
+            for name, row in kb.performance.items()
+            if name in allowed
+            and method in row
+            and row[method] is not None
+            and np.isfinite(row[method])
         ]
         if not values:
             continue

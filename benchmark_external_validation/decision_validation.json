@@ -1,9 +1,35 @@
 {
-  "schema_version": 1,
+  "schema_version": "histoweave.validation_evidence.v2",
   "protocol": "external_holdout",
   "source_protocol": "histoweave.external_validation.recommender_loocv.v1",
-  "source_artifact": "recommendation_loocv.json",
+  "source_artifacts": [
+    {
+      "path": "recommendation_loocv.json",
+      "sha256": "541f591c9d776ab518ab4bf52936e30e8bc743d05d312d0d0a8aae8d7e40713a"
+    }
+  ],
   "task": "spatial_domain",
+  "ground_truth_kind": "spatial_domain",
+  "k_policy": "oracle",
+  "metric": "ARI",
+  "higher_is_better": true,
+  "method_panel": [
+    "agglomerative",
+    "birch",
+    "bisecting_kmeans",
+    "dbscan",
+    "gaussian_mixture",
+    "kmeans",
+    "mean_shift",
+    "minibatch_kmeans",
+    "optics",
+    "spectral",
+    "banksy_py",
+    "harmony_kmeans",
+    "moran_spectral"
+  ],
+  "split_unit": "dataset",
+  "training_exclusion_verified": true,
   "n_queries": 5,
   "beats_global_best": false,
   "conclusion": "The personalised candidate generator ties, rather than beats, the global-best comparator on mean regret.",
