@@ -1,0 +1,23 @@
+{
+  "beats_global_best": true,
+  "ground_truth_kind": "spatial_domain",
+  "higher_is_better": true,
+  "k_policy": "estimate",
+  "method_panel": [
+    "global",
+    "local@sw0.8"
+  ],
+  "metric": "ARI",
+  "n_queries": 12,
+  "protocol": "study_grouped_holdout",
+  "schema_version": "histoweave.validation_evidence.v2",
+  "source_artifacts": [
+    {
+      "path": "validation_source.json",
+      "sha256": "a71561ca8bd1a0d9aa8b6693288a53a8c7c6e78e0a7a4901bfd0b4cc1f3fe312"
+    }
+  ],
+  "split_unit": "study",
+  "task": "cell_type",
+  "training_exclusion_verified": true
+}

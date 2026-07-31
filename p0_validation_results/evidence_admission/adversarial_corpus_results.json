@@ -1,0 +1,691 @@
+{
+  "cases": [
+    {
+      "case_id": "valid_bound_evidence",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": true,
+      "observed_action": "personalised_set",
+      "passed": true,
+      "personalised": true,
+      "primary_set": [
+        "local@sw0.8",
+        "global"
+      ]
+    },
+    {
+      "case_id": "cross_task_reference",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "No declared query-local reference matches the analysis task.",
+          "name": "task_compatibility",
+          "status": "fail"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "abstain",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "cluster_proxy_ground_truth",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Circular/self-supervised ground truth occurs in query-local evidence: ref_a, ref_b",
+          "name": "task_compatibility",
+          "status": "fail"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "abstain",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "missing_k_policy",
+      "checks": [
+        {
+          "detail": "K-policy is undeclared for admitted domain evidence: ref_a, ref_b",
+          "name": "oracle_k_admissibility",
+          "status": "fail"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "abstain",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "oracle_k_reference",
+      "checks": [
+        {
+          "detail": "Oracle-K evidence reached the admitted neighbour set: ref_a, ref_b",
+          "name": "oracle_k_admissibility",
+          "status": "fail"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "abstain",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "missing_metric_contract",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "The admitted evidence does not declare an evaluation metric.",
+          "name": "metric_contract",
+          "status": "fail"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Validation metric does not match the admitted evidence.",
+          "name": "heldout_validation",
+          "status": "warn"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "abstain",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "unverified_validation_json",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Validation JSON was not loaded through the hash-verifying evidence loader.",
+          "name": "heldout_validation",
+          "status": "warn"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "evidence_required",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "validation_task_mismatch",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Validation task does not match the recommendation task.",
+          "name": "heldout_validation",
+          "status": "warn"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "evidence_required",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "validation_panel_mismatch",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Validation method panel does not match the recommender.",
+          "name": "heldout_validation",
+          "status": "warn"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "evidence_required",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "validation_oracle_k",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Validation is not bound to an explicitly non-oracle K policy.",
+          "name": "heldout_validation",
+          "status": "warn"
+        },
+        {
+          "detail": "2 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": false,
+      "dominated_selected": false,
+      "expected_personalised": false,
+      "observed_action": "evidence_required",
+      "passed": true,
+      "personalised": false,
+      "primary_set": []
+    },
+    {
+      "case_id": "valid_dominated_candidate",
+      "checks": [
+        {
+          "detail": "All admitted domain references use an explicitly non-oracle K policy.",
+          "name": "oracle_k_admissibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Metric contract is 'ARI' with declared direction.",
+          "name": "metric_contract",
+          "status": "pass"
+        },
+        {
+          "detail": "Evidence is compatible with task='spatial_domain'.",
+          "name": "task_compatibility",
+          "status": "pass"
+        },
+        {
+          "detail": "Top method has support=2 across 2 query-local references.",
+          "name": "local_support",
+          "status": "pass"
+        },
+        {
+          "detail": "Top rank-support heuristic=0.800; it is not a calibrated probability.",
+          "name": "rank_support_heuristic",
+          "status": "pass"
+        },
+        {
+          "detail": "The query-local proxy is strictly better on its reference neighbours; this is not held-out performance.",
+          "name": "reference_neighbour_baseline_proxy",
+          "status": "pass"
+        },
+        {
+          "detail": "Grouped holdout supports baseline advantage across n=12.",
+          "name": "heldout_validation",
+          "status": "pass"
+        },
+        {
+          "detail": "1 ranked configuration(s) remain non-dominated.",
+          "name": "pareto_tradeoffs",
+          "status": "pass"
+        },
+        {
+          "detail": "ISUS was not computed; no label-dependent spatial-utility claim is made.",
+          "name": "spatial_information_audit",
+          "status": "not_evaluated"
+        },
+        {
+          "detail": "No failure-fingerprint atlas was supplied.",
+          "name": "failure_phenotypes",
+          "status": "not_evaluated"
+        }
+      ],
+      "dominated_local": true,
+      "dominated_selected": false,
+      "expected_personalised": true,
+      "observed_action": "personalised_set",
+      "passed": true,
+      "personalised": true,
+      "primary_set": [
+        "global"
+      ]
+    }
+  ]
+}

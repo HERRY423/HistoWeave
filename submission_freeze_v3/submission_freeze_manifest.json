@@ -1,0 +1,215 @@
+{
+  "article_type": "Bioinformatics Original Paper",
+  "claim_boundaries": [
+    "The work supports a fail-closed evidence-governance protocol and global default.",
+    "The work does not establish superior personalised selection on unseen studies.",
+    "Oracle-K spatial-region evidence is not represented as non-oracle or cell-type evidence.",
+    "The ISUS score is not represented as a reliable predictor of method gain."
+  ],
+  "freeze_date": "2026-07-27",
+  "generated_artifacts": {
+    "submission_freeze_v3/REPORT.md": {
+      "bytes": 1422,
+      "sha256": "5ad117fb11fc1ad1ae2cae264b15e514e4a93ed4bb69fceafe38205c008a1c44"
+    },
+    "submission_freeze_v3/SUBMISSION_FILE_INVENTORY.md": {
+      "bytes": 879,
+      "sha256": "5f25329bb6a2e1748595d0d4cd70fa636d3ebabac7578e0469c39d974c815dcb"
+    }
+  },
+  "official_guidance": {
+    "author_guidelines": "https://academic.oup.com/bioinformatics/pages/author-guidelines",
+    "checked_on": "2026-07-27",
+    "submission_preparation": "https://academic.oup.com/bioinformatics/pages/submission_online"
+  },
+  "schema_version": "histoweave.submission_freeze.v3",
+  "scientific_risks": [
+    "No independent non-oracle validation supports personalised method selection.",
+    "The Wu stress test is small, oracle-K, and not publicly timestamped independently.",
+    "The grouped five-dataset LOOCV result is negative and editorially vulnerable.",
+    "The external panel is not a complete aligned SOTA comparison."
+  ],
+  "source_artifacts": {
+    "5x15_spatial_aware/performance_matrix_mean_full.csv": {
+      "bytes": 2306,
+      "sha256": "a7d8c7cd99bb90cae80eab6e4b198c69ed69f487ddf780a36dae0a4a9bf7c749"
+    },
+    "benchmark_external_validation/decision_validation.json": {
+      "bytes": 1704,
+      "sha256": "5b0e08bbaf74dc83a7f1da3e4cdd5618e0980aa1a13d8780314bc3486e7072bd"
+    },
+    "benchmark_external_validation/independent_test_wu2021/independent_test_summary.json": {
+      "bytes": 3240,
+      "sha256": "66d0363170ca49f1d4be5dd0201ab10f32be19c5c487065c1f2a50bd6fb3dd83"
+    },
+    "benchmark_external_validation/performance_matrix_mean.csv": {
+      "bytes": 1589,
+      "sha256": "0ecfb98448542a00e8f51f0b65010423e29f5b756be5e8813a57c2eec05c9e67"
+    },
+    "manuscript/AUTHOR_METADATA_REQUIRED.md": {
+      "bytes": 702,
+      "sha256": "bcc9a164486d0094f00fcf61c5308b256efe3f999fb719442e7fd929ace62966"
+    },
+    "manuscript/README.md": {
+      "bytes": 1255,
+      "sha256": "ca7f60696995e51bec6cf66a357f64b4f53ef65ed9f8450924f5a3d41c9f39ef"
+    },
+    "manuscript/SUBMISSION_COMPLIANCE.md": {
+      "bytes": 3897,
+      "sha256": "47716dc4a7d68a765cc9f85ae583b6e2c9b4afe84991af120e08a7833713fd72"
+    },
+    "manuscript/audit_submission.py": {
+      "bytes": 8010,
+      "sha256": "7b4fc35163f5cc827665c2059dedf60052db44e05f9d36b02df5aba8ffbe32c1"
+    },
+    "manuscript/cover_letter.md": {
+      "bytes": 3563,
+      "sha256": "91c3360428cb79c5a4ebb0124a9b8215d8a632615cde9d67198e60f89fc00134"
+    },
+    "manuscript/figures/figure1_workflow.png": {
+      "bytes": 369844,
+      "sha256": "6d8e20f3625a63d3f40991aa30f21b19e1072045214e7848e663bb331aed0e32"
+    },
+    "manuscript/figures/figure1_workflow.svg": {
+      "bytes": 17070,
+      "sha256": "eae2a6ba2981e974ee8b59a0373dfb2d97f0b36f987a9a73c2d2d50573b4981b"
+    },
+    "manuscript/figures/figure1_workflow.tif": {
+      "bytes": 24497804,
+      "sha256": "2ffbbf72d333af3bb4763f9f518078135d6e2fb65fd2db2d7b953cc9f436417b"
+    },
+    "manuscript/figures/figure2_dlpfc_oracle_k.png": {
+      "bytes": 611914,
+      "sha256": "9fee40b0d8180584559d161b6e2592a3825e5fdb457e172a6d5f12d5db380858"
+    },
+    "manuscript/figures/figure2_dlpfc_oracle_k.svg": {
+      "bytes": 59919,
+      "sha256": "9b48f9961bf76183916bdb6efdc2e5e8bb0ae00785cc81d599938f843c302fad"
+    },
+    "manuscript/figures/figure2_dlpfc_oracle_k.tif": {
+      "bytes": 33465638,
+      "sha256": "9e7e48e52460b9a3e9e5bd47f0594d1ad24591a37d57aee7503bd8ea3f84bc0a"
+    },
+    "manuscript/figures/figure3_external_panel.png": {
+      "bytes": 488817,
+      "sha256": "006c76d30fbd9483781d94dd3bd9b72e53228c04c4cafac7dfdf4a29ce3c524d"
+    },
+    "manuscript/figures/figure3_external_panel.svg": {
+      "bytes": 63063,
+      "sha256": "1cd823573ca82e77230be0834d5cdd6f0a75679f633ddd753a8a47ce7ac93ec9"
+    },
+    "manuscript/figures/figure3_external_panel.tif": {
+      "bytes": 25683482,
+      "sha256": "c46f02fe850c0e9fb2267fcd4802fffb9908d527021a5398ac72687471ed8b98"
+    },
+    "manuscript/figures/figure4_validation.png": {
+      "bytes": 397339,
+      "sha256": "1456bc93473e357cd6cf7f7d268f96155699c9202cc2b2662adf3ea5b33b58b6"
+    },
+    "manuscript/figures/figure4_validation.svg": {
+      "bytes": 27833,
+      "sha256": "bf82d116568e4cb3328617affaf1c4db07037e7c5f25c6d2ddb42d4e5e6e5365"
+    },
+    "manuscript/figures/figure4_validation.tif": {
+      "bytes": 27280460,
+      "sha256": "0b53635e51c1ce61af6d6334d6a6082365fc6c658269aee87f7c1add1c68c236"
+    },
+    "manuscript/figures/graphical_abstract.png": {
+      "bytes": 369844,
+      "sha256": "6d8e20f3625a63d3f40991aa30f21b19e1072045214e7848e663bb331aed0e32"
+    },
+    "manuscript/figures/graphical_abstract.svg": {
+      "bytes": 17070,
+      "sha256": "eae2a6ba2981e974ee8b59a0373dfb2d97f0b36f987a9a73c2d2d50573b4981b"
+    },
+    "manuscript/figures/graphical_abstract.tif": {
+      "bytes": 24497804,
+      "sha256": "2c913a0bf7e2559022ff9e02311ea120a771f3d6dd8d9c0873bb52e6eb2b6195"
+    },
+    "manuscript/main.tex": {
+      "bytes": 29626,
+      "sha256": "2a5a32f249986c4fe5a70a6ca87572685777f3b25bbcf9e9160acae9f41e2670"
+    },
+    "manuscript/make_submission_assets.py": {
+      "bytes": 12287,
+      "sha256": "15f6c7ddcb1d79326f1316f9ef1bda651598e7ba1dd7a6babe5650c9eff4ceac"
+    },
+    "manuscript/supplementary.tex": {
+      "bytes": 11551,
+      "sha256": "9a9ef741012982df32be7a0e6893c3be1c0f2e3ff14119eaf53a3e7741c9d840"
+    },
+    "non_oracle_k_sota/summary.json": {
+      "bytes": 3496,
+      "sha256": "c045067cc0dd873a74f0c65b59c7b1954c8ebede5c2c6fc2d802b16297f35461"
+    },
+    "p0_validation_results/evidence_admission/audit_summary.json": {
+      "bytes": 401,
+      "sha256": "d9c6a4b4302f73b99c7b118c449f05756b0351b9e7a95681868e3aacb74f17b1"
+    },
+    "p1_validation_results/REPORT.md": {
+      "bytes": 474,
+      "sha256": "f1c83870928d5b869b5a817c4ed6bae522b3c70a144e6f344967610c8b67619d"
+    },
+    "p1_validation_results/TEST_REPORT.md": {
+      "bytes": 765,
+      "sha256": "d8b27f2b30e29b9fb6b6e2baaac47be62bba54494a5d547c83de7349da56366d"
+    },
+    "p1_validation_results/submission_audit.json": {
+      "bytes": 2912,
+      "sha256": "17866a98190b1794069adfdd4238c2a3bba764ca7bb966ec998fc7637df82a36"
+    },
+    "prospective_validation_v2/protocol.json": {
+      "bytes": 3250,
+      "sha256": "055e0e725d7466d00fec40f66e8145d569bd23402ba6ac3d99b6ecf2a763927e"
+    },
+    "protocol_endpoints_results/selective_regret_coverage.json": {
+      "bytes": 5087,
+      "sha256": "cc4da3043f24f30c9249ba17fb5c63aa7ec67dc8b0b72cf5b627dec5508d82dd"
+    },
+    "submission_freeze_v2/REPORT.md": {
+      "bytes": 674,
+      "sha256": "bd6427f6984849c2efd4ebbd10656bd466a79d9d3c458ea350935b231af7b026"
+    },
+    "submission_freeze_v2/submission_freeze_manifest.json": {
+      "bytes": 8767,
+      "sha256": "277dc35329cbd76f6e8abcf657cf8e2ad7e679025c225cdcb03d6637f3c7759a"
+    },
+    "submission_freeze_v3/reproduce_submission_freeze.py": {
+      "bytes": 12699,
+      "sha256": "651c437d9dfae8b082c353d6de40d209c2f5977b579699d405885d6a7226dbc7"
+    },
+    "tests/test_submission_freeze_v3.py": {
+      "bytes": 1714,
+      "sha256": "f12c65b9e64a71a90658eafd8bfdfa011235b4ed1aace7c7aa93583ec183b450"
+    }
+  },
+  "status": "p1_editorial_draft_complete_submission_blocked",
+  "submission_blockers": [
+    "Bioinformatics AI-policy compliance and accurate disclosure require author action.",
+    "Author identity, affiliation, ORCID, CRediT, funding, and conflict metadata are missing.",
+    "The manuscript requires compilation and visual inspection in the current OUP environment."
+  ],
+  "validation": {
+    "abstract_words": 123,
+    "all_figures_at_least_350_dpi": true,
+    "author_required_placeholders": 9,
+    "evidence_assertions": {
+      "audit_all_cases_passed": true,
+      "audit_zero_dominated_selections": true,
+      "audit_zero_false_rejections": true,
+      "audit_zero_invalid_admissions": true,
+      "dlpfc_top_method_stagate": true,
+      "external_does_not_beat_global": true,
+      "external_regret_matches_text": true,
+      "selective_global_default": true,
+      "wu_mean_matches_text": true,
+      "wu_negative": true
+    },
+    "latex_compile_status": "not_run_no_engine_available",
+    "main_body_words": 2828,
+    "main_figures": 4,
+    "missing_bibliography_keys": [],
+    "missing_labels": [],
+    "static_audit_passed": true
+  }
+}

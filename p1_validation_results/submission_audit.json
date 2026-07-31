@@ -1,0 +1,118 @@
+{
+  "abstract_within_recommended_150_words": true,
+  "abstract_word_count_including_headings_and_urls": 123,
+  "all_evidence_checks_passed": true,
+  "all_figure_files_exist": true,
+  "all_figures_at_least_350_dpi": true,
+  "article_type": "Bioinformatics Original Paper",
+  "author_required_placeholders": 9,
+  "bibliography_keys": [
+    "chen2022",
+    "dong2022",
+    "hu2021",
+    "hubert1985",
+    "long2023",
+    "marconato2025",
+    "maynard2021",
+    "moses2022",
+    "palla2022",
+    "pedregosa2011",
+    "ross2014",
+    "singhal2024",
+    "stahl2016",
+    "wu2021",
+    "yuan2024",
+    "zhao2021"
+  ],
+  "checked_on": "2026-07-27",
+  "citation_keys": [
+    "chen2022",
+    "dong2022",
+    "hu2021",
+    "hubert1985",
+    "long2023",
+    "marconato2025",
+    "maynard2021",
+    "moses2022",
+    "palla2022",
+    "pedregosa2011",
+    "ross2014",
+    "singhal2024",
+    "stahl2016",
+    "wu2021",
+    "yuan2024",
+    "zhao2021"
+  ],
+  "evidence_checks": {
+    "audit_all_cases_passed": true,
+    "audit_zero_dominated_selections": true,
+    "audit_zero_false_rejections": true,
+    "audit_zero_invalid_admissions": true,
+    "dlpfc_top_method_stagate": true,
+    "external_does_not_beat_global": true,
+    "external_regret_matches_text": true,
+    "selective_global_default": true,
+    "wu_mean_matches_text": true,
+    "wu_negative": true
+  },
+  "figures": {
+    "figure1_workflow.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 2081,
+      "passes_350_dpi": true,
+      "width": 3924
+    },
+    "figure2_dlpfc_oracle_k.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 2126,
+      "passes_350_dpi": true,
+      "width": 5247
+    },
+    "figure3_external_panel.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 1926,
+      "passes_350_dpi": true,
+      "width": 4445
+    },
+    "figure4_validation.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 1846,
+      "passes_350_dpi": true,
+      "width": 4926
+    }
+  },
+  "latex_compile_status": "not_run_no_engine_available",
+  "latex_engine_available": false,
+  "main_body_within_5000_words": true,
+  "main_body_word_count_excluding_references": 2828,
+  "missing_bibliography_keys": [],
+  "missing_labels": [],
+  "schema_version": "histoweave.manuscript_audit.v1",
+  "static_audit_passed": true,
+  "structured_abstract_headings": {
+    "Availability and Implementation:": true,
+    "Contact:": true,
+    "Motivation:": true,
+    "Results:": true,
+    "Supplementary information:": true
+  },
+  "submission_status": "editorial_draft_complete_author_and_policy_actions_required",
+  "uncited_bibliography_keys": [],
+  "unreferenced_labels": []
+}

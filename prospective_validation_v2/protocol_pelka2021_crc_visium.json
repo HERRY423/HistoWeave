@@ -1,0 +1,120 @@
+{
+  "schema_version": "histoweave.prospective_validation.registration_readiness.v2",
+  "status": "registration_ready_not_publicly_timestamped",
+  "prepared_on": "2026-07-31",
+  "claim_boundary": "This local bundle is not a preregistration. Execution is forbidden until the study accession is fixed and this exact protocol is publicly timestamped. No outcome file of the Pelka cohort may be downloaded or opened before that timestamp is visible.",
+  "study": {
+    "label": "Pelka et al. 2021 colorectal cancer Visium",
+    "paper_title": "Spatially organized multicellular immune hubs in human colorectal cancer",
+    "paper_doi": "10.1016/j.cell.2021.08.003",
+    "pmid": "34450029",
+    "journal": "Cell, 184(18):4734-4752.e20",
+    "platform": "Visium (10x Genomics, FFPE colorectal cancer)",
+    "tissue": "human colorectal cancer and adjacent normal",
+    "primary_data_series": "GSE178341 (NCBI GEO)",
+    "bioproject": "PRJNA738517",
+    "note_on_accession": "The exact Visium sample files and pathology ground-truth annotations must be confirmed from the paper's data-availability statement at registration, without inspecting outcome values. GSE178341 is the study-level series identifier locked here."
+  },
+  "registration_gate": {
+    "public_registration_url": null,
+    "public_timestamp_utc": null,
+    "protocol_sha256_at_registration": null,
+    "dataset_accession_or_doi": "GSE178341",
+    "dataset_outcomes_inspected": false,
+    "execution_permitted": false
+  },
+  "independence_requirements": {
+    "study_absent_from_training_and_method_selection": true,
+    "donors_absent_from_all_development_panels": true,
+    "no_outcome_or_label_inspection_before_public_timestamp": true,
+    "independence_audit_required_before_download": true
+  },
+  "independence_audit": {
+    "protocol": "histoweave.study_independence_audit.v1",
+    "audit_file": "prospective_validation_v2/independence_audit_pelka.json",
+    "identifiers_checked": [
+      "pelka",
+      "GSE178341",
+      "PRJNA738517",
+      "10.1016/j.cell.2021.08.003"
+    ],
+    "verdict_at_preparation": "independence_confirmed",
+    "sources_scanned_at_preparation": 799,
+    "note": "Audit must be re-run at registration time against the then-current working tree and its source hashes recorded in the public registration record."
+  },
+  "training_basis": {
+    "meta_panel_protocol": "histoweave.aligned_meta_panel.v1",
+    "meta_panel_file": "meta_panel_alignment/meta_panel_manifest.json",
+    "aligned_units": 15,
+    "aligned_methods": [
+      "banksy",
+      "spagcn",
+      "graphst",
+      "stagate",
+      "bayesspace",
+      "spectral",
+      "kmeans",
+      "gaussian_mixture",
+      "agglomerative"
+    ],
+    "seed_complete_cells_at_preparation": 0,
+    "partial_seed_cells_at_preparation": 6,
+    "backlog_cells": 135,
+    "seed_completeness_definition": "a cell is seed-complete only when all three declared estimate-K seeds (42,1,2) have explicit non-oracle ARI evidence on admissible spatial-domain ground truth",
+    "requirement": "The meta-panel must satisfy grouped study/donor-level non-oracle validation before personalised_set can be unlocked on this study. Until then the global-default gate stays closed."
+  },
+  "task_contract": {
+    "task": "spatial_domain",
+    "ground_truth_kind": "spatial_domain",
+    "metric": "ARI",
+    "higher_is_better": true,
+    "k_policy": "estimate",
+    "oracle_k_allowed": false,
+    "cluster_proxy_labels_allowed": false
+  },
+  "locked_policy": {
+    "candidate_action": "personalised_set",
+    "fallback_action": "global_default",
+    "abstain_action_reserved_for_no_task_valid_evidence": true,
+    "recommended_method_source": "training-only evidence admitted by histoweave.evidence_decision.v2 from the aligned meta-panel",
+    "minimum_shortlist_size": 1,
+    "maximum_shortlist_size": 3
+  },
+  "heldout_design": {
+    "split_unit": "study_or_donor",
+    "minimum_evaluable_units": 5,
+    "training_exclusion_verified": true,
+    "method_panel_fixed_before_download": true,
+    "missing_method_results_imputed": false,
+    "seeds": [
+      42,
+      1,
+      2
+    ]
+  },
+  "primary_endpoint": {
+    "name": "mean regret of the HistoWeave action versus the training-fold global default on the Pelka cohort",
+    "success_margin_ari": 0.02,
+    "success_rule": "bootstrap upper 95% confidence bound of mean(personalised_regret - global_regret) <= 0.02",
+    "superiority_rule": "bootstrap upper 95% confidence bound of mean(personalised_regret - global_regret) < 0",
+    "coverage_rule": "HistoWeave external personalisation coverage reported at every locked threshold; a matched-or-higher-coverage contrast with the existing ungated rule is prespecified",
+    "resampling_unit": "study_or_donor",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260731
+  },
+  "fail_closed_rules": [
+    "Any oracle-K result is descriptive only and cannot unlock personalised_set.",
+    "Any task, ground-truth, metric, method-panel, source-hash, or split-unit mismatch returns evidence_required.",
+    "Fewer than five evaluable independent donors returns evidence_required.",
+    "Failure of the non-inferiority rule retains global_default.",
+    "If the aligned meta-panel does not support grouped non-oracle validation, HistoWeave uses the global fallback at every threshold and reports zero personalisation coverage.",
+    "All negative and missing-method outcomes are reported; no missing cell is imputed."
+  ],
+  "required_public_registration_steps": [
+    "Re-run the independence audit against the current working tree and record the source hashes.",
+    "Confirm the exact Pelka Visium sample accession and ground-truth annotations from the data-availability statement, without opening outcome values.",
+    "Fill the four null registration_gate fields without changing endpoints, thresholds, seeds, or the method panel.",
+    "Publish the protocol hash on an independent timestamped service before any outcome download (the v3 precedent used a public GitHub issue and recorded server time; opentimestamps or a Zenodo draft also qualify).",
+    "Set execution_permitted=true only after the public timestamp is independently visible."
+  ]
+}

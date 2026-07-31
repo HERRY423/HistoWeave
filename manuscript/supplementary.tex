@@ -1,0 +1,303 @@
+% HistoWeave -- Supplementary Material for Bioinformatics Original Paper
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{natbib}
+\usepackage{setspace}
+
+\geometry{margin=1in}
+\graphicspath{{figures/}{../benchmark_external_validation/figures/}
+{../benchmark_external_validation/independent_test_wu2021/}}
+\onehalfspacing
+
+\title{Supplementary Material\\
+\large HistoWeave: evidence-governed method decisions with structured
+abstention for spatial transcriptomics}
+\author{[AUTHOR METADATA MUST MATCH THE MAIN MANUSCRIPT]}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Supplementary methods}
+
+\subsection{Decision rule}
+
+For a declared query task, HistoWeave performs the following ordered checks:
+\begin{enumerate}
+  \item reject references with an incompatible task, ground-truth kind, or
+        \(K\) policy;
+  \item verify the metric direction and retain method configurations rather
+        than collapsing spatial-context settings;
+  \item generate a target-free reference-neighbour ranking and compare its
+        proxy score with the training-reference global method;
+  \item require a source-hash-verified grouped held-out result with a matching
+        task, truth kind, \(K\) policy, metric, panel, and split unit;
+  \item intersect the ranked shortlist with the matched non-dominated Pareto
+        set when a multi-objective table is supplied; and
+  \item emit \texttt{personalised\_set}, \texttt{global\_default},
+        \texttt{evidence\_required}, or \texttt{abstain}.
+\end{enumerate}
+The complete implementation is in
+\texttt{src/histoweave/benchmark/decision.py}. Policy thresholds and every
+check are serialized in the output card.
+
+\subsection{Training, validation, and test separation}
+
+The DLPFC benchmark contains five sections from one study
+\citep{maynard2021}. It is an oracle-\(K\) development track and is not an
+independent test. The five-dataset external panel is also oracle-\(K\); its
+leave-one-dataset-out result is a diagnostic comparison with a training-fold
+global method. The 20-query selective endpoint is grouped by study or
+independent query unit. The six-section Wu breast-cancer cohort
+\citep{wu2021} was absent from audited development sources and was executed
+once under an in-repository locked rule, but it lacks an independent public
+timestamp and uses oracle \(K\). It is therefore a negative stress test.
+The non-oracle prospective-v2 protocol has no outcome data and remains
+execution-blocked pending a public timestamp.
+
+\subsection{Adversarial evidence corpus}
+
+The 11 cases in Table~\ref{tab:audit} exercise the full
+\texttt{build\_decision\_card} path. A valid dominated-candidate case is
+expected to return a personalised set that excludes the dominated local
+configuration; it is therefore a valid-evidence control, not an invalid case.
+Rates reported in the paper use the eligible denominator for each endpoint.
+
+\section{Supplementary results}
+
+\begin{longtable}{@{}lrrrrr@{}}
+\caption{Full DLPFC oracle-\(K\) ARI matrix. Values are means over seeds
+42, 1, and 2. Spatial-context configurations are written as
+\texttt{@sw}; higher ARI is better.\label{tab:dlpfc-full}}\\
+\toprule
+Method & 151673 & 151674 & 151507 & 151669 & 151670 \\
+\midrule
+\endfirsthead
+\toprule
+Method & 151673 & 151674 & 151507 & 151669 & 151670 \\
+\midrule
+\endhead
+STAGATE & 0.426 & 0.394 & 0.426 & 0.249 & 0.272 \\
+BayesSpace & 0.504 & 0.301 & 0.389 & 0.203 & 0.231 \\
+SpaGCN & 0.385 & 0.396 & 0.383 & 0.199 & 0.222 \\
+GMM@sw0.8 & 0.299 & 0.294 & 0.263 & 0.169 & 0.243 \\
+spectral@sw0.8 & 0.302 & 0.280 & 0.234 & 0.179 & 0.221 \\
+kmeans@sw0.3 & 0.250 & 0.298 & 0.240 & 0.166 & 0.221 \\
+agglomerative@sw0.8 & 0.246 & 0.300 & 0.216 & 0.190 & 0.199 \\
+spectral@sw0.3 & 0.242 & 0.176 & 0.200 & 0.168 & 0.346 \\
+birch@sw0.8 & 0.235 & 0.277 & 0.251 & 0.187 & 0.181 \\
+BANKSY & 0.198 & 0.246 & 0.219 & 0.156 & 0.295 \\
+kmeans@sw0.8 & 0.263 & 0.267 & 0.198 & 0.181 & 0.193 \\
+GraphST & 0.236 & 0.221 & 0.299 & 0.120 & 0.213 \\
+GMM@sw0.3 & 0.235 & 0.269 & 0.223 & 0.140 & 0.178 \\
+agglomerative@sw0.3 & 0.148 & 0.221 & 0.211 & 0.145 & 0.280 \\
+kmeans@sw0.0 & 0.174 & 0.210 & 0.183 & 0.136 & 0.262 \\
+birch@sw0.3 & 0.170 & 0.253 & 0.132 & 0.130 & 0.188 \\
+spectral@sw0.0 & 0.168 & 0.218 & 0.138 & 0.115 & 0.107 \\
+GMM@sw0.0 & 0.165 & 0.208 & 0.131 & 0.099 & 0.080 \\
+agglomerative@sw0.0 & 0.099 & 0.119 & 0.080 & 0.044 & $-0.074$ \\
+birch@sw0.0 & 0.088 & 0.118 & 0.046 & 0.030 & $-0.085$ \\
+\bottomrule
+\end{longtable}
+
+\begin{table}[ht]
+\centering
+\caption{SpaGCN oracle-\(K\) sensitivity at seed 42.
+\label{tab:oracle-k}}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Section & True \(K\) & Estimated \(K\) & Oracle ARI & Estimated ARI & Difference \\
+\midrule
+151673 & 7 & 2 & 0.418 & 0.186 & $-0.232$ \\
+151674 & 7 & 2 & 0.273 & 0.199 & $-0.074$ \\
+151507 & 7 & 3 & 0.385 & 0.248 & $-0.137$ \\
+151669 & 8 & 2 & 0.207 & 0.137 & $-0.070$ \\
+151670 & 5 & 2 & 0.213 & 0.416 & $+0.203$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{External oracle-\(K\) performance matrix. Values are mean ARI over
+three seeds. SpatialDE-kmeans and nnSVG-kmeans produced no finite values and
+are not shown.\label{tab:external-full}}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Method & Visium HD CRC & Xenium lung & Xenium Prime ovary & Visium brain & MERFISH brain \\
+\midrule
+spectral & 0.676 & 0.153 & 0.463 & 0.627 & 0.282 \\
+birch & 0.598 & 0.009 & 0.199 & 0.512 & 0.222 \\
+kmeans & 0.286 & 0.031 & 0.136 & 0.576 & 0.244 \\
+minibatch kmeans & 0.255 & 0.033 & 0.174 & 0.580 & 0.236 \\
+BANKSY-Python & 0.372 & 0.081 & 0.122 & 0.470 & 0.279 \\
+Gaussian mixture & 0.342 & 0.056 & 0.242 & 0.494 & 0.217 \\
+agglomerative & 0.362 & 0.013 & 0.249 & 0.507 & 0.212 \\
+bisecting kmeans & 0.335 & 0.081 & 0.179 & 0.508 & 0.253 \\
+Harmony-kmeans & 0.222 & 0.056 & 0.033 & 0.559 & 0.211 \\
+mean shift & $-0.001$ & 0.183 & 0.003 & 0.005 & 0.029 \\
+Moran spectral & 0.078 & 0.013 & 0.171 & 0.268 & 0.141 \\
+DBSCAN & $-0.024$ & 0.016 & 0.088 & 0.000 & 0.000 \\
+OPTICS & 0.012 & 0.035 & 0.003 & 0.010 & 0.022 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{External leave-one-dataset-out diagnostic.\label{tab:loocv}}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Metric & Value \\
+\midrule
+Held-out datasets & 5 \\
+Top-1 accuracy & 0.80 \\
+Candidate-generator mean regret & 0.005921 \\
+Training-fold global mean regret & 0.005921 \\
+Random expected mean regret & 0.233815 \\
+Regret reduction versus global & 0.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Wu breast-cancer stress-test results. The comparator is the best
+finite method in the locked seven-method oracle-\(K\) panel.
+\label{tab:wu}}
+\begin{tabular}{@{}lrrlr@{}}
+\toprule
+Section & Spectral ARI & Best ARI & Best method & Regret \\
+\midrule
+1142243F & 0.032 & 0.032 & spectral & 0.000 \\
+1160920F & 0.301 & 0.628 & birch & 0.327 \\
+CID4290 & 0.326 & 0.326 & spectral & 0.000 \\
+CID4465 & 0.058 & 0.093 & birch & 0.035 \\
+CID44971 & 0.410 & 0.579 & Gaussian mixture & 0.169 \\
+CID4535 & 0.155 & 0.412 & bisecting kmeans & 0.257 \\
+\midrule
+Mean & & & & 0.131 \\
+95\% bootstrap CI & & & & 0.034--0.236 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.20\textwidth}p{0.42\textwidth}@{}}
+\caption{Adversarial evidence-admission audit.
+\label{tab:audit}}\\
+\toprule
+Case & Expected action class & Contract exercised \\
+\midrule
+\endfirsthead
+\toprule
+Case & Expected action class & Contract exercised \\
+\midrule
+\endhead
+valid bound evidence & personalised & all declared contracts match \\
+cross-task reference & not personalised & reference task mismatch \\
+cluster-proxy truth & not personalised & inadmissible ground-truth kind \\
+missing \(K\) policy & not personalised & undeclared cluster-count policy \\
+oracle-\(K\) reference & not personalised & oracle evidence disallowed \\
+missing metric contract & not personalised & metric direction absent \\
+unverified validation JSON & not personalised & source hashes not verified \\
+validation task mismatch & not personalised & held-out task mismatch \\
+validation panel mismatch & not personalised & held-out method-panel mismatch \\
+validation oracle \(K\) & not personalised & held-out \(K\) policy mismatch \\
+valid dominated candidate & personalised & dominated local configuration excluded \\
+\bottomrule
+\end{longtable}
+
+\begin{table}[ht]
+\centering
+\caption{Evidence panels are reported separately when their method coverage,
+task, \(K\) policy, or split unit differs.\label{tab:coverage}}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+Panel & Units & Methods/configurations & \(K\) policy \\
+\midrule
+DLPFC development & 5 & 20 & oracle \\
+External development & 5 & 15 prespecified / 13 finite & oracle \\
+Strict task-stratified v2 & 9 & 7 & source-derived oracle \\
+DLPFC dual-\(K\) sensitivity & 5 & 2 & oracle + three estimated tracks \\
+Adversarial evidence audit & 11 & not applicable & not applicable \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Scalability summary for 30 pipeline methods over 1,000 to
+1,000,000 cells by 2,000 genes.\label{tab:scale}}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Metric & Value \\
+\midrule
+Method-by-scale cells measured & 150 \\
+Successful runs & 104 \\
+Out-of-memory failures & 20 \\
+Skipped after prior out-of-memory result & 26 \\
+Methods reaching one million cells & 10 / 30 \\
+Per-method timeout & 1,800 s \\
+Memory cap & 58 GB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\section{Reproduction and frozen artefacts}
+
+\begin{verbatim}
+# Deterministic P1 figures
+python manuscript/make_submission_assets.py
+
+# P0 evidence-admission audit
+python scripts/run_p0_evidence_audit.py
+
+# P1 source and claim verification
+python submission_freeze_v3/reproduce_submission_freeze.py --check
+
+# Targeted decision regressions
+python -m pytest -q \
+  tests/test_evidence_audit.py \
+  tests/test_submission_freeze_v3.py \
+  tests/test_decision.py \
+  tests/test_recommend.py
+\end{verbatim}
+
+The P1 freeze binds the manuscript, supplement, cover letter, compliance
+record, figure-generation script, figures, and underlying source tables by
+SHA-256. It does not change the P0 scientific artefacts.
+
+\section{AI-assisted preparation: mandatory author action}
+
+This working draft received assistance from OpenAI Codex. The current
+\textit{Bioinformatics} policy states that LLMs may assist with limited tasks
+such as language correction, translation, anomaly detection, code, and
+documentation when disclosed, but does not permit drafting a paper from a
+prompt. Before submission, the human authors must substantively rewrite and
+verify the manuscript, document only the final permitted use in the cover
+letter and manuscript, or obtain written guidance from the Editorial Office.
+This disclosure does not by itself make LLM-drafted text compliant.
+
+\begin{thebibliography}{9}
+\bibitem[Maynard et~al.(2021)]{maynard2021}
+Maynard, K.R. et~al. (2021). Transcriptome-scale spatial gene expression in
+the human dorsolateral prefrontal cortex. \emph{Nature Neuroscience}, 24,
+425--436. doi:10.1038/s41593-020-00787-0.
+
+\bibitem[Wu et~al.(2021)]{wu2021}
+Wu, S.Z. et~al. (2021). A single-cell and spatially resolved atlas of human
+breast cancers. \emph{Nature Genetics}, 53, 1334--1347.
+doi:10.1038/s41588-021-00911-1.
+\end{thebibliography}
+
+\end{document}

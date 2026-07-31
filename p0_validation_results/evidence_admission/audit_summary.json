@@ -1,0 +1,14 @@
+{
+  "all_cases_passed": true,
+  "dominated_opportunities": 1,
+  "dominated_selection_rate": 0.0,
+  "dominated_selections": 0,
+  "incompatible_evidence_admission_rate": 0.0,
+  "invalid_admissions": 0,
+  "invalid_cases": 9,
+  "n_cases": 11,
+  "protocol": "histoweave.evidence_admission_audit.v1",
+  "valid_cases": 2,
+  "valid_evidence_false_rejection_rate": 0.0,
+  "valid_rejections": 0
+}

@@ -1,0 +1,207 @@
+{
+  "claim_boundaries": [
+    "External five-dataset results are oracle-K spatial-region evidence.",
+    "The external panel has 15 prespecified and 13 fully finite methods; it is not a full aligned SOTA panel.",
+    "The Wu analysis is a negative in-repository stress test, not a publicly timestamped preregistration.",
+    "No current held-out artifact can unlock non-oracle personalised deployment."
+  ],
+  "freeze_date": "2026-07-26",
+  "generated_artifacts": {
+    "submission_freeze_v2/METHOD_COVERAGE.md": {
+      "bytes": 1108,
+      "sha256": "ebc2c62fc5ca78834965458b54ff046c88bb7dd060a8d3319b23a044069f8ce4"
+    },
+    "submission_freeze_v2/method_coverage_ledger.json": {
+      "bytes": 3830,
+      "sha256": "d7786d0bdecf94edd342e9c6e92c84880ab8cec64d061423caee663994bde200"
+    }
+  },
+  "schema_version": "histoweave.submission_freeze.v2",
+  "source_artifacts": {
+    "5x15_spatial_aware/performance_matrix_mean_full.csv": {
+      "bytes": 2306,
+      "sha256": "a7d8c7cd99bb90cae80eab6e4b198c69ed69f487ddf780a36dae0a4a9bf7c749"
+    },
+    "benchmark_external_validation/benchmark_long.csv": {
+      "bytes": 34895,
+      "sha256": "f3b8cf3196a997faea259f314aca2aec4160f4e16a6f6946fa00d7b0c8c04a0c"
+    },
+    "benchmark_external_validation/decision_validation.json": {
+      "bytes": 1704,
+      "sha256": "5b0e08bbaf74dc83a7f1da3e4cdd5618e0980aa1a13d8780314bc3486e7072bd"
+    },
+    "benchmark_external_validation/independent_test_wu2021/independence_audit.json": {
+      "bytes": 1169,
+      "sha256": "4ed0b48d8811069d1af6b8a1f302f7b1bf8bdf7e2e43fc047e93a068c23b08fb"
+    },
+    "benchmark_external_validation/independent_test_wu2021/independent_test_summary.json": {
+      "bytes": 3240,
+      "sha256": "66d0363170ca49f1d4be5dd0201ab10f32be19c5c487065c1f2a50bd6fb3dd83"
+    },
+    "benchmark_external_validation/independent_test_wu2021/preregistered_protocol.json": {
+      "bytes": 3262,
+      "sha256": "eca7ed6fe72a0c3318c28b2d56aba24c19aa56eae7ad3e0ed1b28f0db92174f2"
+    },
+    "benchmark_external_validation/recommendation_loocv.json": {
+      "bytes": 4740,
+      "sha256": "541f591c9d776ab518ab4bf52936e30e8bc743d05d312d0d0a8aae8d7e40713a"
+    },
+    "benchmark_external_validation/strict_external_panel_v2/loocv_summary.json": {
+      "bytes": 3017,
+      "sha256": "fcd45586f72be0bb7ad10998a2dfd5a09f07c4facc8a8865561c7de67856ebd2"
+    },
+    "benchmark_external_validation/strict_external_panel_v2/sota_coverage.csv": {
+      "bytes": 4051,
+      "sha256": "51aaa45a71c7a5b2bca2dbedce9d08c7215852794ea0a18ecf56e2a90ed7d194"
+    },
+    "examples/case_study_intercepted_recommendation.py": {
+      "bytes": 18623,
+      "sha256": "bb54f78d2fb2d8e68cb4e71ebdf411b4240c48d2c135e8e746fe5fb65049c5dc"
+    },
+    "manuscript/cover_letter_p0_archive.md": {
+      "bytes": 3424,
+      "sha256": "1fcc48dea79d08e5894bddc6ea0529eb59c9184ab92ef5109587a3794dfdf81c"
+    },
+    "manuscript/main_p0_archive.tex": {
+      "bytes": 25155,
+      "sha256": "de1bae19c100be0496a11e888ee78d94f52f6d9a758973261f31fa438986abea"
+    },
+    "manuscript/supplementary_p0_archive.tex": {
+      "bytes": 7764,
+      "sha256": "f46c77e0199f31288b33e58fb51f6757164d897956712d65c21a18dcc2cd4f9d"
+    },
+    "non_oracle_k_sota/summary.json": {
+      "bytes": 3496,
+      "sha256": "c045067cc0dd873a74f0c65b59c7b1954c8ebede5c2c6fc2d802b16297f35461"
+    },
+    "p0_validation_results/evidence_admission/REPORT.md": {
+      "bytes": 705,
+      "sha256": "fd62111aee5bcc16bb4b9a93ac5aefa579591579880238366570d5c1b3d0686c"
+    },
+    "p0_validation_results/evidence_admission/adversarial_corpus_results.json": {
+      "bytes": 23682,
+      "sha256": "1ae9285c8f26617b7cb2d053f1e38d42a05ef3c9561e2ed3f43becbb693c4c8f"
+    },
+    "p0_validation_results/evidence_admission/audit_summary.json": {
+      "bytes": 401,
+      "sha256": "d9c6a4b4302f73b99c7b118c449f05756b0351b9e7a95681868e3aacb74f17b1"
+    },
+    "p0_validation_results/evidence_admission/manifest.json": {
+      "bytes": 1263,
+      "sha256": "57592abf6ad9b464d000bb26eb29683cd41532d80448d2e6a73dad02455be8ae"
+    },
+    "p0_validation_results/evidence_admission/validation_oracle_k.json": {
+      "bytes": 595,
+      "sha256": "d3b814da2759dc35ed3ff973290323ca98216551546663bb181d489fa34e1672"
+    },
+    "p0_validation_results/evidence_admission/validation_panel_mismatch.json": {
+      "bytes": 577,
+      "sha256": "6caaf63ee25f6434b3c095cbd18e3894d858f80074c6c5801f992fd7ab9e027d"
+    },
+    "p0_validation_results/evidence_admission/validation_source.json": {
+      "bytes": 154,
+      "sha256": "a71561ca8bd1a0d9aa8b6693288a53a8c7c6e78e0a7a4901bfd0b4cc1f3fe312"
+    },
+    "p0_validation_results/evidence_admission/validation_task_mismatch.json": {
+      "bytes": 592,
+      "sha256": "8135f00d30e87aeeb521c54f334e45e7f13b6f08c644299381f53f46bc54a66a"
+    },
+    "p0_validation_results/evidence_admission/validation_valid.json": {
+      "bytes": 597,
+      "sha256": "a1b324b6ea63dae26c773be8c6589c278976bf494fc714747c1fbe9c509df451"
+    },
+    "prospective_validation_v2/STATUS.md": {
+      "bytes": 1976,
+      "sha256": "b7fd15c91fc0b8ac7299e79786e0608f90e8ae178855ebf25b9ae4aa0c8b3487"
+    },
+    "prospective_validation_v2/protocol.json": {
+      "bytes": 3250,
+      "sha256": "055e0e725d7466d00fec40f66e8145d569bd23402ba6ac3d99b6ecf2a763927e"
+    },
+    "protocol_endpoints_results/selective_regret_coverage.json": {
+      "bytes": 5087,
+      "sha256": "cc4da3043f24f30c9249ba17fb5c63aa7ec67dc8b0b72cf5b627dec5508d82dd"
+    },
+    "reference_artefacts/MANIFEST.json": {
+      "bytes": 49183,
+      "sha256": "a414935caafaf28adcc056f16c539010387ad26ac526e0bd0fe99b9f14d36dfa"
+    },
+    "scripts/build_reference_artefact_manifest.py": {
+      "bytes": 7727,
+      "sha256": "0702d1581731a5d7f15abc66bfb21457fbab77ba8a513fce8472eed4340c3a76"
+    },
+    "scripts/run_p0_evidence_audit.py": {
+      "bytes": 898,
+      "sha256": "189620e3e74aa500d8a92370a84084410d1735ec3d0851dc85eea01791f166b1"
+    },
+    "scripts/update_zenodo_doi.py": {
+      "bytes": 4968,
+      "sha256": "53c6043a5940b66849a391e284780d1caad9632a5960b8e0e0f1671d0ce9794b"
+    },
+    "src/histoweave/benchmark/decision.py": {
+      "bytes": 35000,
+      "sha256": "96638e7d08b91d528a5858f35bf27da0be8e6ca8e13ee1db78f63b0868795682"
+    },
+    "src/histoweave/benchmark/evidence_audit.py": {
+      "bytes": 10797,
+      "sha256": "3ee1ff52a92966cdc543012500bb06d24694a20ce0e302c666ed88ed90e0ee4a"
+    },
+    "src/histoweave/benchmark/recommend.py": {
+      "bytes": 41766,
+      "sha256": "90ce9357a1c5b502f61b020fedc48d6a5545fee96f0939dd8afa6d584ff59f47"
+    },
+    "submission_freeze_v1/DATA_CODE_AVAILABILITY.md": {
+      "bytes": 6423,
+      "sha256": "db88b9edb505be5388668aa93c8e7bc3c227bdfbe4bc430f4e3990b243a8d392"
+    },
+    "submission_freeze_v1/main_figures.lock.json": {
+      "bytes": 4912,
+      "sha256": "b8e90397c995ca1e63d5b0309dd91cb4b0137fb1f5dfb9f7d2ba217bb323b23c"
+    },
+    "submission_freeze_v2/reproduce_submission_freeze.py": {
+      "bytes": 16096,
+      "sha256": "b076b7bfc96a425c0e6098f790492678d3ea86e89df686073a6567ea1546ac1c"
+    },
+    "tests/test_decision.py": {
+      "bytes": 12758,
+      "sha256": "e54a685bacb6810102cc6d8415e20f4f5206761cfeace06d7c91ee3fcf4d27c6"
+    },
+    "tests/test_evidence_audit.py": {
+      "bytes": 2203,
+      "sha256": "25eae8e3c9f6b1eee9f03774e8e26e8a5d115b122cb48478cd0f0e6d3ed446a0"
+    },
+    "tests/test_submission_freeze_v2.py": {
+      "bytes": 800,
+      "sha256": "89ec89b38e2894494734dcaee3b45f4b73675fd4e1e4c78338ab36e2396b8564"
+    }
+  },
+  "status": "p0_local_complete_public_preregistration_pending",
+  "validation": {
+    "decision_validation_binding": {
+      "can_unlock_non_oracle_personalisation": false,
+      "k_policy": "oracle",
+      "metric": "ARI",
+      "schema": "histoweave.validation_evidence.v2",
+      "task": "spatial_domain",
+      "verified_source_artifacts": [
+        "recommendation_loocv.json"
+      ]
+    },
+    "evidence_admission_audit": {
+      "all_cases_passed": true,
+      "dominated_opportunities": 1,
+      "dominated_selection_rate": 0.0,
+      "dominated_selections": 0,
+      "incompatible_evidence_admission_rate": 0.0,
+      "invalid_admissions": 0,
+      "invalid_cases": 9,
+      "n_cases": 11,
+      "protocol": "histoweave.evidence_admission_audit.v1",
+      "valid_cases": 2,
+      "valid_evidence_false_rejection_rate": 0.0,
+      "valid_rejections": 0
+    },
+    "prospective_execution_permitted": false,
+    "prospective_registration_status": "registration_ready_not_publicly_timestamped"
+  }
+}
