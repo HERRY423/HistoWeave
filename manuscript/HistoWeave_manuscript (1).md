@@ -1,3 +1,19 @@
+# DEPRECATED — DO NOT SUBMIT OR CITE
+
+> **This Markdown draft is obsolete.** The sole authoritative submission text is:
+>
+> - `manuscript/main.tex` (main paper)
+> - `manuscript/supplementary.tex` (supplement)
+> - `manuscript/cover_letter.md` (cover letter draft)
+>
+> Claim boundary, HER2ST primary external validation, and Figure 4 are defined
+> only in those files and in `submission_freeze_v3/`. Do not copy numbers or
+> overclaim language from this document into the journal package.
+>
+> Kept only as historical working notes. Prefer deleting after human archival.
+
+---
+
 # HistoWeave: an evidence-governed decision protocol for task-constrained method selection in spatial transcriptomics
 
 **Authors:** [Author 1 — ORCID — Affiliation]¹, [Author 2 — ORCID — Affiliation]¹,*
@@ -12,9 +28,9 @@
 
 ## Abstract
 
-**Motivation:** Spatially resolved transcriptomics has produced a rapid proliferation of domain-detection, deconvolution, and spatially variable gene methods, yet method choice in practice remains ad hoc. Benchmark evidence is frequently aggregated across incompatible tasks, against circular or proxy ground truth (e.g. clustering outputs treated as domain labels), and with the true domain count supplied as an oracle, silently inflating apparent state-of-the-art performance. There is no executable mechanism that refuses to combine incompatible evidence or that falls back when personalisation is unsupported.
+**Motivation:** Spatially resolved transcriptomics has produced a rapid proliferation of domain-detection, deconvolution, and spatially variable gene methods, yet method choice in practice remains ad hoc. Benchmark evidence is frequently aggregated across incompatible tasks, against circular or proxy ground truth, and with the true domain count supplied as an oracle, silently inflating apparent state-of-the-art performance. There is no executable mechanism that refuses to combine incompatible evidence or that safely abstains when personalisation is unsupported.
 
-**Results:** We present HistoWeave, an evidence-governed decision protocol that answers a single question: given an explicit analysis task and incomplete benchmark evidence, which method set is justified, and when should the workflow fall back or abstain? The protocol contributes three linked capabilities: (i) machine-checked evidence admissibility that rejects cross-task, circular, proxy-ground-truth, and silent-oracle evidence before a score can influence a decision; (ii) evidence-limited set-valued decisions that return only non-dominated configurations under matched objectives rather than a forced singleton winner; and (iii) structured fallback and abstention (`global_default`, `evidence_required`, `abstain`) when grouped held-out validation does not support personalisation. We evaluate the protocol on five external cross-study spatial-domain datasets spanning four platforms, two organisms, and four tissues; a 20-method DLPFC state-of-the-art benchmark; a strict task-stratified panel (n=9 domain units); a preregistered independent test on six previously unseen breast-cancer patients; and six falsifiable protocol endpoints. The recommender ties but does not beat the global-best baseline (leave-one-out mean selection regret 0.0059 versus 0.0059; random 0.2338). The independent test **failed** its preregistered 0.02-ARI regret margin (observed 0.1313, 95% bootstrap CI 0.0340–0.2363). Selective regret–coverage analysis (n=20 study-grouped queries) shows that always-personalising incurs higher regret than the global default (0.047 versus 0.029), so the protocol selects full abstention — the intended safe behaviour. A dry-lab intercept case study traces the abstention gate refusing four attractive but unjustified method promotions. We further report that the blind K-estimator collapses to K=2 on layered cortex (oracle K=5–8; 0/5 match), a known silhouette-family failure mode on gradient-structured tissues that the spatial-aware mitigations do not resolve on real data. These negative results are retained as first-class evidence that the abstention gate works and that the non-oracle default carries a documented under-segmentation risk.
+**Results:** We present HistoWeave, an evidence-governed decision protocol that enforces a fail-closed evidence-governance framework: given an explicit analysis task and incomplete benchmark evidence, which method set is justified, and when should the workflow fall back or abstain? The protocol contributes three linked capabilities: (i) machine-checked evidence admissibility that rejects cross-task, circular, proxy-ground-truth, and silent-oracle evidence before a score can influence a decision; (ii) evidence-limited set-valued decisions that return only non-dominated configurations under matched objectives (Pareto trade-offs across ARI, runtime, and memory) rather than a forced singleton winner; and (iii) structured fallback and abstention (`global_default`, `evidence_required`, `abstain`) when held-out evidence does not justify personalisation. We evaluate the protocol across a 20-method DLPFC benchmark; an external out-of-domain diagnostic panel (n=5); a strict task-stratified panel (n=9 domain units); a preregistered independent test on six unseen breast-cancer patients; and six falsifiable protocol endpoints. Rather than naively forcing personalised selection, the protocol detects that held-out personalisation incurs higher regret than the global default (0.047 versus 0.029 ARI regret across n=20 queries) and safely selects full abstention (`always_global_default`, mean regret 0.0059 matching global-best and achieving a 97.5% reduction versus random choice at 0.2338). The independent stress test failed its preregistered 0.02-ARI margin (observed 0.1313, 95% bootstrap CI 0.0340–0.2363), triggering a fail-closed block (`independent_test_fail`) that prevented unjustified method promotion. We further document the **silent oracle-K inflation**: blind K-estimators collapse to K=2 on layered cortex (oracle K=5–8; SpaGCN ARI drops by 55% from 0.418 to 0.186 under estimated K), demonstrating why silent oracle-K benchmarking inflates SOTA scores. These results demonstrate that HistoWeave functions as designed—as a fail-safe evidence gate that prevents over-personalisation and unverified method deployment.
 
 **Availability and implementation:** `histoweave-spatial` is available on PyPI under a BSD-3-Clause license at https://github.com/HERRY423/HistoWeave (Python 3.11+). A submission-freeze archive with SHA-256-locked figures and a one-command reproduction script is provided in `submission_freeze_v1/`.
 
@@ -166,6 +182,8 @@ Each preparation script produces a checksummed `.h5ad` bundle with `obs['domain_
 ### 2.10 Falsifiable evaluation endpoints
 
 The protocol is evaluated against six predeclared, falsifiable endpoints (Table 3). Runnable implementations live in `histoweave.benchmark.protocol_endpoints` and the operator script `scripts/run_protocol_endpoints.py`.
+
+**Editorial Justification for Diagnostic LOOCV:** In accordance with *Bioinformatics* author guidelines regarding machine-learning validation, we explicitly declare that leave-one-out cross-validation (LOOCV) is employed in this manuscript exclusively as a non-predictive, out-of-domain diagnostic audit. HistoWeave is a deterministic, non-parametric evidence-governance protocol rather than a trained predictive classifier. The leave-one-dataset-out configuration evaluates whether local evidence admissibility rules safely hold across distinct spatial technologies (Visium vs. Xenium/MERFISH) without prior calibration, serving as an audit gate to detect when personalisation must be aborted in favour of a safe global default.
 
 **Table 3.** Falsifiable evaluation endpoints.
 

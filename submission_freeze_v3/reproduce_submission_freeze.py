@@ -13,6 +13,9 @@ import argparse
 import hashlib
 import json
 import logging
+import re
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -20,7 +23,17 @@ LOGGER = logging.getLogger(__name__)
 ROOT = Path(__file__).resolve().parents[1]
 FREEZE = ROOT / "submission_freeze_v3"
 SCHEMA = "histoweave.submission_freeze.v3"
-FREEZE_DATE = "2026-07-27"
+FREEZE_DATE = "2026-07-31"
+
+# Fast freeze-critical suite (always run). Full-suite summary is optional via env.
+# Do not include tests/test_submission_freeze_v3.py here: it invokes --check and
+# would race with writing the freeze outputs.
+FREEZE_CRITICAL_TESTS = (
+    "tests/test_evidence_audit.py",
+    "tests/test_decision.py",
+    "tests/test_recommend.py",
+    "tests/test_install_smoke.py",
+)
 
 MANUSCRIPT_PATHS = (
     "manuscript/main.tex",
@@ -62,11 +75,20 @@ EVIDENCE_PATHS = (
     "5x15_spatial_aware/performance_matrix_mean_full.csv",
     "benchmark_external_validation/performance_matrix_mean.csv",
     "prospective_validation_v2/protocol.json",
+    "manuscript/prospective_validation_v3/figure_data.json",
+    "manuscript/prospective_validation_v3/REPORT.md",
+    "manuscript/prospective_validation_v3/SUBMISSION_ASSESSMENT.md",
+    "manuscript/protocol_diagnostics/action_frequency_and_sensitivity.json",
+    "manuscript/protocol_diagnostics/REPORT.md",
+    "scripts/build_protocol_diagnostics.py",
+    "tests/test_install_smoke.py",
 )
 
 IMPLEMENTATION_PATHS = (
     "submission_freeze_v3/reproduce_submission_freeze.py",
     "tests/test_submission_freeze_v3.py",
+    ".zenodo.json",
+    "CITATION.cff",
 )
 
 SOURCE_PATHS = MANUSCRIPT_PATHS + FIGURE_PATHS + AUDIT_PATHS + EVIDENCE_PATHS + IMPLEMENTATION_PATHS
@@ -96,6 +118,66 @@ def _generated_record(text: str) -> dict[str, Any]:
     return {
         "bytes": len(raw),
         "sha256": hashlib.sha256(raw).hexdigest(),
+    }
+
+
+def _parse_pytest_summary(text: str) -> dict[str, int]:
+    """Parse the final pytest short summary line."""
+    counts = {"passed": 0, "failed": 0, "skipped": 0, "errors": 0, "xfailed": 0}
+    # e.g. "12 passed, 1 skipped in 2.34s"
+    for key in counts:
+        match = re.search(rf"(\d+)\s+{key}", text)
+        if match:
+            counts[key] = int(match.group(1))
+    return counts
+
+
+def _stable_pytest_summary_line(counts: dict[str, int]) -> str:
+    """Deterministic summary without wall-clock duration (required for freeze hashes)."""
+    parts = []
+    for key in ("passed", "failed", "skipped", "errors", "xfailed"):
+        n = int(counts.get(key, 0))
+        if n or key in {"passed", "failed", "skipped"}:
+            parts.append(f"{n} {key}")
+    return ", ".join(parts)
+
+
+def _run_pytest(paths: tuple[str, ...], *, timeout_s: int = 300) -> dict[str, Any]:
+    cmd = [sys.executable, "-m", "pytest", "-q", "--tb=no", *paths]
+    proc = subprocess.run(
+        cmd,
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+        timeout=timeout_s,
+    )
+    combined = (proc.stdout or "") + "\n" + (proc.stderr or "")
+    counts = _parse_pytest_summary(combined)
+    return {
+        "paths": list(paths),
+        "returncode": proc.returncode,
+        "summary_line": _stable_pytest_summary_line(counts),
+        **counts,
+        "ok": proc.returncode == 0 and counts["failed"] == 0 and counts["errors"] == 0,
+    }
+
+
+def _regression_report() -> dict[str, Any]:
+    critical = _run_pytest(FREEZE_CRITICAL_TESTS, timeout_s=180)
+    # Optional full suite: set HISTOWEAVE_FREEZE_FULL_PYTEST=1 (slow).
+    import os
+
+    full: dict[str, Any] | None = None
+    if os.environ.get("HISTOWEAVE_FREEZE_FULL_PYTEST", "").strip() in {"1", "true", "yes"}:
+        full = _run_pytest(("tests",), timeout_s=3600)
+    return {
+        "critical": critical,
+        "full_suite": full,
+        "note": (
+            "critical suite always runs at freeze time; "
+            "set HISTOWEAVE_FREEZE_FULL_PYTEST=1 for full tests/"
+        ),
     }
 
 
@@ -159,31 +241,59 @@ def _inventory_text() -> str:
     )
 
 
-def _report_text(audit: dict[str, Any]) -> str:
+def _report_text(audit: dict[str, Any], regression: dict[str, Any]) -> str:
+    critical = regression["critical"]
+    crit_line = (
+        f"{critical['passed']} passed, {critical['skipped']} skipped, "
+        f"{critical['failed']} failed"
+    )
+    full = regression.get("full_suite")
+    if full:
+        full_line = (
+            f"{full['passed']} passed, {full['skipped']} skipped, "
+            f"{full['failed']} failed"
+        )
+    else:
+        full_line = (
+            "not re-run at freeze (set HISTOWEAVE_FREEZE_FULL_PYTEST=1); "
+            "critical suite recorded below"
+        )
     return (
         "# HistoWeave Bioinformatics P1 submission freeze v3\n\n"
         "The scientific narrative, evidence boundaries, supplementary material, "
         "cover letter, references, and deterministic artwork are frozen at editorial "
         "review quality. The package is not represented as immediately uploadable.\n\n"
+        f"- Freeze date: {FREEZE_DATE}\n"
         f"- Structured abstract: {audit['abstract_word_count_including_headings_and_urls']} "
         "words (recommended maximum 150)\n"
         f"- Main body: {audit['main_body_word_count_excluding_references']} "
         "words (target maximum 5,000)\n"
-        "- Main figures: 4; all PNG review copies are at least 350 dpi\n"
+        "- Main figures: 4; Fig.4 includes HER2ST primary external panels; "
+        "all PNG review copies are at least 350 dpi\n"
         f"- Citation-key gaps: {len(audit['missing_bibliography_keys'])}\n"
         f"- Evidence assertions passed: {audit['all_evidence_checks_passed']}\n"
         f"- Author-required placeholders: {audit['author_required_placeholders']}\n"
         "- LaTeX compile: not run because no TeX engine is installed locally\n"
-        "- Full repository regression: 832 passed, 8 skipped, 0 failed\n\n"
+        f"- Freeze-critical pytest: {crit_line} "
+        f"({'ok' if critical['ok'] else 'FAILED'})\n"
+        f"- Full repository regression: {full_line}\n"
+        "- Canonical narrative: `manuscript/main.tex` + "
+        "`manuscript/supplementary.tex` (Markdown drafts deprecated)\n"
+        "- Zenodo concept DOI: https://doi.org/10.5281/zenodo.21586217 "
+        "(re-deposit after freeze changes)\n\n"
         "Blocking actions before journal upload:\n\n"
         "1. Human authors must resolve Bioinformatics AI-policy compliance, "
         "substantively verify/rewrite the text as required, and make an accurate disclosure.\n"
         "2. Authors must supply names, affiliations, ORCID, corresponding-author details, "
         "CRediT roles, funding, acknowledgements, and conflicts.\n"
-        "3. Compile and visually inspect the sources in the current official OUP template.\n\n"
-        "Scientific risks remain explicit: the external stress test is small and oracle-K, "
-        "LOOCV is editorially vulnerable, the aligned external SOTA panel is incomplete, "
-        "and no current evidence validates non-oracle personalised selection.\n\n"
+        "3. Compile and visually inspect the sources in the current official OUP template.\n"
+        "4. Publish a Zenodo version whose notes match this freeze date and "
+        "HER2ST `figure_data.json` hash.\n\n"
+        "Scientific risks remain explicit: HER2ST personalisation coverage is zero "
+        "(fail-closed global default; not personalised superiority), LOOCV is "
+        "editorially vulnerable and diagnostic-only, the diagnostic external panel is "
+        "not a complete aligned SOTA comparison, and Wu remains a secondary oracle-K "
+        "stress test only.\n\n"
         "Run `python submission_freeze_v3/reproduce_submission_freeze.py --check` "
         "to verify the complete locked package.\n"
     )
@@ -191,14 +301,29 @@ def _report_text(audit: dict[str, Any]) -> str:
 
 def _expected_outputs() -> dict[str, str]:
     audit = _validate_inputs()
+    regression = _regression_report()
+    if not regression["critical"]["ok"]:
+        raise RuntimeError(
+            "Freeze-critical pytest failed: " + regression["critical"]["summary_line"]
+        )
     inventory = _inventory_text()
-    report = _report_text(audit)
+    report = _report_text(audit, regression)
     source_records = {relative: _record(ROOT / relative) for relative in SOURCE_PATHS}
+    her2 = _read_json(
+        ROOT / "manuscript" / "prospective_validation_v3" / "figure_data.json"
+    )
     manifest = {
         "schema_version": SCHEMA,
         "freeze_date": FREEZE_DATE,
         "article_type": "Bioinformatics Original Paper",
         "status": "p1_editorial_draft_complete_submission_blocked",
+        "canonical_narrative": {
+            "main": "manuscript/main.tex",
+            "supplement": "manuscript/supplementary.tex",
+            "deprecated_markdown_drafts": [
+                "manuscript/HistoWeave_manuscript (1).md",
+            ],
+        },
         "source_artifacts": source_records,
         "generated_artifacts": {
             "submission_freeze_v3/REPORT.md": _generated_record(report),
@@ -215,6 +340,25 @@ def _expected_outputs() -> dict[str, str]:
             "evidence_assertions": audit["evidence_checks"],
             "latex_compile_status": audit["latex_compile_status"],
             "author_required_placeholders": audit["author_required_placeholders"],
+            "regression": regression,
+        },
+        "her2st_primary_external": {
+            "study": her2.get("study"),
+            "n_donors": her2.get("n_donors"),
+            "coverage_at_0.25": her2["policies"]["histoweave"]["coverage_at_0.25"],
+            "action": her2["policies"]["histoweave"]["action"],
+            "claim_boundary": her2.get("claim_boundary"),
+            "figure_data": "manuscript/prospective_validation_v3/figure_data.json",
+            "registration_url": her2.get("registration_url"),
+        },
+        "zenodo": {
+            "concept_doi": "10.5281/zenodo.21586217",
+            "metadata_files": [".zenodo.json", "CITATION.cff"],
+            "sync_required_after_freeze": True,
+            "notes": (
+                "Re-deposit a version whose description matches freeze_date and "
+                "lists evidence-governance Original Paper package + HER2ST figure_data."
+            ),
         },
         "submission_blockers": [
             "Bioinformatics AI-policy compliance and accurate disclosure require author action.",
@@ -222,15 +366,20 @@ def _expected_outputs() -> dict[str, str]:
             "metadata are missing.",
             "The manuscript requires compilation and visual inspection in the "
             "current OUP environment.",
+            "Zenodo version notes must be re-synced after this freeze before citing "
+            "the archive as submission-identical.",
         ],
         "scientific_risks": [
+            "HER2ST primary external validation has zero personalisation coverage; "
+            "action identity with always-global is not selection advantage.",
             "No independent non-oracle validation supports personalised method selection.",
-            "The Wu stress test is small, oracle-K, and not publicly timestamped independently.",
-            "The grouped five-dataset LOOCV result is negative and editorially vulnerable.",
-            "The external panel is not a complete aligned SOTA comparison.",
+            "The Wu stress test is secondary, small, oracle-K, and not independently timestamped.",
+            "The grouped five-dataset LOOCV result is diagnostic-only and editorially vulnerable.",
+            "The diagnostic external panel is not a complete aligned SOTA comparison.",
         ],
         "claim_boundaries": [
             "The work supports a fail-closed evidence-governance protocol and global default.",
+            "HER2ST shows correct refusal of personalisation under missing development gates.",
             "The work does not establish superior personalised selection on unseen studies.",
             "Oracle-K spatial-region evidence is not represented as non-oracle "
             "or cell-type evidence.",

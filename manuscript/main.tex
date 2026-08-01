@@ -1,6 +1,8 @@
 % HistoWeave -- Bioinformatics Original Paper, format-free initial submission
 % Official requirements checked 2026-07-27:
 % https://academic.oup.com/bioinformatics/pages/author-guidelines
+% Claim posture: narrowed evidence-governance + selective abstention paper
+% (not a validated personalised method-selector paper).
 \documentclass[12pt]{article}
 
 \usepackage[utf8]{inputenc}
@@ -41,17 +43,17 @@ for spatial transcriptomics}
 
 \begin{abstract}
 \noindent\textbf{Motivation:} Spatial-domain methods are often compared across
-incompatible tasks or with the true domain count supplied, yet method-selection
-tools rarely expose when evidence is insufficient.
-\textbf{Results:} \software{} validates task, ground-truth, cluster-count,
-metric, method-panel, holdout, and source-integrity contracts before returning
-a method set, a global default, an evidence request, or abstention. An
-11-case adversarial audit admitted no incompatible evidence. On five external
-oracle-count datasets, leave-one-dataset-out selection tied the global
-comparator (mean regret 0.006). A locked six-section breast-cancer stress test
-failed its margin (mean regret 0.131, 95\% bootstrap CI 0.034--0.236).
-Consequently, current evidence retains the global default and does not justify
-non-oracle personalisation.
+incompatible tasks or with the true domain count supplied, yet decision tools
+rarely refuse personalisation when evidence is insufficient.
+\textbf{Results:} \software{} admits only task-compatible, source-verified
+benchmark evidence and returns a method set, global default, evidence request,
+or abstention. An 11-case audit admitted no incompatible evidence. Oracle
+access to \(K\) cut SpaGCN ARI by more than half on one DLPFC section.
+Diagnostic leave-one-out ranking tied the global comparator (mean regret
+0.006). Across 20 grouped queries, always-personalising raised regret
+(0.047 versus 0.029), so the protocol retained the global default. On
+time-stamped non-oracle HER2ST donors, personalisation coverage was zero.
+Evidence supports fail-closed governance, not validated personalised selection.
 \textbf{Availability and Implementation:} BSD-3-Clause source, tests, and
 frozen artefacts: \url{https://github.com/HERRY423/Histoweave};
 \url{https://doi.org/10.5281/zenodo.21586217}.
@@ -89,23 +91,68 @@ obscures this distinction.
 
 Existing spatial-omics frameworks solve complementary problems. SpatialData
 provides a common data model, and Squidpy provides scalable spatial analysis
-\citep{marconato2025,palla2022}. Benchmark studies compare algorithms and
-identify scenario-dependent behaviour \citep{yuan2024}. What is missing is an
-executable layer that decides which benchmark evidence is admissible for a
-declared task, binds validation results to their source artefacts, and refuses
-to personalise when those checks fail.
+\citep{marconato2025,palla2022}. Large benchmarks map method behaviour across
+technologies and organs and can list scenario-specific recommendations
+\citep{yuan2024,chen2025imeta}, but a recommendation table is not itself an
+executable, query-bound decision under incomplete evidence. Related
+machine-learning work studies dataset-level algorithm selection under
+distribution shift \citep{jiang2025ood} and selective prediction with
+abstention and coverage constraints
+\citep{geifman2017selective,casacuberta2025selective}; those results motivate
+reporting risk conditional on action and refusing forced labels when evidence
+is weak. What is missing in spatial transcriptomics practice is an executable
+layer that decides which benchmark evidence is admissible for a declared task,
+binds validation results to their source artefacts, and refuses to personalise
+when those checks fail.
 
 We developed \software{} as that decision layer. Its unit of output is not a
 universal winner but a versioned \texttt{DecisionCard}: an auditable record of
 admitted and rejected evidence, rule outcomes, selected method set,
 comparators, required controls, and a claim boundary. Four actions are
 possible: \texttt{personalised\_set}, \texttt{global\_default},
-\texttt{evidence\_required}, and \texttt{abstain}. We evaluated the protocol
-using real spatial-transcriptomics datasets, an oracle-\(K\) sensitivity
-experiment, grouped held-out analyses, a one-shot external stress test, and an
-adversarial evidence corpus. The purpose of these experiments is to test the
-decision protocol and expose its limits; they do not establish a new
-state-of-the-art clustering method.
+\texttt{evidence\_required}, and \texttt{abstain}. We evaluate the protocol
+to test whether it fails closed under invalid evidence, whether silent
+oracle-\(K\) use changes SOTA interpretation, and whether real external
+evidence currently justifies personalisation. The experiments do not establish
+a new clustering algorithm or a validated cross-study meta-selector
+(Table~\ref{tab:claims}).
+
+\begin{table}[t]
+\centering
+\caption{\textbf{Scientific claim boundary for this Original Paper.}}
+\label{tab:claims}
+\begin{tabular}{@{}p{0.46\textwidth}p{0.46\textwidth}@{}}
+\toprule
+\textbf{We claim} & \textbf{We do not claim} \\
+\midrule
+Evidence semantics and source integrity can
+be machine-checked before aggregation &
+Nearest-neighbour ranking or Pareto sorting is a new algorithm \\
+Cross-task, circular, proxy-domain, and
+undeclared oracle-\(K\) evidence is rejected
+rather than softly mixed &
+Soft down-weighting makes incompatible
+evidence valid \\
+A decision may be a non-dominated set, a
+global fallback, an evidence request, or
+abstention &
+A local ranking proves one method is
+biologically correct \\
+Negative or missing held-out evidence must
+change the action &
+Reference-neighbour fit is independent
+generalisation proof \\
+Oracle access to \(K\) can materially change
+reported ARI and must be dual-tracked &
+A universal penalty converts oracle-\(K\)
+scores into non-oracle performance \\
+On current external evidence the protocol
+correctly retains a global default &
+Personalised selection is superior on unseen
+studies or non-oracle deployments \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \begin{figure}[t]
 \centering
@@ -191,7 +238,9 @@ held-out unit \(i\) is
 where \(s_{i,m_i^\ast}\) is the best finite ARI in the fixed method panel and
 \(s_{i,\widehat m_i}\) is the ARI of the selected method. A personalised
 policy must be compared with the training-fold global method, not only with a
-random-choice expectation.
+random-choice expectation. Deployed regret is also reported under the action
+actually taken by a policy (global, ungated \(k\)-NN, or \software{}), which
+can differ from the regret of a forced personalised shortlist.
 
 \subsection{Pareto set and post-hoc spatial information}
 
@@ -215,49 +264,107 @@ pre-execution selection gate. Coordinate-shuffle nulls and a paired
 ISUS--ARI-gain audit are retained to prevent the ratio from being interpreted
 as an unvalidated predictor.
 
-\subsection{Development data, cross-validation, and independent test}
+\subsection{Evaluation design and evidence tiers}
 
-The candidate generator is a small \(k\)-nearest-neighbour ranking model, so
-we explicitly separate development, grouped validation, and external stress
-evidence. The DLPFC development track used five sections from the LIBD study
+Because the scientific product is a decision protocol rather than a trained
+classifier, experiments are organised by the claim they can support
+(Table~\ref{tab:tiers}).
+
+\begin{table}[t]
+\centering
+\caption{\textbf{Evidence tiers used in this paper.} Higher tiers do not
+supersede lower-tier claim boundaries; each tier answers a different
+question.}
+\label{tab:tiers}
+\begin{tabular}{@{}llp{0.42\textwidth}@{}}
+\toprule
+\textbf{Tier} & \textbf{Material} & \textbf{Question answered} \\
+\midrule
+T0 & 11 adversarial decision-card cases &
+Does the implemented path fail closed for enumerated contract violations? \\
+T1 & Five DLPFC sections, 20 configurations;
+oracle-\(K\) versus estimated-\(K\) ablations &
+How does access to true \(K\) change ranking and ARI interpretation? \\
+T2 & Five external datasets; leave-one-dataset-out
+ranking versus training-fold global &
+Does the candidate generator beat a deployable global default?
+(diagnostic only) \\
+T3 & 20 study-grouped selective queries &
+Does personalisation improve regret--coverage over always-global? \\
+T4 & HER2ST donor-level prospective external study
+(non-oracle \(K\); public registration) &
+On an untouched study, does admissible evidence justify personalisation? \\
+T5 & Synthetic reliable-signal construct-validity panel &
+Can the protocol personalise when a true target-free switch signal exists? \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Development and sensitivity (T1).}
+The DLPFC development track used five sections from the LIBD study
 \citep{maynard2021}. It contains 20 configurations: five general clustering
-algorithms at three spatial weights and five spatially informed methods. This
-track is oracle-\(K\) and is used only for bounded benchmarking and
-sensitivity analysis.
+algorithms at three spatial weights and five spatially informed methods.
+Oracle-\(K\) runs support bounded benchmarking and sensitivity analysis only.
+Silhouette, spatial-silhouette, and ensemble estimates of \(K\) provide the
+non-oracle track for SpaGCN and STAGATE at seed 42.
 
-A separate external development panel contains five datasets from independent
-studies spanning Visium HD, Xenium, Xenium Prime, Visium, and MERFISH.
-Fifteen methods were prespecified; 13 produced finite results on all five
-datasets. Only BANKSY overlaps the five spatially informed DLPFC families
-across the external panel, so the two panels are never pooled as an aligned
-state-of-the-art comparison. Leave-one-dataset-out analysis is used because
-there are only five independent datasets and because its role is diagnostic:
-it asks whether the candidate generator beats a training-fold global
-comparator. It is not presented as independent confirmation. A broader frozen
-selective endpoint contains 20 study-grouped queries.
+\paragraph{Diagnostic ranking (T2).}
+A separate external panel contains five datasets from independent studies
+spanning Visium HD, Xenium, Xenium Prime, Visium, and MERFISH. Fifteen methods
+were prespecified; 13 produced finite results on all five datasets. Only
+BANKSY overlaps the five spatially informed DLPFC families, so the two panels
+are never pooled as an aligned state-of-the-art comparison. Leave-one-dataset-out
+analysis is retained solely as a diagnostic of whether the candidate generator
+beats a training-fold global comparator. It is not presented as independent
+confirmation of personalised selection and is not used as the primary external
+claim.
 
-The independent stress test comprises six breast-cancer Visium sections from
-Wu \textit{et al.} \citep{wu2021}. Before local outcome execution, the
-repository record fixed the spectral policy, a seven-method panel,
-truth-derived \(K\), and a success margin of 0.02 ARI regret. The study was
-absent from audited development sources. However, the record lacks an
-independent public timestamp and uses oracle \(K\); it is therefore described
-as a one-shot negative stress test, not as a public preregistration or
-validation of non-oracle personalisation. A new non-oracle prospective
-protocol exists but remains execution-blocked until an untouched accession and
-independent public timestamp are recorded.
+\paragraph{Selective regret--coverage (T3).}
+A frozen selective endpoint comprises 20 study-grouped queries. For each
+confidence threshold we record personalisation coverage and mean deployed
+regret of always-personalised, always-global, and selective policies.
+
+\paragraph{Primary external validation (T4).}
+The primary external validation uses HER2ST legacy Spatial Transcriptomics
+breast-cancer donors with pathologist region labels
+\citep{andersson2021}. Public registration of the protocol, exclusion rules,
+method panel, non-oracle \(K\) estimator, seeds, and success criteria preceded
+access to outcome-bearing files (GitHub issue~19; server timestamp
+2026-07-29T05:34:31Z; protocol commit and SHA-256 recorded in the repository
+freeze). Predictions and comparator actions were frozen before a separate
+scorer opened labels. The analysis unit is the donor. Seven donors were
+evaluable after the locked exclusion of G2 for duplicated label coordinates.
+Nine methods (SpaGCN, STAGATE, GraphST, BayesSpace, BANKSY, spectral,
+Gaussian mixture, \(k\)-means, agglomerative) shared the same retained spots,
+raw-count start, seed grid, and label-free estimated \(K\). Backend failures
+were retained without silent substitution. Registration-time development
+evidence selected SpaGCN as the global default. An ungated 3-NN rule was
+frozen as an existing-rule comparator.
+
+\paragraph{Construct validity (T5).}
+A separately locked synthetic panel injects an independent target-free feature
+that truly switches the better method on a subset of units. This tests whether
+the implementation can return non-global actions when a reliable signal is
+present; it is not biological external validation.
+
+\paragraph{Secondary oracle stress test.}
+A six-section breast-cancer Visium cohort from Wu \textit{et al.}
+\citep{wu2021} remains a secondary, oracle-\(K\), one-shot stress test fixed
+before local outcome execution but without an independent public timestamp. It
+is reported only as supporting negative stress evidence and does not satisfy
+the non-oracle external gate.
 
 \subsection{Benchmarks and statistical analysis}
 
 ARI \citep{hubert1985} is the primary accuracy metric. DLPFC configurations
-were run with seeds 42, 1, and 2 using truth-derived \(K\). To quantify
-oracle-\(K\) sensitivity, SpaGCN and STAGATE were rerun at seed 42 with
-silhouette, spatial-silhouette, and ensemble estimates of \(K\). External
-scores are means over the same three seeds. For the Wu stress test, mean
-regret and a percentile bootstrap 95\% confidence interval were calculated by
-resampling the six patient/section units. The locked decision uses the
-prespecified point-estimate margin; the interval is descriptive because all
-units arise from one study.
+were run with seeds 42, 1, and 2 using truth-derived \(K\) unless stated.
+External panel scores are means over the same three seeds. For HER2ST, mean
+deployed regret and percentile bootstrap 95\% confidence intervals resample
+donors. The locked decision uses the prespecified point-estimate margin; the
+interval is descriptive because all units arise from one study. Non-inferiority
+to always-global is reported only when actions differ; action identity yields
+zero regret difference by definition and is not interpreted as selection
+advantage.
 
 The adversarial audit exercises the complete decision-card path. Nine invalid
 cases independently introduce cross-task evidence, cluster-proxy truth,
@@ -287,7 +394,12 @@ and transformation.
 
 \section{Results}
 
-\subsection{The evidence protocol rejected incompatible inputs}
+Results follow the claim tiers in Table~\ref{tab:tiers}. Positive language is
+reserved for contracts that fire correctly and for measurement findings
+(oracle-\(K\) sensitivity). Decision-policy results are reported as action
+outcomes; they are not reframed as selector superiority.
+
+\subsection{Fail-closed contracts reject incompatible evidence}
 
 All 11 adversarial cases produced their prespecified outcome. None of the nine
 invalid evidence objects unlocked personalisation, neither valid control was
@@ -297,24 +409,25 @@ all 0/eligible cases. These are software-contract tests rather than estimates
 of error rates in an open population, but they demonstrate that the
 implemented path fails closed for each enumerated incompatibility.
 
-\subsection{DLPFC rankings depended on method, section, and access to \(K\)}
+\subsection{Oracle access to \(K\) changes SOTA magnitude and interpretation}
 
 Across the five DLPFC sections and three seeds, STAGATE had the highest grand
-mean ARI (0.353), followed by BayesSpace (0.326) and SpaGCN (0.317).
-No method led every section (Fig.~\ref{fig:dlpfc}). Section 151669 was
+mean ARI (0.353), followed by BayesSpace (0.326) and SpaGCN (0.317)
+(Fig.~\ref{fig:dlpfc}A). No method led every section. Section 151669 was
 difficult for all configurations (maximum mean ARI 0.249), whereas on section
 151670 \texttt{spectral@sw0.3} reached 0.346 and exceeded every spatially
 informed method in this panel.
 
-Providing \(K\) changed both the magnitude and interpretation of performance.
-For SpaGCN, mean ARI decreased from 0.299 with truth-derived \(K\) to 0.237
-with silhouette-estimated \(K\). The largest decline occurred on section
-151673, from 0.418 at \(K=7\) to 0.186 at estimated \(K=2\), a 55.5\%
-relative decrease. STAGATE decreased from 0.232 to 0.219 on average. None of
-the blind estimators recovered the true \(K\) on any of the five sections.
-The effect was not monotone: on section 151670, \(K=2\) produced higher ARI
-than truth-derived \(K=5\). These results support dual-track reporting rather
-than a universal correction factor.
+Providing \(K\) changed both the magnitude and interpretation of performance
+(Fig.~\ref{fig:dlpfc}B). For SpaGCN, mean ARI decreased from 0.299 with
+truth-derived \(K\) to 0.237 with silhouette-estimated \(K\). The largest
+decline occurred on section 151673, from 0.418 at \(K=7\) to 0.186 at
+estimated \(K=2\), a 55.5\% relative decrease. STAGATE decreased from 0.232 to
+0.219 on average. None of the blind estimators recovered the true \(K\) on any
+of the five sections. The effect was not monotone: on section 151670, \(K=2\)
+produced higher ARI than truth-derived \(K=5\). These results support dual-track
+reporting of oracle and estimated \(K\); they do not supply a universal
+correction factor for published oracle-\(K\) tables.
 
 \begin{figure}[t]
 \centering
@@ -328,7 +441,7 @@ lines denote method means.}
 \label{fig:dlpfc}
 \end{figure}
 
-\subsection{External oracle-\(K\) selection tied the global comparator}
+\subsection{Diagnostic ranking ties the global comparator}
 
 The five external datasets differed strongly in absolute difficulty and
 method ranking (Fig.~\ref{fig:external}). Spectral clustering led four
@@ -336,23 +449,25 @@ datasets, with mean ARI ranging from 0.282 on MERFISH mouse brain to 0.676 on
 Visium HD colorectal cancer. Mean shift led the Xenium lung dataset at 0.183.
 The candidate generator selected the held-out oracle-best method for four of
 five datasets and achieved mean regret 0.0059. The training-fold global
-comparator achieved the same mean regret. Random expected regret was 0.2338,
-showing that beating random choice was not sufficient to demonstrate value
-over the deployable default.
+comparator achieved the same mean regret. Random expected regret was 0.2338.
+Beating random choice is therefore not evidence of value over the deployable
+default. Because this analysis uses leave-one-dataset-out on five units and an
+incomplete aligned SOTA panel, it is retained only as a diagnostic of the
+ranking proxy (tier T2), not as independent confirmation of personalisation.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figure3_external_panel.png}
-\caption{\textbf{External oracle-\(K\) spatial-domain panel.} Cells show mean
-ARI over three seeds. The panel prespecified 15 methods; two methods without
-finite results are blank. These datasets use anatomical, pathology, or manual
-spatial-region labels. SpaGCN, STAGATE, GraphST, and BayesSpace were not run
-across this panel, so the figure is not an aligned comparison of the five
-DLPFC spatial-method families.}
+\caption{\textbf{External oracle-\(K\) spatial-domain panel (diagnostic).}
+Cells show mean ARI over three seeds. The panel prespecified 15 methods; two
+methods without finite results are blank. These datasets use anatomical,
+pathology, or manual spatial-region labels. SpaGCN, STAGATE, GraphST, and
+BayesSpace were not run across this panel, so the figure is not an aligned
+comparison of the five DLPFC spatial-method families.}
 \label{fig:external}
 \end{figure}
 
-\subsection{Selective evaluation retained the global default}
+\subsection{Selective evaluation retains the global default}
 
 Across 20 grouped queries, always-personalised selection had mean regret
 0.0468, whereas the training-fold global policy had mean regret 0.0290. The
@@ -360,50 +475,163 @@ selective action attained its minimum only at zero personalisation coverage
 (Fig.~\ref{fig:validation}A). \software{} therefore returned the global
 default throughout the observed confidence-threshold grid. This is a negative
 decision result: the protocol prevented a higher-regret action rather than
-claiming that the ranking heuristic was successful.
+demonstrating that the ranking heuristic was successful.
 
-The Wu breast-cancer stress test reinforced the boundary
-(Fig.~\ref{fig:validation}B). The frozen spectral policy was oracle-best on
-two of six sections. Mean regret was 0.1313 (95\% bootstrap CI
-0.0340--0.2363), exceeding the locked 0.02 margin; the recorded outcome was
-\texttt{independent\_test\_fail}. The cohort remains excluded from training.
-Because the analysis uses truth-derived \(K\), it cannot satisfy the
-non-oracle held-out gate.
+\subsection{Prospective non-oracle external validation yields zero personalisation
+coverage}
+
+On HER2ST, every method used the same non-oracle estimated \(K\), spots, and
+seeds. Mean donor ARI for pathologist regions ranged from 0.215 (BANKSY) to
+0.112 (BayesSpace); SpaGCN, the locked global default from registration-time
+development evidence, had mean donor ARI 0.134 (Table~\ref{tab:her2st}).
+Seven donors cannot establish a universal ranking; the table is descriptive
+context for the decision comparison only.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{HER2ST aligned non-oracle panel (descriptive).} Mean donor
+ARI versus pathologist regions; estimated \(K\); three seeds. Not a claim of
+cross-study superiority.}
+\label{tab:her2st}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Method & Donors & Mean donor ARI \\
+\midrule
+BANKSY & 7 & 0.215 \\
+STAGATE & 7 & 0.177 \\
+GraphST & 7 & 0.175 \\
+\(k\)-means & 7 & 0.153 \\
+Gaussian mixture & 6 & 0.152 \\
+Agglomerative & 7 & 0.145 \\
+SpaGCN (locked global default) & 7 & 0.134 \\
+Spectral & 7 & 0.119 \\
+BayesSpace & 7 & 0.112 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Because grouped, aligned full-panel development validation was unavailable at
+registration, \software{} selected the pre-registered SpaGCN global default for
+all seven donors. Personalisation coverage was 0/7 at every locked threshold,
+including 0.25. The ungated 3-NN comparator selected
+\texttt{gaussian\_mixture@sw0.8} on every donor with finite Gaussian-mixture
+results. On the six-donor common-availability mask, \software{} minus
+always-global deployed regret was 0.0000 by action identity (always-global
+deployed regret 0.125, 95\% donor bootstrap CI 0.065--0.183). \software{} minus
+ungated 3-NN deployed regret was 0.0002 (95\% CI \(-0.089\) to \(0.092\)).
+Passing a 0.02 non-inferiority margin under action identity is not evidence of
+better selection. The result validates fail-closed behaviour on a publicly
+time-stamped external study: the protocol refused personalisation because the
+evidence needed to justify it was absent.
+
+A secondary oracle-\(K\) Wu stress test failed its locked 0.02-ARI margin
+(mean regret 0.131, 95\% bootstrap CI 0.034--0.236) and is consistent with not
+promoting an unverified personalised policy, but it is not a non-oracle
+prospective confirmation and is not shown in Fig.~\ref{fig:validation}.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figure4_validation.png}
-\caption{\textbf{Validation results preserve the fallback.}
-\textbf{(A)} Selective regret--coverage over 20 grouped queries. Points are
-observed operating points; repeated thresholds can share a coverage value.
-\textbf{(B)} Per-section regret of the frozen spectral policy in the
-six-section Wu breast-cancer stress test. Blue bars meet the locked
-0.02-ARI margin and orange bars do not.}
+\caption{\textbf{Selective and HER2ST external validation preserve the
+fallback.}
+\textbf{(A)} Selective regret--coverage over 20 grouped queries; the minimum
+is at zero personalisation coverage.
+\textbf{(B)} HER2ST aligned non-oracle panel: mean donor ARI versus
+pathologist regions (bars) with donor-level SD (whiskers); blue marks the
+locked SpaGCN global default.
+\textbf{(C)} HER2ST decision-protocol comparison of deployed regret
+(donor-bootstrap 95\% CI). HistoWeave coverage is 0/7 and matches
+always-global by action identity; ungated 3-NN covers available donors but
+does not improve regret detectably. A secondary oracle-\(K\) Wu stress test
+is reported in the text only.}
 \label{fig:validation}
 \end{figure}
 
+\subsection{Construct validity: personalisation is possible when a reliable signal
+exists}
+
+In the locked synthetic construct-validity panel, an independent target-free
+feature truly switched the better method. At threshold 0.25 the protocol
+selected non-global STAGATE on 23/60 independent test units (coverage 0.383).
+Deployed regret was 0.036 versus 0.122 for always-global (difference
+\(-0.085\); 95\% CI \(-0.129\) to \(-0.042\)). The implementation is therefore
+not hard-coded to refuse. A compound success predicate registered before
+unsealing remains failed because coverage was below 0.50 and the predicate
+also required the global method among covered units---a malformed joint
+condition that was left unrepaired. This positive scenario demonstrates
+mechanism non-degeneracy only; it does not substitute for biological
+personalisation on an external study.
+
+\subsection{Action frequencies and threshold sensitivity}
+
+To test whether the four actions are only design diagrams, we re-applied the
+default \texttt{DecisionPolicy} to the twenty study-grouped recommendation
+objects without attaching a bound held-out validation pack
+(Supplementary action-frequency and threshold tables). Under default settings
+(\texttt{min\_rank\_support\_score}$=0.25$, \texttt{min\_support}$=2$,
+\texttt{require\_heldout\_validation}$=$\texttt{true}), the protocol emitted
+\texttt{evidence\_required} on 13/20 queries and \texttt{global\_default} on
+7/20; \texttt{personalised\_set} and \texttt{abstain} were never selected.
+The 13 \texttt{evidence\_required} outcomes are exactly the queries whose
+local proxy beat the global comparator: missing grouped validation blocks
+personalisation rather than silently promoting the shortlist. An ablation that
+disables the held-out gate yields 12 \texttt{personalised\_set}, 7
+\texttt{global\_default}, and 1 \texttt{evidence\_required}, confirming that
+the gate---not rank-support alone---is the binding constraint on this cohort.
+
+Sweeping \texttt{min\_rank\_support\_score}$\in\{0,0.15,0.25,0.40,0.50,0.75,0.90\}$
+and \texttt{min\_support}$\in\{1,2,3\}$ with the held-out gate enabled never
+unlocked \texttt{personalised\_set} (Supplementary threshold grid).
+Thresholds therefore matter for local heuristics, but they cannot compensate
+for missing validation evidence. On HER2ST, coverage remained 0/7 at every
+locked threshold, so external risk--coverage is degenerate: the study
+validates refusal (no unsupported personalisation), not a safer positive-coverage
+operating point \citep{geifman2017selective}.
+
 \section{Discussion}
 
-\software{} addresses a different question from a new clustering algorithm:
-given heterogeneous and incomplete benchmark evidence, which method set is
-justified for comparative execution, and when should the workflow fall back?
-The implemented answer is deliberately conservative. Evidence semantics and
-source integrity are checked before scores are aggregated; personalisation
-must beat a global comparator under a compatible grouped validation design;
-and a matched Pareto analysis can remove dominated configurations. Negative
-and missing evidence changes the action rather than disappearing from the
-report.
+\software{} addresses a different question from a new clustering algorithm or
+from a comprehensive method ranking. Large spatial-clustering benchmarks such
+as Chen \textit{et al.}\ \citep{chen2025imeta} are complementary: they
+characterise method preferences across technologies, organs, and replicates and
+can publish scenario tables. Our contribution is orthogonal---an executable
+admissibility and selective-decision layer that refuses to treat those tables
+as automatic deployment rules when task, \(K\) policy, panel alignment, or
+grouped holdout contracts fail. Dataset-level algorithm selection under shift
+\citep{jiang2025ood} and selective prediction with abstention
+\citep{geifman2017selective,casacuberta2025selective} supply the right
+evaluation language (risk conditional on coverage; forced prediction is not
+always safer), which we instantiate for spatial-domain method choice with
+source-hash-bound evidence.
 
 The experiments illustrate why these constraints matter. On DLPFC, access to
 truth-derived \(K\) changed SpaGCN ARI by more than half in one section, yet
 the direction was not consistent across all sections. An oracle-\(K\) score
 therefore cannot be translated into deployment performance by applying a
-single penalty. On the external panel, a high top-1 rate concealed the fact
-that the selector and the global method made the same consequential error and
-had identical mean regret. Finally, the one-shot breast-cancer analysis
-failed its locked margin. Reporting that failure narrows the claim to what the
-evidence supports: an auditable decision protocol that currently retains a
-global fallback, not a validated personalised selector.
+single penalty. On the diagnostic external panel, a high top-1 rate concealed
+identical mean regret to the global method. Grouped selective analysis and the
+HER2ST prospective study both retained the global default: the former because
+always-personalising increased regret, the latter because the development
+evidence required for personalisation was simply unavailable. Reporting these
+outcomes narrows the claim to what the evidence supports---an auditable
+fail-closed decision protocol---not a validated personalised selector.
+
+Risk--coverage on real external data is currently \emph{degenerate at zero
+coverage}. That is a scientific result, not a plotting failure: without an
+aligned non-oracle development meta-panel, the correct action is refusal, and
+no positive-coverage risk curve can be honest. Synthetic construct validity
+shows the implementation can personalise when a reliable target-free switch
+exists; it does not repair external degeneracy. Action-frequency diagnostics
+further show that \texttt{evidence\_required} is the modal response when a
+local proxy looks favourable but grouped validation is unbound---so the four
+actions are exercised in real recommendation objects, not only in adversarial
+unit tests.
+
+Registration for HER2ST used a public GitHub issue with server timestamp,
+protocol commit, and SHA-256 preceding outcome access. This is stronger than an
+untimestamped in-repository lock and weaker than an OSF or Zenodo protocol DOI;
+we report the strength class explicitly and retain the full lock in the
+Supplement rather than overstating preregistration formality.
 
 This positioning also clarifies the role of ground-truth semantics. Spatial
 regions and cell types can both be biologically meaningful, but they are not
@@ -412,26 +640,30 @@ a label may be appropriate for contiguous cortical layers and inappropriate
 for interspersed immune-cell identities. The present external results use
 spatial-region labels only and do not establish cell-type performance.
 
-Several limitations are substantial. First, the five-dataset external
-leave-one-out analysis is small. Bioinformatics normally requires an
-independent test for machine-learning claims and may reject leave-one-out
-designs without special justification. We retain the analysis only as a
-diagnostic of the evidence gate and do not use it to claim predictive
-generalisation. Second, the independent Wu test is one study, is not
-independently timestamped, and uses oracle \(K\). Third, the external method
-panel lacks SpaGCN, STAGATE, GraphST, and BayesSpace; only BANKSY overlaps the
-DLPFC spatial-method set. Fourth, the adversarial corpus enumerates known
-contract violations but cannot measure all future failure modes. Fifth, the
-current ISUS calibration uses five DLPFC sections and shows no reliable
-positive association with spatial ARI gain; it remains descriptive.
+Several limitations are substantial and define the next evidence needed.
+First, the five-dataset leave-one-out analysis is small and remains
+editorially sensitive under machine-learning validation policies; we retain it
+only as a ranking diagnostic. Second, HER2ST provides genuine independence but
+limited transport breadth (one assay family, one organ construct, seven
+donors); confidence intervals are wide, and generalisation to Visium,
+single-cell-resolution assays, other organs, or other annotation semantics is
+untested. Third, the external oracle panel lacks SpaGCN, STAGATE, GraphST, and
+BayesSpace; only BANKSY overlaps the DLPFC spatial-method set. Fourth, zero
+external personalisation coverage means risk--coverage frontiers cannot yet
+demonstrate safer personalised operating points. Fifth, registration is
+repository-timestamped rather than independently DOI-stamped. Sixth, the
+adversarial corpus enumerates known contract violations but cannot measure all
+future failure modes. Seventh, ISUS remains descriptive: the current DLPFC
+calibration shows no reliable positive association with spatial ARI gain.
 
-The next confirmatory step is already specified but intentionally unexecuted:
-select an untouched public study without inspecting outcomes, verify its
-absence from all development sources, publicly timestamp the complete
-non-oracle protocol, and evaluate a fixed method panel at the study or donor
-level. Until that gate is passed, \software{} should be used to organize
-comparative execution and expose evidence gaps, not to automate a
-personalised final choice.
+A defensible positive personalisation claim would require (i)~an aligned,
+grouped, non-oracle development meta-panel that validates nonzero coverage
+before outcome access on a new study, and (ii)~at least one additional
+untouched study on which deployed regret under personalisation improves on
+always-global with matched or higher coverage. Until those gates are passed,
+\software{} should be used to organise comparative execution, expose evidence
+gaps, and refuse unsupported personalisation---not to automate a final
+personalised method choice.
 
 \section*{Data availability}
 
@@ -440,17 +672,25 @@ repository and archive cited below. Public source datasets are referenced by
 their original publications or persistent identifiers. Raw source data are
 not redistributed by \software{}; preparation scripts record download
 locations, checksums where available, inclusion rules, and transformations.
-The Wu \textit{et al.} dataset is available from Zenodo at
+HER2ST source data are available from Zenodo at
+\url{https://doi.org/10.5281/zenodo.5511762}. The Wu \textit{et al.} dataset
+is available from Zenodo at
 \url{https://doi.org/10.5281/zenodo.4739739}.
 
 \section*{Code availability}
 
 Source code, documentation, tests, test data, environment locks, figure
-scripts, and the P1 freeze checker are available at
+scripts, protocol diagnostics, and the P1 freeze checker are available at
 \url{https://github.com/HERRY423/Histoweave}. The archival release is
 \url{https://doi.org/10.5281/zenodo.21586217}. The software is licensed under
 BSD-3-Clause and the package is distributed on PyPI as
-\texttt{histoweave-spatial}.
+\texttt{histoweave-spatial}. A minimal independent-install smoke path is
+\texttt{pip install histoweave-spatial} followed by
+\texttt{python -m histoweave --help} and the repository tests in
+\texttt{tests/test\_install\_smoke.py} (DecisionCard construction without
+dataset download). Prospective protocol registration for HER2ST is recorded at
+\url{https://github.com/HERRY423/HistoWeave/issues/19}
+(server time 2026-07-29T05:34:31Z; protocol commit and SHA-256 in the SI).
 
 \section*{Acknowledgements}
 
@@ -478,16 +718,36 @@ placeholder statement as evidence that the policy issue has been resolved.}
 \bibliographystyle{plainnat}
 \begin{thebibliography}{99}
 
+\bibitem[Andersson et~al.(2021)]{andersson2021}
+Andersson, A. et~al. (2021). Spatial deconvolution of HER2-positive breast
+cancer delineates tumor-associated cell types and their interplay.
+\emph{Nature Communications}, 12, 6012.
+\href{https://doi.org/10.1038/s41467-021-26271-2}{doi:10.1038/s41467-021-26271-2}.
+
+\bibitem[Casacuberta and Kanade(2025)]{casacuberta2025selective}
+Casacuberta, S. and Kanade, V. (2025). Selective omniprediction and fair
+abstention. In \emph{Advances in Neural Information Processing Systems}.
+
 \bibitem[Chen et~al.(2022)]{chen2022}
 Chen, A. et~al. (2022). Spatiotemporal transcriptomic atlas of mouse
 organogenesis using DNA nanoball-patterned arrays. \emph{Cell}, 185,
 1777--1792.e21. \href{https://doi.org/10.1016/j.cell.2022.04.003}{doi:10.1016/j.cell.2022.04.003}.
+
+\bibitem[Chen et~al.(2025)]{chen2025imeta}
+Chen, R. et~al. (2025). A comprehensive benchmarking for spatially resolved
+transcriptomics clustering methods across variable technologies, organs, and
+replicates. \emph{iMeta}, 4, e70084.
+\href{https://doi.org/10.1002/imt2.70084}{doi:10.1002/imt2.70084}.
 
 \bibitem[Dong and Zhang(2022)]{dong2022}
 Dong, K. and Zhang, S. (2022). Deciphering spatial domains from spatially
 resolved transcriptomics with an adaptive graph attention auto-encoder.
 \emph{Nature Communications}, 13, 1739.
 \href{https://doi.org/10.1038/s41467-022-29439-6}{doi:10.1038/s41467-022-29439-6}.
+
+\bibitem[Geifman and El-Yaniv(2017)]{geifman2017selective}
+Geifman, Y. and El-Yaniv, R. (2017). Selective classification for deep neural
+networks. In \emph{Advances in Neural Information Processing Systems}, 30.
 
 \bibitem[Hu et~al.(2021)]{hu2021}
 Hu, J. et~al. (2021). SpaGCN: integrating gene expression, spatial location
@@ -499,6 +759,11 @@ graph convolutional network. \emph{Nature Methods}, 18, 1342--1351.
 Hubert, L. and Arabie, P. (1985). Comparing partitions.
 \emph{Journal of Classification}, 2, 193--218.
 \href{https://doi.org/10.1007/BF01908075}{doi:10.1007/BF01908075}.
+
+\bibitem[Jiang and Teney(2025)]{jiang2025ood}
+Jiang, L. and Teney, D. (2025). OOD-Chameleon: Is algorithm selection for OOD
+generalization learnable? In \emph{Proceedings of the 42nd International
+Conference on Machine Learning}, PMLR 267, 27624--27648.
 
 \bibitem[Long et~al.(2023)]{long2023}
 Long, Y. et~al. (2023). Spatially informed clustering, integration, and

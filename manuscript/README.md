@@ -1,29 +1,41 @@
 # HistoWeave P1 manuscript package
 
-The canonical review files are:
+## Single narrative source of truth
 
-- `main.tex` — format-free Bioinformatics Original Paper review manuscript
-- `supplementary.tex` — methods, full tables, audit corpus, and reproduction details
-- `cover_letter.md` — cover-letter draft
-- `SUBMISSION_COMPLIANCE.md` — dated journal-rule audit and blockers
-- `AUTHOR_METADATA_REQUIRED.md` — fields that only the authors can supply
-- `make_submission_assets.py` — deterministic figure and graphical-abstract builder
-- `figures/` — SVG, PNG, and TIFF submission artwork
+| Role | File |
+|------|------|
+| **Main paper (authoritative)** | `main.tex` |
+| **Supplement (authoritative)** | `supplementary.tex` |
+| Cover letter draft | `cover_letter.md` |
+| Journal compliance record | `SUBMISSION_COMPLIANCE.md` |
+| Author-only fields | `AUTHOR_METADATA_REQUIRED.md` |
+| HER2ST locked figure data | `prospective_validation_v3/figure_data.json` |
+| Figure builder | `make_submission_assets.py` |
+| Static audit | `audit_submission.py` |
+| Artwork | `figures/` (SVG, PNG, TIFF) |
 
-Regenerate and verify:
+**Deprecated:** `HistoWeave_manuscript (1).md` — historical notes only; never upload.
+
+Scientific claim: **fail-closed evidence governance + selective abstention**, not validated personalised method selection. Evidence tiers T0–T5 are defined in `main.tex` and expanded in `supplementary.tex`.
+
+## Regenerate and verify
 
 ```powershell
 python manuscript\make_submission_assets.py
+python manuscript\audit_submission.py
+python submission_freeze_v3\reproduce_submission_freeze.py
 python submission_freeze_v3\reproduce_submission_freeze.py --check
 ```
 
-The repository does not currently contain a LaTeX engine, so P1 performs
-static TeX validation and artifact checks locally. Compile the source in the
-official OUP/Overleaf environment before upload.
-
-The file `bioinfo.cls` is a legacy drafting stub and is not used by P1.
-Initial submission is format-free under the current journal guidance; if a
-revision is requested, migrate the verified text and figures into the current
-official OUP LaTeX template.
+The repository may not contain a LaTeX engine; P1 uses static TeX validation
+and artefact hashes locally. Compile in the official OUP/Overleaf environment
+before upload.
 
 **Do not submit until every blocker in `SUBMISSION_COMPLIANCE.md` is resolved.**
+
+## Zenodo sync
+
+Software concept DOI: `https://doi.org/10.5281/zenodo.21586217`  
+Metadata templates: repo-root `.zenodo.json`, `CITATION.cff`  
+After freeze changes, mint a new Zenodo version whose notes cite
+`submission_freeze_v3/REPORT.md` freeze date and HER2ST `figure_data.json`.

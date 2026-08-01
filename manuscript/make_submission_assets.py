@@ -291,15 +291,33 @@ def build_external_figure() -> None:
 
 
 def build_validation_figure() -> None:
+    """Figure 4: selective diagnostic (A) + HER2ST primary external (B, C)."""
     selective = json.loads(
-        (ROOT / "protocol_endpoints_results" / "selective_regret_coverage.json").read_text()
+        (ROOT / "protocol_endpoints_results" / "selective_regret_coverage.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    her2 = json.loads(
+        (
+            ROOT
+            / "manuscript"
+            / "prospective_validation_v3"
+            / "figure_data.json"
+        ).read_text(encoding="utf-8")
     )
     rows = selective["curve"]
-    wu = pd.read_csv(
-        ROOT / "benchmark_external_validation" / "independent_test_wu2021" / "sample_regret.csv"
-    )
+    methods = her2["method_mean_donor_ari"]
+    policies = her2["policies"]
 
-    fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(12.2, 4.5), constrained_layout=True)
+    fig, axes = plt.subplots(
+        1,
+        3,
+        figsize=(14.4, 4.6),
+        constrained_layout=True,
+        gridspec_kw={"width_ratios": [1.05, 1.15, 1.0]},
+    )
+    ax0, ax1, ax2 = axes
+
     coverage = np.array([row["coverage"] for row in rows], dtype=float)
     hybrid = np.array([row["mean_regret_abstain_as_global"] for row in rows], dtype=float)
     personalised = float(rows[0]["mean_regret_always_personalised"])
@@ -312,31 +330,82 @@ def build_validation_figure() -> None:
     ax0.set_ylabel("Mean selection regret (ARI)")
     ax0.set_title("A  Grouped selective evaluation (n=20)", loc="left", weight="bold")
     ax0.grid(color="#D9E0E6", lw=0.7)
-    ax0.legend(frameon=False)
+    ax0.legend(frameon=False, fontsize=7.5)
     ax0.annotate(
         "minimum at zero coverage",
         xy=(0, global_regret),
-        xytext=(0.22, global_regret + 0.009),
+        xytext=(0.18, global_regret + 0.009),
         arrowprops={"arrowstyle": "->", "color": INK},
+        fontsize=8,
     )
 
-    labels = wu["sample"].astype(str)
-    regrets = wu["frozen_regret"].astype(float)
-    colors = [BLUE if value <= 0.02 else RED for value in regrets]
-    ax1.bar(np.arange(len(regrets)), regrets, color=colors)
-    ax1.axhline(0.02, color=INK, ls="--", lw=1.2, label="locked margin = 0.02")
-    ax1.set_xticks(np.arange(len(labels)), labels, rotation=45, ha="right")
-    ax1.set_ylabel("Frozen-policy regret (ARI)")
-    ax1.set_title("B  Wu breast-cancer stress test (n=6)", loc="left", weight="bold")
-    ax1.grid(axis="y", color="#D9E0E6", lw=0.7)
-    ax1.legend(frameon=False)
+    names = [row["method"] for row in methods]
+    means = np.array([row["mean_ari"] for row in methods], dtype=float)
+    sds = np.array([row["sd"] for row in methods], dtype=float)
+    locked = her2["locked_global_default"]
+    bar_colors = [BLUE if name == locked else SKY for name in names]
+    y = np.arange(len(names))
+    ax1.barh(y, means, xerr=sds, color=bar_colors, ecolor="#6B7785", capsize=2.5, height=0.72)
+    ax1.set_yticks(y, names)
+    ax1.invert_yaxis()
+    ax1.set_xlabel("Mean donor ARI (pathologist regions)")
+    ax1.set_title(
+        "B  HER2ST aligned non-oracle panel (n=7 donors)",
+        loc="left",
+        weight="bold",
+    )
+    ax1.grid(axis="x", color="#D9E0E6", lw=0.7)
+    ax1.set_xlim(0, 0.40)
     ax1.text(
         0.98,
-        0.96,
-        "mean 0.131\n95% bootstrap CI 0.034–0.236",
+        0.04,
+        "blue = locked global default\nestimated K · 3 seeds",
         transform=ax1.transAxes,
         ha="right",
+        va="bottom",
+        fontsize=7.5,
+        bbox={"boxstyle": "round,pad=0.3", "facecolor": PALE, "edgecolor": "none"},
+    )
+
+    policy_labels = ["HistoWeave", "always-global", "ungated 3-NN"]
+    policy_keys = ["histoweave", "always_global", "ungated_3nn"]
+    regrets = np.array(
+        [policies[key]["deployed_regret"] for key in policy_keys], dtype=float
+    )
+    lo = np.array([policies[key]["ci95"][0] for key in policy_keys], dtype=float)
+    hi = np.array([policies[key]["ci95"][1] for key in policy_keys], dtype=float)
+    err = np.vstack([regrets - lo, hi - regrets])
+    coverages = [
+        policies["histoweave"]["coverage_at_0.25"],
+        policies["always_global"]["coverage"],
+        policies["ungated_3nn"]["coverage_available_donors"],
+    ]
+    x = np.arange(len(policy_labels))
+    policy_colors = [GREEN, BLUE, ORANGE]
+    ax2.bar(x, regrets, yerr=err, color=policy_colors, capsize=4, width=0.62, ecolor=INK)
+    ax2.set_xticks(x, policy_labels, rotation=15, ha="right")
+    ax2.set_ylabel("Deployed regret (ARI)")
+    ax2.set_title("C  HER2ST decision-protocol comparison", loc="left", weight="bold")
+    ax2.grid(axis="y", color="#D9E0E6", lw=0.7)
+    ax2.set_ylim(0, 0.28)
+    for i, cov in enumerate(coverages):
+        ax2.text(
+            i,
+            regrets[i] + err[1, i] + 0.008,
+            f"cov={cov:.0%}",
+            ha="center",
+            va="bottom",
+            fontsize=8,
+            color=INK,
+        )
+    ax2.text(
+        0.02,
+        0.98,
+        "HistoWeave coverage 0/7\nΔ vs global = 0 (action identity)",
+        transform=ax2.transAxes,
+        ha="left",
         va="top",
+        fontsize=7.5,
         bbox={"boxstyle": "round,pad=0.3", "facecolor": PALE, "edgecolor": "none"},
     )
     _save(fig, "figure4_validation")

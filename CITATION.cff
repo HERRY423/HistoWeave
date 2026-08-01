@@ -1,30 +1,36 @@
 cff-version: 1.2.0
 message: "If you use HistoWeave in your research, please cite both the software and the original method implementations it orchestrates."
-title: "HistoWeave: reproducible spatial transcriptomics orchestration and evaluation platform"
+title: "HistoWeave: evidence-governed method decisions with structured abstention for spatial transcriptomics"
 type: software
 authors:
   - name: "HistoWeave contributors"
     website: "https://github.com/HERRY423/Histoweave"
-version: 0.1.1
-date-released: 2026-07-25
+version: 0.1.1-submission-freeze-v3
+date-released: 2026-07-31
 license: BSD-3-Clause
 repository-code: "https://github.com/HERRY423/Histoweave"
 url: "https://HERRY423.github.io/Histoweave"
 doi: 10.5281/zenodo.21586217
 abstract: >
-  HistoWeave is an open-source orchestration and evaluation platform for
-  reproducible spatial transcriptomics analysis. It unifies 80+ analysis
-  methods across 11 categories behind a single plugin interface, with
-  10 scientifically validated and 3 contract-validated multi-dataset evidence
-  packages (13 total). It benchmarks methods on structured reference datasets
-  and provides a recommendation engine with explicit global-best baselines
-  and negative-result reporting.
+  HistoWeave implements an executable evidence-governance and selective-decision
+  protocol for spatial transcriptomics. Task, ground-truth, cluster-count policy,
+  metric, panel, holdout, and source-hash contracts gate method decisions with
+  fail-closed actions (personalised set, global default, evidence required, or
+  abstain). The submission freeze packages a Bioinformatics Original Paper draft
+  with dual-track oracle-K sensitivity, diagnostic ranking, selective
+  regret-coverage, and a publicly time-stamped HER2ST non-oracle external study
+  in which personalisation coverage is zero. The software also provides plugin
+  orchestration, multi-dataset evidence packages, and reproducible benchmarks.
+  Claim boundary: fail-closed governance, not validated personalised superiority.
 keywords:
   - spatial transcriptomics
   - bioinformatics
+  - evidence governance
+  - method selection
+  - selective prediction
+  - abstention
   - reproducibility
   - benchmarking
-  - method recommendation
   - scverse
 references:
   - type: article

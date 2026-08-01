@@ -76,10 +76,20 @@ def main() -> None:
     selective = json.loads(
         (ROOT / "protocol_endpoints_results" / "selective_regret_coverage.json").read_text()
     )
+    her2 = json.loads(
+        (
+            ROOT
+            / "manuscript"
+            / "prospective_validation_v3"
+            / "figure_data.json"
+        ).read_text(encoding="utf-8")
+    )
     dlpfc = pd.read_csv(
         ROOT / "5x15_spatial_aware" / "performance_matrix_mean_full.csv", index_col=0
     )
 
+    her2_global = her2["policies"]["histoweave"]
+    her2_contrast = her2["contrasts"]["histoweave_minus_always_global"]
     evidence_checks = {
         "audit_all_cases_passed": audit["all_cases_passed"] is True,
         "audit_zero_invalid_admissions": audit["invalid_admissions"] == 0,
@@ -95,7 +105,36 @@ def main() -> None:
         < 1e-12,
         "selective_global_default": selective["recommended_policy"] == "always_global_default",
         "dlpfc_top_method_stagate": dlpfc.mean(axis=0).idxmax() == "stagate",
+        "her2st_zero_personalisation_coverage": her2_global["coverage_at_0.25"] == 0.0,
+        "her2st_action_is_global_default": her2_global["action"] == "global_default",
+        "her2st_matches_always_global_by_identity": her2_contrast["deployed_regret_delta"]
+        == 0.0,
+        "her2st_locked_global_is_spagcn": her2["locked_global_default"] == "spagcn",
+        "her2st_n_donors_seven": her2["n_donors"] == 7,
     }
+
+    diagnostics_path = (
+        ROOT / "manuscript" / "protocol_diagnostics" / "action_frequency_and_sensitivity.json"
+    )
+    if diagnostics_path.is_file():
+        diagnostics = json.loads(diagnostics_path.read_text(encoding="utf-8"))
+        default_actions = diagnostics["action_frequency"]["default_policy"]["actions"]
+        evidence_checks.update(
+            {
+                "diagnostics_evidence_required_modal": default_actions.get(
+                    "evidence_required", 0
+                )
+                >= default_actions.get("global_default", 0),
+                "diagnostics_no_personalised_under_default": default_actions.get(
+                    "personalised_set", 0
+                )
+                == 0,
+                "diagnostics_her2_risk_coverage_degenerate": diagnostics["risk_coverage"][
+                    "her2st_t4"
+                ]["risk_coverage_status"]
+                == "degenerate_zero_coverage",
+            }
+        )
 
     figure_audit: dict[str, dict[str, object]] = {}
     for path in figure_paths:

@@ -1,8 +1,8 @@
 # HistoWeave P1 submission audit
 
 - Static audit passed: **True**
-- Abstract words: **123 / 150 recommended**
-- Main-body words: **2828 / 5,000**
+- Abstract words: **130 / 150 recommended**
+- Main-body words: **4291 / 5,000**
 - Main figures: **4**, all at least 350 dpi: **True**
 - Missing citation keys: **0**
 - Evidence assertions passed: **True**

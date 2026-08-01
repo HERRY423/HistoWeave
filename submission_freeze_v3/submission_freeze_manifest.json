@@ -1,38 +1,64 @@
 {
   "article_type": "Bioinformatics Original Paper",
+  "canonical_narrative": {
+    "deprecated_markdown_drafts": [
+      "manuscript/HistoWeave_manuscript (1).md"
+    ],
+    "main": "manuscript/main.tex",
+    "supplement": "manuscript/supplementary.tex"
+  },
   "claim_boundaries": [
     "The work supports a fail-closed evidence-governance protocol and global default.",
+    "HER2ST shows correct refusal of personalisation under missing development gates.",
     "The work does not establish superior personalised selection on unseen studies.",
     "Oracle-K spatial-region evidence is not represented as non-oracle or cell-type evidence.",
     "The ISUS score is not represented as a reliable predictor of method gain."
   ],
-  "freeze_date": "2026-07-27",
+  "freeze_date": "2026-07-31",
   "generated_artifacts": {
     "submission_freeze_v3/REPORT.md": {
-      "bytes": 1422,
-      "sha256": "5ad117fb11fc1ad1ae2cae264b15e514e4a93ed4bb69fceafe38205c008a1c44"
+      "bytes": 2000,
+      "sha256": "a25f765bfb2c232eeaa6073e16206036d7c10dddcbe12ae378ef8ac52a12ecf7"
     },
     "submission_freeze_v3/SUBMISSION_FILE_INVENTORY.md": {
       "bytes": 879,
       "sha256": "5f25329bb6a2e1748595d0d4cd70fa636d3ebabac7578e0469c39d974c815dcb"
     }
   },
+  "her2st_primary_external": {
+    "action": "global_default",
+    "claim_boundary": "fail_closed_zero_coverage_not_personalised_superiority",
+    "coverage_at_0.25": 0.0,
+    "figure_data": "manuscript/prospective_validation_v3/figure_data.json",
+    "n_donors": 7,
+    "registration_url": "https://github.com/HERRY423/HistoWeave/issues/19",
+    "study": "HER2ST"
+  },
   "official_guidance": {
     "author_guidelines": "https://academic.oup.com/bioinformatics/pages/author-guidelines",
-    "checked_on": "2026-07-27",
+    "checked_on": "2026-07-31",
     "submission_preparation": "https://academic.oup.com/bioinformatics/pages/submission_online"
   },
   "schema_version": "histoweave.submission_freeze.v3",
   "scientific_risks": [
+    "HER2ST primary external validation has zero personalisation coverage; action identity with always-global is not selection advantage.",
     "No independent non-oracle validation supports personalised method selection.",
-    "The Wu stress test is small, oracle-K, and not publicly timestamped independently.",
-    "The grouped five-dataset LOOCV result is negative and editorially vulnerable.",
-    "The external panel is not a complete aligned SOTA comparison."
+    "The Wu stress test is secondary, small, oracle-K, and not independently timestamped.",
+    "The grouped five-dataset LOOCV result is diagnostic-only and editorially vulnerable.",
+    "The diagnostic external panel is not a complete aligned SOTA comparison."
   ],
   "source_artifacts": {
+    ".zenodo.json": {
+      "bytes": 2239,
+      "sha256": "8d5681a806ec750a90beb14cb514ebff3031bdcd57deb809b939d31f441770c3"
+    },
     "5x15_spatial_aware/performance_matrix_mean_full.csv": {
       "bytes": 2306,
       "sha256": "a7d8c7cd99bb90cae80eab6e4b198c69ed69f487ddf780a36dae0a4a9bf7c749"
+    },
+    "CITATION.cff": {
+      "bytes": 2151,
+      "sha256": "631cd73178f076428d3eff1177105d2eaaab59b57a85095a8c330a112f3d9f4c"
     },
     "benchmark_external_validation/decision_validation.json": {
       "bytes": 1704,
@@ -51,20 +77,20 @@
       "sha256": "bcc9a164486d0094f00fcf61c5308b256efe3f999fb719442e7fd929ace62966"
     },
     "manuscript/README.md": {
-      "bytes": 1255,
-      "sha256": "ca7f60696995e51bec6cf66a357f64b4f53ef65ed9f8450924f5a3d41c9f39ef"
+      "bytes": 1668,
+      "sha256": "1bdd1f6b57a16288b901d8d64a252df6879f97b2e4b1a967bc6981a7cee2511a"
     },
     "manuscript/SUBMISSION_COMPLIANCE.md": {
-      "bytes": 3897,
-      "sha256": "47716dc4a7d68a765cc9f85ae583b6e2c9b4afe84991af120e08a7833713fd72"
+      "bytes": 6437,
+      "sha256": "ca3d3955a51b031249d1dbea1d9da318b2e8cd12793b74564e65ba5bc35704a9"
     },
     "manuscript/audit_submission.py": {
-      "bytes": 8010,
-      "sha256": "7b4fc35163f5cc827665c2059dedf60052db44e05f9d36b02df5aba8ffbe32c1"
+      "bytes": 9760,
+      "sha256": "de8d4e663f377eddb1faaf730544476f26bd991d4cf49c57310ccbfb1f7acdd0"
     },
     "manuscript/cover_letter.md": {
-      "bytes": 3563,
-      "sha256": "91c3360428cb79c5a4ebb0124a9b8215d8a632615cde9d67198e60f89fc00134"
+      "bytes": 3941,
+      "sha256": "e3f42b0d86571062702cfd83a0abf792b5bc9f4aee865f6d09c09a5748df95ca"
     },
     "manuscript/figures/figure1_workflow.png": {
       "bytes": 369844,
@@ -72,7 +98,7 @@
     },
     "manuscript/figures/figure1_workflow.svg": {
       "bytes": 17070,
-      "sha256": "eae2a6ba2981e974ee8b59a0373dfb2d97f0b36f987a9a73c2d2d50573b4981b"
+      "sha256": "12d254b4e534da898c28b501bedd9133919fb3a6d4983537fdd436962957d25b"
     },
     "manuscript/figures/figure1_workflow.tif": {
       "bytes": 24497804,
@@ -84,7 +110,7 @@
     },
     "manuscript/figures/figure2_dlpfc_oracle_k.svg": {
       "bytes": 59919,
-      "sha256": "9b48f9961bf76183916bdb6efdc2e5e8bb0ae00785cc81d599938f843c302fad"
+      "sha256": "32a753cdd014f15319345bcae28052308bb117b4e843e16dc554529ccd167990"
     },
     "manuscript/figures/figure2_dlpfc_oracle_k.tif": {
       "bytes": 33465638,
@@ -96,23 +122,23 @@
     },
     "manuscript/figures/figure3_external_panel.svg": {
       "bytes": 63063,
-      "sha256": "1cd823573ca82e77230be0834d5cdd6f0a75679f633ddd753a8a47ce7ac93ec9"
+      "sha256": "76db2e63eb6a62149b5313c7bb02366cd0f52d52f554685ffa237038730db918"
     },
     "manuscript/figures/figure3_external_panel.tif": {
       "bytes": 25683482,
       "sha256": "c46f02fe850c0e9fb2267fcd4802fffb9908d527021a5398ac72687471ed8b98"
     },
     "manuscript/figures/figure4_validation.png": {
-      "bytes": 397339,
-      "sha256": "1456bc93473e357cd6cf7f7d268f96155699c9202cc2b2662adf3ea5b33b58b6"
+      "bytes": 504330,
+      "sha256": "9ae66d46368d9e188cfb0ba982e0f9386617e2616c69b314ab7b948bcb5444fe"
     },
     "manuscript/figures/figure4_validation.svg": {
-      "bytes": 27833,
-      "sha256": "bf82d116568e4cb3328617affaf1c4db07037e7c5f25c6d2ddb42d4e5e6e5365"
+      "bytes": 44135,
+      "sha256": "9476f64e9de1aaff95d843939b72bbb1c6a18e2e13104a881ee264fc4ec741a2"
     },
     "manuscript/figures/figure4_validation.tif": {
-      "bytes": 27280460,
-      "sha256": "0b53635e51c1ce61af6d6334d6a6082365fc6c658269aee87f7c1add1c68c236"
+      "bytes": 32850620,
+      "sha256": "1122cc8f5fc678468d7cc5e4bd9004308dca16388839154964b8c0a76e43dad0"
     },
     "manuscript/figures/graphical_abstract.png": {
       "bytes": 369844,
@@ -120,23 +146,43 @@
     },
     "manuscript/figures/graphical_abstract.svg": {
       "bytes": 17070,
-      "sha256": "eae2a6ba2981e974ee8b59a0373dfb2d97f0b36f987a9a73c2d2d50573b4981b"
+      "sha256": "12d254b4e534da898c28b501bedd9133919fb3a6d4983537fdd436962957d25b"
     },
     "manuscript/figures/graphical_abstract.tif": {
       "bytes": 24497804,
       "sha256": "2c913a0bf7e2559022ff9e02311ea120a771f3d6dd8d9c0873bb52e6eb2b6195"
     },
     "manuscript/main.tex": {
-      "bytes": 29626,
-      "sha256": "2a5a32f249986c4fe5a70a6ca87572685777f3b25bbcf9e9160acae9f41e2670"
+      "bytes": 42837,
+      "sha256": "7e8f1f069325eb7cd6d555ba0023a5f3c2d858585ef92f1f24dd21dd11c18197"
     },
     "manuscript/make_submission_assets.py": {
-      "bytes": 12287,
-      "sha256": "15f6c7ddcb1d79326f1316f9ef1bda651598e7ba1dd7a6babe5650c9eff4ceac"
+      "bytes": 14583,
+      "sha256": "40e8375cd013d1b9ffd8b4382cc5b35104c2644e61e3386a739f15e4c55dbdfc"
+    },
+    "manuscript/prospective_validation_v3/REPORT.md": {
+      "bytes": 4752,
+      "sha256": "c75bf5649c930180449f2240a92e76b385b5ac644bd98ee9ff5702c39ad3afc5"
+    },
+    "manuscript/prospective_validation_v3/SUBMISSION_ASSESSMENT.md": {
+      "bytes": 5773,
+      "sha256": "048a375202035efdb4d3c43d2a34bf47574286e863bde8d8201caa1b0f864408"
+    },
+    "manuscript/prospective_validation_v3/figure_data.json": {
+      "bytes": 2591,
+      "sha256": "9dc8fe302b1c5fd7130d4cde9e3c7ebde3abb485004446410a7ef4b9e703efe0"
+    },
+    "manuscript/protocol_diagnostics/REPORT.md": {
+      "bytes": 885,
+      "sha256": "12a7f9a5d676254834844d3885f69734391bea56ce6b93219585397e11b38b02"
+    },
+    "manuscript/protocol_diagnostics/action_frequency_and_sensitivity.json": {
+      "bytes": 13983,
+      "sha256": "f03086303f261d35bc8374d1d3657d317c1dc942ed85d4eb547b81845202d2a0"
     },
     "manuscript/supplementary.tex": {
-      "bytes": 11551,
-      "sha256": "9a9ef741012982df32be7a0e6893c3be1c0f2e3ff14119eaf53a3e7741c9d840"
+      "bytes": 25119,
+      "sha256": "0da5a228579897a1a575db7db966f4da404aefb87d05ed68e01c4d7fb3fc0a97"
     },
     "non_oracle_k_sota/summary.json": {
       "bytes": 3496,
@@ -148,15 +194,15 @@
     },
     "p1_validation_results/REPORT.md": {
       "bytes": 474,
-      "sha256": "f1c83870928d5b869b5a817c4ed6bae522b3c70a144e6f344967610c8b67619d"
+      "sha256": "342a21833504458a279a9313c928fccd5b35c3fb92d7e2d9e6719facbfbce9eb"
     },
     "p1_validation_results/TEST_REPORT.md": {
       "bytes": 765,
       "sha256": "d8b27f2b30e29b9fb6b6e2baaac47be62bba54494a5d547c83de7349da56366d"
     },
     "p1_validation_results/submission_audit.json": {
-      "bytes": 2912,
-      "sha256": "17866a98190b1794069adfdd4238c2a3bba764ca7bb966ec998fc7637df82a36"
+      "bytes": 3561,
+      "sha256": "e66f032f88112d44c01d688781386b8b2458af65a77ad043047f628ddd49493a"
     },
     "prospective_validation_v2/protocol.json": {
       "bytes": 3250,
@@ -165,6 +211,10 @@
     "protocol_endpoints_results/selective_regret_coverage.json": {
       "bytes": 5087,
       "sha256": "cc4da3043f24f30c9249ba17fb5c63aa7ec67dc8b0b72cf5b627dec5508d82dd"
+    },
+    "scripts/build_protocol_diagnostics.py": {
+      "bytes": 12317,
+      "sha256": "176ac80180e99e0cb5bced237f8d796e7f70d6a338813f55c58689401bb0fd3c"
     },
     "submission_freeze_v2/REPORT.md": {
       "bytes": 674,
@@ -175,8 +225,12 @@
       "sha256": "277dc35329cbd76f6e8abcf657cf8e2ad7e679025c225cdcb03d6637f3c7759a"
     },
     "submission_freeze_v3/reproduce_submission_freeze.py": {
-      "bytes": 12699,
-      "sha256": "651c437d9dfae8b082c353d6de40d209c2f5977b579699d405885d6a7226dbc7"
+      "bytes": 18918,
+      "sha256": "52000cc91cf5cadb6e855e026710abd53cded1ac3607cbb31114cc6b5745cc61"
+    },
+    "tests/test_install_smoke.py": {
+      "bytes": 2993,
+      "sha256": "f29cc673f41627eaf893018f44a6ff9730adb5f638bb2d9aae3ab9cdd19d7a36"
     },
     "tests/test_submission_freeze_v3.py": {
       "bytes": 1714,
@@ -187,10 +241,11 @@
   "submission_blockers": [
     "Bioinformatics AI-policy compliance and accurate disclosure require author action.",
     "Author identity, affiliation, ORCID, CRediT, funding, and conflict metadata are missing.",
-    "The manuscript requires compilation and visual inspection in the current OUP environment."
+    "The manuscript requires compilation and visual inspection in the current OUP environment.",
+    "Zenodo version notes must be re-synced after this freeze before citing the archive as submission-identical."
   ],
   "validation": {
-    "abstract_words": 123,
+    "abstract_words": 130,
     "all_figures_at_least_350_dpi": true,
     "author_required_placeholders": 9,
     "evidence_assertions": {
@@ -198,18 +253,55 @@
       "audit_zero_dominated_selections": true,
       "audit_zero_false_rejections": true,
       "audit_zero_invalid_admissions": true,
+      "diagnostics_evidence_required_modal": true,
+      "diagnostics_her2_risk_coverage_degenerate": true,
+      "diagnostics_no_personalised_under_default": true,
       "dlpfc_top_method_stagate": true,
       "external_does_not_beat_global": true,
       "external_regret_matches_text": true,
+      "her2st_action_is_global_default": true,
+      "her2st_locked_global_is_spagcn": true,
+      "her2st_matches_always_global_by_identity": true,
+      "her2st_n_donors_seven": true,
+      "her2st_zero_personalisation_coverage": true,
       "selective_global_default": true,
       "wu_mean_matches_text": true,
       "wu_negative": true
     },
     "latex_compile_status": "not_run_no_engine_available",
-    "main_body_words": 2828,
+    "main_body_words": 4291,
     "main_figures": 4,
     "missing_bibliography_keys": [],
     "missing_labels": [],
+    "regression": {
+      "critical": {
+        "errors": 0,
+        "failed": 0,
+        "ok": true,
+        "passed": 23,
+        "paths": [
+          "tests/test_evidence_audit.py",
+          "tests/test_decision.py",
+          "tests/test_recommend.py",
+          "tests/test_install_smoke.py"
+        ],
+        "returncode": 0,
+        "skipped": 0,
+        "summary_line": "23 passed, 0 failed, 0 skipped",
+        "xfailed": 0
+      },
+      "full_suite": null,
+      "note": "critical suite always runs at freeze time; set HISTOWEAVE_FREEZE_FULL_PYTEST=1 for full tests/"
+    },
     "static_audit_passed": true
+  },
+  "zenodo": {
+    "concept_doi": "10.5281/zenodo.21586217",
+    "metadata_files": [
+      ".zenodo.json",
+      "CITATION.cff"
+    ],
+    "notes": "Re-deposit a version whose description matches freeze_date and lists evidence-governance Original Paper package + HER2ST figure_data.",
+    "sync_required_after_freeze": true
   }
 }

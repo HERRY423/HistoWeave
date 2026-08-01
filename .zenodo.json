@@ -1,6 +1,6 @@
 {
-  "title": "HistoWeave: reproducible spatial transcriptomics orchestration and evaluation platform",
-  "description": "HistoWeave is an open-source orchestration and evaluation platform for reproducible spatial transcriptomics. Release v0.1.1 repairs the core runtime dependency contract for the submission freeze with 10 scientifically validated and 3 contract-validated multi-dataset evidence packages (13 total).",
+  "title": "HistoWeave: evidence-governed method decisions with structured abstention for spatial transcriptomics",
+  "description": "HistoWeave implements an executable evidence-governance and selective-decision protocol for spatial transcriptomics: task/ground-truth/K-policy/metric/panel/holdout/source-hash contracts gate method decisions, with fail-closed actions (personalised_set, global_default, evidence_required, abstain). Submission freeze v3 (2026-07-31) locks the Bioinformatics Original Paper package (main.tex, supplementary.tex, figures including HER2ST primary external panels, and SHA-256 evidence tables). Scientific claim boundary: fail-closed governance and correct refusal of unsupported personalisation (HER2ST coverage 0/7); not validated personalised superiority. Software release also provides multi-dataset evidence packages, plugin maturity tiers, and reproducible benchmarks.",
   "upload_type": "software",
   "access_right": "open",
   "license": "bsd-3-clause",
@@ -13,9 +13,12 @@
   "keywords": [
     "spatial transcriptomics",
     "bioinformatics",
+    "evidence governance",
+    "method selection",
+    "selective prediction",
+    "abstention",
     "reproducibility",
     "benchmarking",
-    "method recommendation",
     "scverse"
   ],
   "related_identifiers": [
@@ -23,8 +26,13 @@
       "identifier": "https://github.com/HERRY423/Histoweave",
       "relation": "isSupplementTo",
       "resource_type": "software"
+    },
+    {
+      "identifier": "10.5281/zenodo.21586217",
+      "relation": "isNewVersionOf",
+      "resource_type": "software"
     }
   ],
   "version": "0.1.2",
-  "notes": "Packaging hotfix: scikit-learn is now declared as a core dependency and release publishing smoke-tests the built wheel before upload. Canonical validation ledger: 10 scientific validated + 3 contract_validated = 13 multi-dataset evidence packages."
+  "notes": "Release v0.1.2 retains the scikit-learn packaging hotfix and built-wheel smoke test. Submission freeze v3 (2026-07-31) remains the last immutable journal freeze; the canonical working manuscript is manuscript/main.tex plus manuscript/supplementary.tex. Re-run python manuscript/make_submission_assets.py, python manuscript/audit_submission.py, and python submission_freeze_v3/reproduce_submission_freeze.py --check. Authors must complete AI-policy review, ORCID/metadata, and OUP compilation before journal upload."
 }

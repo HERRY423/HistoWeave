@@ -1,4 +1,5 @@
-% HistoWeave -- Supplementary Material for Bioinformatics Original Paper
+% HistoWeave -- Supplementary Material (aligned with main.tex claim tiers T0--T5)
+% Canonical manuscript: manuscript/main.tex  |  Freeze: submission_freeze_v3/
 \documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
@@ -11,67 +12,225 @@
 \usepackage{longtable}
 \usepackage{natbib}
 \usepackage{setspace}
+\usepackage{xcolor}
 
 \geometry{margin=1in}
-\graphicspath{{figures/}{../benchmark_external_validation/figures/}
-{../benchmark_external_validation/independent_test_wu2021/}}
+\graphicspath{{figures/}}
 \onehalfspacing
 
+\newcommand{\software}{HistoWeave}
+\newcommand{\required}[1]{\textcolor{red}{[AUTHOR REQUIRED: #1]}}
+
 \title{Supplementary Material\\
-\large HistoWeave: evidence-governed method decisions with structured
+\large \software: evidence-governed method decisions with structured
 abstention for spatial transcriptomics}
-\author{[AUTHOR METADATA MUST MATCH THE MAIN MANUSCRIPT]}
+\author{\required{author metadata must match the main manuscript}}
 \date{}
 
 \begin{document}
 \maketitle
 
-\section{Supplementary methods}
+\noindent\textbf{Companion to:} main manuscript \texttt{manuscript/main.tex}
+(submission freeze v3). This supplement expands evidence tables and
+reproduction detail; it does not enlarge the scientific claim boundary.
+Personalised superiority on unseen studies is \textbf{not} claimed.
 
-\subsection{Decision rule}
+\section{Evidence tiers and action rules}
 
-For a declared query task, HistoWeave performs the following ordered checks:
+\subsection{Tier map (matches main-text Table~1 claim boundary and Table~2 tiers)}
+
+\begin{table}[ht]
+\centering
+\caption{Evidence tiers and what each may support.
+\label{tab:si-tiers}}
+\begin{tabular}{@{}llp{0.42\textwidth}@{}}
+\toprule
+Tier & Material & Supports \\
+\midrule
+T0 & 11 adversarial decision-card cases & Fail-closed contract path \\
+T1 & DLPFC 5 sections $\times$ 20 configs; oracle vs estimated \(K\) &
+Oracle-\(K\) sensitivity (not deployment ranking) \\
+T2 & 5 external datasets; leave-one-out vs training-fold global &
+Diagnostic ranking only (not independent confirmation) \\
+T3 & 20 study-grouped selective queries &
+Whether personalisation improves regret--coverage \\
+T4 & HER2ST donor-level prospective external (non-oracle \(K\)) &
+Primary external: does evidence justify personalisation? \\
+T5 & Synthetic reliable-signal construct-validity panel &
+Non-degeneracy of personalisation when a true signal exists \\
+Secondary & Wu 2021 six-section oracle-\(K\) stress test &
+Negative stress only; not non-oracle prospective confirmation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Four-action decision rule}
+
+For a declared query task \(\tau\) and evidence set \(\mathcal{E}\), the
+ordered gate is:
+
 \begin{enumerate}
-  \item reject references with an incompatible task, ground-truth kind, or
-        \(K\) policy;
-  \item verify the metric direction and retain method configurations rather
-        than collapsing spatial-context settings;
-  \item generate a target-free reference-neighbour ranking and compare its
-        proxy score with the training-reference global method;
-  \item require a source-hash-verified grouped held-out result with a matching
-        task, truth kind, \(K\) policy, metric, panel, and split unit;
-  \item intersect the ranked shortlist with the matched non-dominated Pareto
-        set when a multi-objective table is supplied; and
-  \item emit \texttt{personalised\_set}, \texttt{global\_default},
-        \texttt{evidence\_required}, or \texttt{abstain}.
+  \item \textbf{Reject} references with incompatible task, ground-truth kind,
+        undeclared or oracle \(K\) (when the query is non-oracle), missing
+        metric direction, or unverified source hashes.
+  \item Generate a target-free reference-neighbour ranking and compare its
+        proxy to the \textbf{training-fold global} comparator (not only to
+        random choice).
+  \item If the local proxy does not beat the global comparator $\rightarrow$
+        \texttt{global\_default}.
+  \item If grouped held-out validation is missing or mismatched $\rightarrow$
+        \texttt{evidence\_required}.
+  \item If a matched Pareto table is supplied, retain only the intersection of
+        the shortlist with the non-dominated set.
+  \item If every hard gate passes $\rightarrow$ \texttt{personalised\_set};
+        if no task-valid evidence remains $\rightarrow$ \texttt{abstain}.
 \end{enumerate}
-The complete implementation is in
-\texttt{src/histoweave/benchmark/decision.py}. Policy thresholds and every
-check are serialized in the output card.
+
+Default policy serialisation (changing any value creates a distinct policy):
+shortlist size $\le 3$; minimum neighbour support $\ge 2$; rank-support
+heuristic threshold $0.25$ (not a calibrated probability). Implementation:
+\texttt{src/histoweave/benchmark/decision.py}.
+
+\begin{table}[ht]
+\centering
+\caption{\texttt{DecisionCard} fields recorded for every decision.
+\label{tab:si-card}}
+\begin{tabular}{@{}lp{0.62\textwidth}@{}}
+\toprule
+Field group & Contents \\
+\midrule
+Identity & Policy version, thresholds, software version, timestamp \\
+Task contract & Analysis task, ground-truth kind, label key, platform \\
+Evidence roles & Admitted / rejected objects with rejection reasons \\
+Checks & Per-gate pass/fail (task, \(K\), metric, panel, split, hashes) \\
+Candidates & Ranked configurations, support, coverage, rank-support heuristic \\
+Comparators & Training-fold global method; random-choice baseline if reported \\
+Action & One of four actions; selected method set (possibly empty) \\
+Claim boundary & Explicit statement of what the card does \emph{not} establish \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Training, validation, and test separation}
 
-The DLPFC benchmark contains five sections from one study
-\citep{maynard2021}. It is an oracle-\(K\) development track and is not an
-independent test. The five-dataset external panel is also oracle-\(K\); its
-leave-one-dataset-out result is a diagnostic comparison with a training-fold
-global method. The 20-query selective endpoint is grouped by study or
-independent query unit. The six-section Wu breast-cancer cohort
-\citep{wu2021} was absent from audited development sources and was executed
-once under an in-repository locked rule, but it lacks an independent public
-timestamp and uses oracle \(K\). It is therefore a negative stress test.
-The non-oracle prospective-v2 protocol has no outcome data and remains
-execution-blocked pending a public timestamp.
+\begin{itemize}
+  \item \textbf{T1 DLPFC} \citep{maynard2021}: five sections, one study;
+        oracle-\(K\) development and sensitivity only.
+  \item \textbf{T2 external panel}: five independent studies; oracle-\(K\);
+        leave-one-dataset-out is a \emph{diagnostic} of the candidate generator
+        versus the training-fold global method.
+  \item \textbf{T3 selective}: twenty study-grouped queries; frozen selective
+        regret--coverage endpoint.
+  \item \textbf{T4 HER2ST} \citep{andersson2021}: primary external validation.
+        Public registration (GitHub issue~19; server time
+        2026-07-29T05:34:31Z) and protocol hash preceded outcome access.
+        Non-oracle estimated \(K\); donor is the analysis unit; seven evaluable
+        donors after locked exclusion of G2.
+  \item \textbf{T5 synthetic}: construct validity only; not biological
+        external validation.
+  \item \textbf{Secondary Wu} \citep{wu2021}: oracle-\(K\) one-shot stress
+        test without independent public timestamp; not the non-oracle gate.
+  \item \textbf{Prospective v2 (Pelka CRC Visium)}: registration-ready
+        protocol remains \textbf{execution-blocked} until an independent public
+        timestamp is recorded (\texttt{prospective\_validation\_v2/}); it is
+        \emph{not} used as a result in this paper.
+\end{itemize}
 
-\subsection{Adversarial evidence corpus}
+\section{Supplementary methods detail}
 
-The 11 cases in Table~\ref{tab:audit} exercise the full
-\texttt{build\_decision\_card} path. A valid dominated-candidate case is
-expected to return a personalised set that excludes the dominated local
-configuration; it is therefore a valid-evidence control, not an invalid case.
-Rates reported in the paper use the eligible denominator for each endpoint.
+\subsection{Adversarial evidence corpus (T0)}
+
+Eleven cases exercise the full \texttt{build\_decision\_card} path
+(Table~\ref{tab:audit}). Nine are invalid; two are valid controls (ordinary
+admissible evidence; valid but Pareto-dominated local candidate). Rates use the
+eligible denominator for each endpoint. Source summary:
+\texttt{p0\_validation\_results/evidence\_admission/audit\_summary.json}.
+
+\subsection{Oracle-\(K\) sensitivity (T1)}
+
+SpaGCN and STAGATE were re-run at seed~42 with silhouette-estimated \(K\)
+(and related estimators in the dual-track archive). Truth-derived \(K\) is
+never mixed into non-oracle deployment claims.
+
+\subsection{HER2ST protocol registration (T4)}
+
+\begin{table}[ht]
+\centering
+\caption{HER2ST prospective registration lock.
+\label{tab:si-her2-reg}}
+\begin{tabular}{@{}lp{0.58\textwidth}@{}}
+\toprule
+Item & Value \\
+\midrule
+Study & HER2ST legacy Spatial Transcriptomics breast cancer \\
+Paper DOI & 10.1038/s41467-021-26271-2 \\
+Data DOI & 10.5281/zenodo.5511762 \\
+Registration & https://github.com/HERRY423/HistoWeave/issues/19 \\
+Server time (UTC) & 2026-07-29T05:34:31Z \\
+Protocol commit & \texttt{a1ea59e2a8e305f86ef3bb3c118721786868fc60} \\
+Protocol SHA-256 &
+\texttt{2fe030ddd11656bfd43a9f399bd1a82e361bc8b881a51c31fd7550a629c0c7dc} \\
+\(K\) policy & estimate (label-free); true \(K\) unavailable at fit \\
+Ground truth & pathologist regions (unsealed after action freeze) \\
+Evaluable donors & A, B, C, D, E, F, H ($n=7$) \\
+Excluded & G2 (duplicated label coordinates; locked rule) \\
+Locked global default & SpaGCN (registration-time development evidence) \\
+Ungated comparator & 3-NN $\rightarrow$ \texttt{gaussian\_mixture@sw0.8} \\
+Machine-readable source &
+\texttt{manuscript/prospective\_validation\_v3/figure\_data.json} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Supplementary results}
+
+\subsection{T0: adversarial audit}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.20\textwidth}p{0.42\textwidth}@{}}
+\caption{Adversarial evidence-admission audit (all cases passed as
+prespecified).
+\label{tab:audit}}\\
+\toprule
+Case & Expected action class & Contract exercised \\
+\midrule
+\endfirsthead
+\toprule
+Case & Expected action class & Contract exercised \\
+\midrule
+\endhead
+valid bound evidence & personalised & all declared contracts match \\
+cross-task reference & not personalised & reference task mismatch \\
+cluster-proxy truth & not personalised & inadmissible ground-truth kind \\
+missing \(K\) policy & not personalised & undeclared cluster-count policy \\
+oracle-\(K\) reference & not personalised & oracle evidence disallowed \\
+missing metric contract & not personalised & metric direction absent \\
+unverified validation JSON & not personalised & source hashes not verified \\
+validation task mismatch & not personalised & held-out task mismatch \\
+validation panel mismatch & not personalised & held-out method-panel mismatch \\
+validation oracle \(K\) & not personalised & held-out \(K\) policy mismatch \\
+valid dominated candidate & personalised & dominated local configuration excluded \\
+\bottomrule
+\end{longtable}
+
+\begin{table}[ht]
+\centering
+\caption{Audit aggregate rates.
+\label{tab:audit-rates}}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Endpoint & Value \\
+\midrule
+Invalid cases & 9 \\
+Valid cases & 2 \\
+Incompatible admissions & 0 \\
+Valid-evidence false rejections & 0 \\
+Dominated selections & 0 \\
+All cases passed & true \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{T1: DLPFC oracle-\(K\) matrix and sensitivity}
 
 \begin{longtable}{@{}lrrrrr@{}}
 \caption{Full DLPFC oracle-\(K\) ARI matrix. Values are means over seeds
@@ -110,7 +269,7 @@ birch@sw0.0 & 0.088 & 0.118 & 0.046 & 0.030 & $-0.085$ \\
 
 \begin{table}[ht]
 \centering
-\caption{SpaGCN oracle-\(K\) sensitivity at seed 42.
+\caption{SpaGCN oracle-\(K\) sensitivity at seed 42 (silhouette estimate).
 \label{tab:oracle-k}}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
@@ -125,11 +284,14 @@ Section & True \(K\) & Estimated \(K\) & Oracle ARI & Estimated ARI & Difference
 \end{tabular}
 \end{table}
 
+\subsection{T2: external diagnostic panel and LOOCV}
+
 \begin{table}[ht]
 \centering
 \caption{External oracle-\(K\) performance matrix. Values are mean ARI over
 three seeds. SpatialDE-kmeans and nnSVG-kmeans produced no finite values and
-are not shown.\label{tab:external-full}}
+are not shown. SpaGCN, STAGATE, GraphST, and BayesSpace were not run on this
+panel.\label{tab:external-full}}
 \resizebox{\textwidth}{!}{
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
@@ -154,7 +316,9 @@ OPTICS & 0.012 & 0.035 & 0.003 & 0.010 & 0.022 \\
 
 \begin{table}[ht]
 \centering
-\caption{External leave-one-dataset-out diagnostic.\label{tab:loocv}}
+\caption{External leave-one-dataset-out \textbf{diagnostic} (not independent
+confirmation of personalisation).
+\label{tab:loocv}}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Metric & Value \\
@@ -165,14 +329,107 @@ Candidate-generator mean regret & 0.005921 \\
 Training-fold global mean regret & 0.005921 \\
 Random expected mean regret & 0.233815 \\
 Regret reduction versus global & 0.0 \\
+Role in paper & diagnostic ranking proxy only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{T3: selective regret--coverage}
+
+\begin{table}[ht]
+\centering
+\caption{Selective endpoint summary ($n=20$ study-grouped queries).
+Source: \texttt{protocol\_endpoints\_results/selective\_regret\_coverage.json}.
+\label{tab:si-selective}}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Metric & Value \\
+\midrule
+Always-personalised mean regret & 0.0468 \\
+Always-global mean regret & 0.0290 \\
+Recommended policy & \texttt{always\_global\_default} \\
+Minimum selective regret & at coverage $=0$ \\
+Main-figure panel & Fig.~4A \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{T4: HER2ST primary external validation}
+
+\begin{table}[ht]
+\centering
+\caption{HER2ST aligned non-oracle panel: mean donor ARI versus pathologist
+regions (estimated \(K\), three seeds). Descriptive only; not a universal
+ranking.
+\label{tab:si-her2-methods}}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Method & Donors & Mean donor ARI & SD \\
+\midrule
+BANKSY & 7 & 0.2149 & 0.1226 \\
+STAGATE & 7 & 0.1770 & 0.1085 \\
+GraphST & 7 & 0.1747 & 0.0991 \\
+\(k\)-means & 7 & 0.1529 & 0.1077 \\
+Gaussian mixture & 6 & 0.1516 & 0.1428 \\
+Agglomerative & 7 & 0.1451 & 0.1378 \\
+SpaGCN (locked global) & 7 & 0.1337 & 0.0964 \\
+Spectral & 7 & 0.1190 & 0.1360 \\
+BayesSpace & 7 & 0.1115 & 0.1471 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\caption{Wu breast-cancer stress-test results. The comparator is the best
-finite method in the locked seven-method oracle-\(K\) panel.
+\caption{HER2ST decision-protocol comparison. HistoWeave personalisation
+coverage is zero at every locked threshold; $\Delta$ versus always-global is
+zero by action identity and is \textbf{not} selection advantage.
+\label{tab:si-her2-policy}}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Policy & Coverage & Deployed regret & 95\% donor bootstrap CI \\
+\midrule
+HistoWeave (\texttt{global\_default}) & 0/7 & 0.1247 & 0.0647--0.1827 \\
+Always-global (SpaGCN) & 0 & 0.1247 & 0.0647--0.1827 \\
+Ungated 3-NN & 6/6 available$^\ast$ & 0.1190 & 0.0237--0.2311 \\
+\midrule
+HistoWeave $-$ always-global & --- & 0.0000 & 0.0000--0.0000 \\
+HistoWeave $-$ ungated 3-NN & --- & 0.0002 & $-0.0893$--$0.0922$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+{\footnotesize $^\ast$Donor C excluded from the pairwise 3-NN contrast because
+all three Gaussian-mixture seeds failed; failures retained without imputation.}
+\end{table}
+
+\subsection{T5: construct validity (synthetic)}
+
+\begin{table}[ht]
+\centering
+\caption{Synthetic reliable-signal panel (mechanism non-degeneracy only).
+\label{tab:si-t5}}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Metric & Value \\
+\midrule
+Threshold & 0.25 \\
+Personalisation coverage & 23/60 $=0.383$ \\
+Deployed regret (HistoWeave) & 0.0362 \\
+Deployed regret (always-global) & 0.1215 \\
+Difference (HW $-$ global) & $-0.0853$ (95\% CI $-0.129$--$-0.042$) \\
+Locked compound success flag & false (malformed joint predicate retained) \\
+Role in paper & not a substitute for biological external personalisation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Secondary: Wu oracle-\(K\) stress test}
+
+\begin{table}[ht]
+\centering
+\caption{Wu breast-cancer stress-test results (secondary only). The comparator
+is the best finite method in the locked seven-method oracle-\(K\) panel.
 \label{tab:wu}}
 \begin{tabular}{@{}lrrlr@{}}
 \toprule
@@ -191,52 +448,138 @@ Mean & & & & 0.131 \\
 \end{tabular}
 \end{table}
 
-\begin{longtable}{@{}p{0.28\textwidth}p{0.20\textwidth}p{0.42\textwidth}@{}}
-\caption{Adversarial evidence-admission audit.
-\label{tab:audit}}\\
-\toprule
-Case & Expected action class & Contract exercised \\
-\midrule
-\endfirsthead
-\toprule
-Case & Expected action class & Contract exercised \\
-\midrule
-\endhead
-valid bound evidence & personalised & all declared contracts match \\
-cross-task reference & not personalised & reference task mismatch \\
-cluster-proxy truth & not personalised & inadmissible ground-truth kind \\
-missing \(K\) policy & not personalised & undeclared cluster-count policy \\
-oracle-\(K\) reference & not personalised & oracle evidence disallowed \\
-missing metric contract & not personalised & metric direction absent \\
-unverified validation JSON & not personalised & source hashes not verified \\
-validation task mismatch & not personalised & held-out task mismatch \\
-validation panel mismatch & not personalised & held-out method-panel mismatch \\
-validation oracle \(K\) & not personalised & held-out \(K\) policy mismatch \\
-valid dominated candidate & personalised & dominated local configuration excluded \\
-\bottomrule
-\end{longtable}
+\subsection{Panel inventory}
 
 \begin{table}[ht]
 \centering
-\caption{Evidence panels are reported separately when their method coverage,
-task, \(K\) policy, or split unit differs.\label{tab:coverage}}
+\caption{Evidence panels reported separately when method coverage, task,
+\(K\) policy, or split unit differs.
+\label{tab:coverage}}
 \begin{tabular}{@{}lrrl@{}}
 \toprule
 Panel & Units & Methods/configurations & \(K\) policy \\
 \midrule
-DLPFC development & 5 & 20 & oracle \\
-External development & 5 & 15 prespecified / 13 finite & oracle \\
-Strict task-stratified v2 & 9 & 7 & source-derived oracle \\
-DLPFC dual-\(K\) sensitivity & 5 & 2 & oracle + three estimated tracks \\
-Adversarial evidence audit & 11 & not applicable & not applicable \\
+DLPFC development (T1) & 5 & 20 & oracle \\
+External diagnostic (T2) & 5 & 15 prespecified / 13 finite & oracle \\
+Selective queries (T3) & 20 & landscape-dependent & mixed / declared \\
+HER2ST prospective (T4) & 7 donors & 9 aligned & estimate \\
+Construct validity (T5) & 60 test units & synthetic switch & estimate \\
+Wu secondary stress & 6 & 7 locked & oracle \\
+Adversarial audit (T0) & 11 & not applicable & not applicable \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\subsection{Action frequencies and threshold sensitivity}
+
+Machine-readable source:
+\texttt{manuscript/protocol\_diagnostics/action\_frequency\_and\_sensitivity.json}
+(regenerated by \texttt{python scripts/build\_protocol\_diagnostics.py}).
+
+\begin{table}[ht]
+\centering
+\caption{Decision actions on 20 study-grouped recommendation objects without a
+bound held-out validation pack.
+\label{tab:si-actions}}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Action & Default policy & Ablation: no held-out gate \\
+\midrule
+\texttt{personalised\_set} & 0 & 12 \\
+\texttt{global\_default} & 7 & 7 \\
+\texttt{evidence\_required} & 13 & 1 \\
+\texttt{abstain} & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under the default policy, all 13 queries with local proxy advantage become
+\texttt{evidence\_required}; the 7 without advantage become
+\texttt{global\_default}. Disabling \texttt{require\_heldout\_validation}
+converts most of the former into \texttt{personalised\_set} (diagnostic
+ablation only).
+
+\begin{table}[ht]
+\centering
+\caption{Threshold sensitivity with held-out gate enabled: number of
+\texttt{personalised\_set} actions (always zero on this cohort).
+Full grid in the JSON diagnostics file.
+\label{tab:si-thr}}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\texttt{min\_rank\_support\_score} & \texttt{min\_support}=1 & $=2$ & $=3$ \\
+\midrule
+0.00 & 0 & 0 & 0 \\
+0.15 & 0 & 0 & 0 \\
+0.25 (default) & 0 & 0 & 0 \\
+0.50 & 0 & 0 & 0 \\
+0.90 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Risk--coverage degeneration (external)}
+
+\begin{table}[ht]
+\centering
+\caption{Risk--coverage status of primary external and selective endpoints.
+\label{tab:si-riskcov}}
+\begin{tabular}{@{}llp{0.42\textwidth}@{}}
+\toprule
+Endpoint & Coverage & Interpretation \\
+\midrule
+Selective T3 & recommended 0 & Minimum regret at full abstention \\
+HER2ST T4 & 0/7 at all locked thresholds & Degenerate frontier: validates refusal,
+not safer positive-coverage personalisation \\
+Synthetic T5 & 0.383 at thr 0.25 & Non-degeneracy of implementation only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Registration strength class}
+
+\begin{table}[ht]
+\centering
+\caption{HER2ST registration strength (not overstated as OSF-level preregistration).
+\label{tab:si-reg}}
+\begin{tabular}{@{}lp{0.58\textwidth}@{}}
+\toprule
+Item & Value \\
+\midrule
+Strength class & public repository timestamp (not OSF/Zenodo protocol DOI) \\
+URL & https://github.com/HERRY423/HistoWeave/issues/19 \\
+Server time (UTC) & 2026-07-29T05:34:31Z \\
+Protocol commit & \texttt{a1ea59e2a8e305f86ef3bb3c118721786868fc60} \\
+Protocol SHA-256 &
+\texttt{2fe030ddd11656bfd43a9f399bd1a82e361bc8b881a51c31fd7550a629c0c7dc} \\
+Preceded outcome access & yes \\
+Independent timestamping service & no \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Independent install smoke}
+
+Without downloading spatial datasets:
+
+\begin{verbatim}
+pip install "histoweave-spatial"
+python -m histoweave --help
+python -m pytest -q tests/test_install_smoke.py
+\end{verbatim}
+
+These tests import the decision surface, build a \texttt{DecisionCard}
+(\texttt{evidence\_required} without a validation pack), and check the CLI
+entrypoint.
+
+\subsection{Optional scalability summary}
+
 \begin{table}[ht]
 \centering
 \caption{Scalability summary for 30 pipeline methods over 1,000 to
-1,000,000 cells by 2,000 genes.\label{tab:scale}}
+1,000,000 cells by 2,000 genes (infrastructure context; not a scientific
+claim of this Original Paper).
+\label{tab:scale}}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Metric & Value \\
@@ -253,42 +596,83 @@ Memory cap & 58 GB \\
 \end{table}
 
 \clearpage
-\section{Reproduction and frozen artefacts}
+\section{Reproduction, freeze, and archival sync}
+
+\subsection{Canonical narrative source}
+
+\begin{itemize}
+  \item \textbf{Authoritative manuscript:} \texttt{manuscript/main.tex}
+  \item \textbf{Authoritative supplement:} \texttt{manuscript/supplementary.tex}
+  \item \textbf{Cover letter draft:} \texttt{manuscript/cover\_letter.md}
+  \item \textbf{Compliance record:} \texttt{manuscript/SUBMISSION\_COMPLIANCE.md}
+  \item \textbf{Deprecated working draft:} any file named
+        \texttt{HistoWeave\_manuscript*.md} is \textbf{not} submission text
+        and must not be uploaded or cited as the paper.
+\end{itemize}
+
+\subsection{Commands}
 
 \begin{verbatim}
-# Deterministic P1 figures
+# Protocol action-frequency + threshold diagnostics
+python scripts/build_protocol_diagnostics.py
+
+# Deterministic figures (includes HER2ST panels in figure4)
 python manuscript/make_submission_assets.py
+
+# Static manuscript + evidence assertions
+python manuscript/audit_submission.py
 
 # P0 evidence-admission audit
 python scripts/run_p0_evidence_audit.py
 
-# P1 source and claim verification
+# Write / verify P1 freeze (hashes manuscript, SI, figures, evidence)
+python submission_freeze_v3/reproduce_submission_freeze.py
 python submission_freeze_v3/reproduce_submission_freeze.py --check
 
-# Targeted decision regressions
+# Freeze-critical regressions (recorded automatically by the freeze script)
 python -m pytest -q \
   tests/test_evidence_audit.py \
-  tests/test_submission_freeze_v3.py \
   tests/test_decision.py \
   tests/test_recommend.py
+
+# After writing the freeze, verify package hashes
+python -m pytest -q tests/test_submission_freeze_v3.py
 \end{verbatim}
 
 The P1 freeze binds the manuscript, supplement, cover letter, compliance
-record, figure-generation script, figures, and underlying source tables by
-SHA-256. It does not change the P0 scientific artefacts.
+record, figure-generation script, figures, HER2ST \texttt{figure\_data.json},
+and underlying source tables by SHA-256. Full-suite regression counts are
+recorded in \texttt{submission\_freeze\_v3/submission\_freeze\_manifest.json}
+at freeze time.
+
+\subsection{Zenodo / software archive}
+
+Software archival DOI cited in the main text:
+\url{https://doi.org/10.5281/zenodo.21586217}.
+Repository metadata for deposit: \texttt{.zenodo.json}, \texttt{CITATION.cff}.
+Authors must re-upload a freeze-aligned release after substantive manuscript
+changes so that the Zenodo version notes match
+\texttt{submission\_freeze\_v3/REPORT.md}. Raw public datasets are not
+redistributed; HER2ST data DOI 10.5281/zenodo.5511762; Wu data DOI
+10.5281/zenodo.4739739.
 
 \section{AI-assisted preparation: mandatory author action}
 
-This working draft received assistance from OpenAI Codex. The current
-\textit{Bioinformatics} policy states that LLMs may assist with limited tasks
-such as language correction, translation, anomaly detection, code, and
-documentation when disclosed, but does not permit drafting a paper from a
-prompt. Before submission, the human authors must substantively rewrite and
-verify the manuscript, document only the final permitted use in the cover
-letter and manuscript, or obtain written guidance from the Editorial Office.
-This disclosure does not by itself make LLM-drafted text compliant.
+This working draft received assistance from OpenAI Codex / automated tooling.
+Current \textit{Bioinformatics} policy permits disclosed limited assistance
+but states that drafting a paper from prompts is unacceptable. Before
+submission, human authors must substantively rewrite and verify the manuscript
+and cover letter, document only the final permitted use, or obtain written
+guidance from the Editorial Office. This SI disclosure does not by itself make
+LLM-assisted text compliant.
 
 \begin{thebibliography}{9}
+\bibitem[Andersson et~al.(2021)]{andersson2021}
+Andersson, A. et~al. (2021). Spatial deconvolution of HER2-positive breast
+cancer delineates tumor-associated cell types and their interplay.
+\emph{Nature Communications}, 12, 6012.
+doi:10.1038/s41467-021-26271-2.
+
 \bibitem[Maynard et~al.(2021)]{maynard2021}
 Maynard, K.R. et~al. (2021). Transcriptome-scale spatial gene expression in
 the human dorsolateral prefrontal cortex. \emph{Nature Neuroscience}, 24,
