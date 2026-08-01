@@ -1,5 +1,5 @@
 % HistoWeave -- Supplementary Material (aligned with main.tex claim tiers T0--T5)
-% Canonical manuscript: manuscript/main.tex  |  Freeze: submission_freeze_v3/
+% Canonical manuscript: manuscript/main.tex  |  Freeze: submission_freeze_v4/
 \documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
@@ -31,7 +31,7 @@ abstention for spatial transcriptomics}
 \maketitle
 
 \noindent\textbf{Companion to:} main manuscript \texttt{manuscript/main.tex}
-(submission freeze v3). This supplement expands evidence tables and
+(submission freeze v4). This supplement expands evidence tables and
 reproduction detail; it does not enlarge the scientific claim boundary.
 Personalised superiority on unseen studies is \textbf{not} claimed.
 
@@ -640,8 +640,8 @@ python manuscript/audit_submission.py
 python scripts/run_p0_evidence_audit.py
 
 # Write / verify P1 freeze (hashes manuscript, SI, figures, evidence)
-python submission_freeze_v3/reproduce_submission_freeze.py
-python submission_freeze_v3/reproduce_submission_freeze.py --check
+python submission_freeze_v4/reproduce_submission_freeze.py
+python submission_freeze_v4/reproduce_submission_freeze.py --check
 
 # Freeze-critical regressions (recorded automatically by the freeze script)
 python -m pytest -q \
@@ -650,13 +650,13 @@ python -m pytest -q \
   tests/test_recommend.py
 
 # After writing the freeze, verify package hashes
-python -m pytest -q tests/test_submission_freeze_v3.py
+python -m pytest -q tests/test_submission_freeze_v4.py
 \end{verbatim}
 
 The P1 freeze binds the manuscript, supplement, cover letter, compliance
 record, figure-generation script, figures, HER2ST \texttt{figure\_data.json},
 and underlying source tables by SHA-256. Full-suite regression counts are
-recorded in \texttt{submission\_freeze\_v3/submission\_freeze\_manifest.json}
+recorded in \texttt{submission\_freeze\_v4/submission\_freeze\_manifest.json}
 at freeze time.
 
 \subsection{Zenodo / software archive}

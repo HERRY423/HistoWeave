@@ -1,6 +1,6 @@
 {
   "title": "HistoWeave: evidence-governed method decisions with structured abstention for spatial transcriptomics",
-  "description": "HistoWeave implements an executable evidence-governance and selective-decision protocol for spatial transcriptomics: task/ground-truth/K-policy/metric/panel/holdout/source-hash contracts gate method decisions, with fail-closed actions (personalised_set, global_default, evidence_required, abstain). Submission freeze v3 (2026-07-31) locks the Bioinformatics Original Paper package (main.tex, supplementary.tex, figures including HER2ST primary external panels, and SHA-256 evidence tables). Scientific claim boundary: fail-closed governance and correct refusal of unsupported personalisation (HER2ST coverage 0/7); not validated personalised superiority. Software release also provides multi-dataset evidence packages, plugin maturity tiers, and reproducible benchmarks.",
+  "description": "HistoWeave implements an executable evidence-governance and selective-decision protocol for spatial transcriptomics: task/ground-truth/K-policy/metric/panel/holdout/source-hash contracts gate method decisions, with fail-closed actions (personalised_set, global_default, evidence_required, abstain). Submission freeze v4 (2026-08-01) locks the Bioinformatics Original Paper package and two registered non-oracle external studies with a strict nine-method same-mask panel (13 units total). The real-study policies do not establish personalised superiority; the positive selection result is fixed-split synthetic construct validity only. Software release also provides multi-dataset evidence packages, plugin maturity tiers, and reproducible benchmarks.",
   "upload_type": "software",
   "access_right": "open",
   "license": "bsd-3-clause",
@@ -34,5 +34,5 @@
     }
   ],
   "version": "0.1.2",
-  "notes": "Release v0.1.2 retains the scikit-learn packaging hotfix and built-wheel smoke test. Submission freeze v3 (2026-07-31) remains the last immutable journal freeze; the canonical working manuscript is manuscript/main.tex plus manuscript/supplementary.tex. Re-run python manuscript/make_submission_assets.py, python manuscript/audit_submission.py, and python submission_freeze_v3/reproduce_submission_freeze.py --check. Authors must complete AI-policy review, ORCID/metadata, and OUP compilation before journal upload."
+  "notes": "Release v0.1.2 retains the scikit-learn packaging hotfix and built-wheel smoke test. Submission freeze v4 (2026-08-01) is the current journal freeze; the canonical manuscript is manuscript/main.tex plus manuscript/supplementary.tex. Re-run python manuscript/make_submission_assets.py, python manuscript/audit_submission.py, and python submission_freeze_v4/reproduce_submission_freeze.py --check. Authors must complete AI-policy review, ORCID/metadata, and OUP compilation before journal upload."
 }

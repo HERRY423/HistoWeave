@@ -5,8 +5,8 @@ type: software
 authors:
   - name: "HistoWeave contributors"
     website: "https://github.com/HERRY423/Histoweave"
-version: 0.1.1-submission-freeze-v3
-date-released: 2026-07-31
+version: 0.1.2
+date-released: 2026-08-01
 license: BSD-3-Clause
 repository-code: "https://github.com/HERRY423/Histoweave"
 url: "https://HERRY423.github.io/Histoweave"
@@ -18,10 +18,12 @@ abstract: >
   fail-closed actions (personalised set, global default, evidence required, or
   abstain). The submission freeze packages a Bioinformatics Original Paper draft
   with dual-track oracle-K sensitivity, diagnostic ranking, selective
-  regret-coverage, and a publicly time-stamped HER2ST non-oracle external study
-  in which personalisation coverage is zero. The software also provides plugin
-  orchestration, multi-dataset evidence packages, and reproducible benchmarks.
-  Claim boundary: fail-closed governance, not validated personalised superiority.
+  regret-coverage, and two registered non-oracle external studies with a strict
+  nine-method same-mask panel spanning 13 units. The real-study policies remain
+  fail-closed and do not establish personalised superiority; positive selection
+  is demonstrated only as fixed-split synthetic construct validity. The software
+  also provides plugin orchestration, multi-dataset evidence packages, and
+  reproducible benchmarks.
 keywords:
   - spatial transcriptomics
   - bioinformatics

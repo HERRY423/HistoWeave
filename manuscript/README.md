@@ -23,8 +23,8 @@ Scientific claim: **fail-closed evidence governance + selective abstention**, no
 ```powershell
 python manuscript\make_submission_assets.py
 python manuscript\audit_submission.py
-python submission_freeze_v3\reproduce_submission_freeze.py
-python submission_freeze_v3\reproduce_submission_freeze.py --check
+python submission_freeze_v4\reproduce_submission_freeze.py
+python submission_freeze_v4\reproduce_submission_freeze.py --check
 ```
 
 The repository may not contain a LaTeX engine; P1 uses static TeX validation
@@ -38,4 +38,6 @@ before upload.
 Software concept DOI: `https://doi.org/10.5281/zenodo.21586217`  
 Metadata templates: repo-root `.zenodo.json`, `CITATION.cff`  
 After freeze changes, mint a new Zenodo version whose notes cite
-`submission_freeze_v3/REPORT.md` freeze date and HER2ST `figure_data.json`.
+`submission_freeze_v4/REPORT.md` freeze date and the registered HER2ST/CRC
+evidence hashes. Version 3 is retained as a historical freeze and must not be
+regenerated from the current manuscript paths.

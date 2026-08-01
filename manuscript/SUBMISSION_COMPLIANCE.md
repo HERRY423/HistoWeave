@@ -21,7 +21,7 @@ Official sources:
 | HER2ST machine-readable | `manuscript/prospective_validation_v3/figure_data.json` | Locked into freeze |
 | Protocol diagnostics | `manuscript/protocol_diagnostics/` | Action frequency, threshold sensitivity, risk–coverage, registration class |
 | Install smoke | `tests/test_install_smoke.py` | CLI + DecisionCard without data download |
-| Submission freeze | `submission_freeze_v3/` | SHA-256 package; not upload-ready alone |
+| Submission freeze | `submission_freeze_v4/` | SHA-256 package; v3 retained as historical; not upload-ready alone |
 | **Deprecated draft** | `manuscript/HistoWeave_manuscript (1).md` | **Do not submit or cite** |
 
 Any divergence must be resolved in favour of `main.tex` + `supplementary.tex`.
@@ -79,7 +79,7 @@ Evidence tiers: **T0** contract audit → **T1** oracle-K sensitivity → **T2**
 - [x] `main.tex` / `supplementary.tex` / cover letter / compliance share claim boundary  
 - [x] Fig.4 generated from selective JSON + HER2ST `figure_data.json`  
 - [x] `python manuscript/audit_submission.py` static audit  
-- [x] `python submission_freeze_v3/reproduce_submission_freeze.py` (+ `--check`)  
+- [x] `python submission_freeze_v4/reproduce_submission_freeze.py` (+ `--check`)
 - [ ] Human AI rewrite + disclosure  
 - [ ] Author metadata complete  
 - [ ] OUP PDF compile  
@@ -91,6 +91,6 @@ Evidence tiers: **T0** contract audit → **T1** oracle-K sensitivity → **T2**
 ```powershell
 python manuscript\make_submission_assets.py
 python manuscript\audit_submission.py
-python submission_freeze_v3\reproduce_submission_freeze.py
-python submission_freeze_v3\reproduce_submission_freeze.py --check
+python submission_freeze_v4\reproduce_submission_freeze.py
+python submission_freeze_v4\reproduce_submission_freeze.py --check
 ```

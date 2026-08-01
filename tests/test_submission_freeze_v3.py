@@ -2,25 +2,15 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
-import subprocess
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FREEZE = ROOT / "submission_freeze_v3"
 
 
-def test_p1_submission_freeze_v3_is_self_consistent() -> None:
-    result = subprocess.run(
-        [sys.executable, str(FREEZE / "reproduce_submission_freeze.py"), "--check"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    assert result.returncode == 0, result.stderr
-
+def test_historical_p1_submission_freeze_v3_manifest_is_intact() -> None:
     manifest = json.loads(
         (FREEZE / "submission_freeze_manifest.json").read_text(encoding="utf-8")
     )
@@ -30,6 +20,13 @@ def test_p1_submission_freeze_v3_is_self_consistent() -> None:
     assert manifest["validation"]["evidence_assertions"]["audit_all_cases_passed"] is True
     assert manifest["validation"]["author_required_placeholders"] > 0
     assert manifest["submission_blockers"]
+    for relative, record in manifest["generated_artifacts"].items():
+        path = ROOT / relative
+        assert path.is_file()
+        raw = path.read_bytes()
+        canonical = raw.replace(b"\r\n", b"\n")
+        assert len(canonical) == record["bytes"]
+        assert hashlib.sha256(canonical).hexdigest() == record["sha256"]
 
 
 def test_p1_freeze_contains_all_intended_submission_artwork() -> None:

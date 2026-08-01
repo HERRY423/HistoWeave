@@ -1,5 +1,9 @@
 * text=auto
 *.svg text eol=lf
+manuscript/README_p0_archive.md binary
+manuscript/cover_letter_p0_archive.md binary
+manuscript/main_p0_archive.tex binary
+manuscript/supplementary_p0_archive.tex binary
 7x15_cross_platform/dataset_features.csv text eol=lf
 7x15_cross_platform/performance_matrix_mean.csv text eol=lf
 7x15_cross_platform/platform_topography.csv text eol=lf

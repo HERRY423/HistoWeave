@@ -9,24 +9,24 @@ This guide details the step-by-step process for obtaining a Zenodo DOI for the H
 4. Once enabled, Zenodo will automatically create a DOI for each new GitHub release.
 
 ## Part 2: Prepare the Release
-The repository is already configured with a `.zenodo.json` file containing the correct metadata. The target version for this release is `0.1.1`.
+The repository is already configured with a `.zenodo.json` file containing the correct metadata. The current software version is `0.1.2`.
 
 Before creating the release, ensure consistency across versioning files:
-- **`CITATION.cff`**: Ensure the version matches (`0.1.1`) and `date-released` is correct (e.g., `2026-07-25`).
-- **`pyproject.toml`**: Ensure the version is consistent (`0.1.1`).
-- **`.zenodo.json`**: Ensure the version field is exactly `"0.1.1"`.
+- **`CITATION.cff`**: Ensure the version matches (`0.1.2`) and `date-released` is correct.
+- **`src/histoweave/__init__.py`**: Ensure the dynamic package version is consistent (`0.1.2`).
+- **`.zenodo.json`**: Ensure the version field is exactly `"0.1.2"`.
 
 ## Part 3: Create GitHub Release
 First, tag the release locally and push to GitHub:
 ```bash
-git tag -a v0.1.1 -m "HistoWeave v0.1.1: Bioinformatics submission freeze"
-git push origin v0.1.1
+git tag -a vNEXT -m "HistoWeave vNEXT"
+git push origin vNEXT
 ```
 
 Next, create the release on GitHub:
 1. Go to the **GitHub Repository → Releases → Draft a new release**.
-2. **Choose a tag**: Select the `v0.1.1` tag you just pushed.
-3. **Release title**: "HistoWeave v0.1.1: Bioinformatics Submission Freeze"
+2. **Choose a tag**: Select the new `vNEXT` tag you just pushed. Never move or recreate the existing `v0.1.2` tag.
+3. **Release title**: Use the same new version as `CITATION.cff` and the package metadata.
 4. **Description**: Include key highlights for this release (e.g., finalizing code for Bioinformatics journal submission).
 5. Click **Publish release**.
 
