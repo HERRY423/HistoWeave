@@ -36,9 +36,9 @@ Any divergence must be resolved in favour of `main.tex` + `supplementary.tex`.
 | Initial format | Format-free allowed; ≥12 pt, double spacing, line numbers preferred | `article` 12 pt, double-spaced, `lineno` |
 | Figures | Publication resolution; ≥350 dpi colour/halftone | Deterministic SVG, 400 dpi PNG, 350–400 dpi TIFF |
 | Graphical abstract | File named `graphical_abstract` | Generated with figures |
-| Data availability | Required; public data with persistent IDs | Main text + SI; HER2ST and Wu Zenodo DOIs |
+| Data availability | Required; public data with persistent IDs | Main text + SI; HER2ST, Wu, and CRC Zenodo DOIs |
 | Software | Functional, documented, free HTTPS URLs, test data, archive | GitHub, PyPI, BSD-3-Clause, tests, Zenodo DOI |
-| Machine learning | Train/CV/independent-test clarity; LOOCV normally rejected unless justified | LOOCV is **T2 diagnostic only**; primary external is **T4 HER2ST** (registered, non-oracle, donor-level) |
+| Machine learning | Train/calibration/independent-test clarity; LOOCV normally rejected | **No LOOCV validation claim**; T2 is descriptive only; fixed development/calibration roles and registered external tests are explicit |
 | Peer review | Single anonymized | Author metadata must be present for submission |
 | ORCID | Submitting author required | Pending author input |
 | Funding and conflicts | Complete declarations | Placeholders in TeX |
@@ -54,13 +54,13 @@ Any divergence must be resolved in favour of `main.tex` + `supplementary.tex`.
 
 | Topic | Framing in `main.tex` / SI |
 |---|---|
-| LOOCV (T2) | Diagnostic ranking vs training-fold global; **not** independent confirmation of personalisation |
-| Global-best tie | Candidate generator mean regret = global (0.0059); beating random is insufficient |
+| Historical landscape (T2) | Oracle-\(K\) method-score heterogeneity only; **no cross-validation metric or selector claim** |
+| Fixed-split selector | Development fit and calibration gate are disjoint; independent-test outcomes cannot tune actions |
 | Selective (T3) | Always-personalise regret **higher** than always-global → policy `always_global_default` |
-| HER2ST (T4) | Primary external; **coverage 0/7**; action identity with locked global; **not** personalised superiority |
+| HER2ST + CRC (T4) | Two registered non-oracle studies; 13 strict same-mask units; CRC actions **evidence_required**; **not** personalised superiority |
 | Oracle-K (T1) | Dual-track reporting; SpaGCN large drop under estimated \(K\) on some sections |
 | Wu | **Secondary** oracle-\(K\) stress only |
-| Prospective v2 Pelka | Execution-blocked; **no results in this paper** |
+| Prospective CRC v4 | Prediction/action freeze complete before annotations; 7/7-patient nine-method mask; 15 disclosed runtime skips; descriptive SOTA only |
 | 135-cell non-oracle backlog | Infrastructure gap for *future* positive personalisation claims; **not** a current efficacy claim |
 
 ## Claim boundary retained
@@ -72,7 +72,7 @@ The present evidence supports an implemented, fail-closed evidence-governance pr
 - transport of spatial-region results to cell-type labels; or
 - a reliable ISUS predictor of method gain.
 
-Evidence tiers: **T0** contract audit → **T1** oracle-K sensitivity → **T2** LOOCV diagnostic → **T3** selective regret–coverage → **T4** HER2ST prospective primary external → **T5** synthetic construct validity.
+Evidence tiers: **T0** contract audit → **T1** oracle-K sensitivity → **T2** historical descriptive landscape → **T3** selective regret–coverage → **T4** two registered prospective external studies → **T5** fixed-split synthetic construct validity.
 
 ## Freeze and Zenodo sync checklist
 

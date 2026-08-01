@@ -62,9 +62,6 @@ def main() -> None:
     audit = json.loads(
         (ROOT / "p0_validation_results" / "evidence_admission" / "audit_summary.json").read_text()
     )
-    external = json.loads(
-        (ROOT / "benchmark_external_validation" / "decision_validation.json").read_text()
-    )
     wu = json.loads(
         (
             ROOT
@@ -87,6 +84,21 @@ def main() -> None:
     dlpfc = pd.read_csv(
         ROOT / "5x15_spatial_aware" / "performance_matrix_mean_full.csv", index_col=0
     )
+    synthetic = json.loads(
+        (ROOT / "synthetic_validation_v2" / "results" / "results.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    crc = json.loads(
+        (ROOT / "prospective_validation_v4" / "results" / "results_summary.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    multistudy = json.loads(
+        (ROOT / "multistudy_validation" / "same_mask_results.json").read_text(
+            encoding="utf-8"
+        )
+    )
 
     her2_global = her2["policies"]["histoweave"]
     her2_contrast = her2["contrasts"]["histoweave_minus_always_global"]
@@ -95,11 +107,14 @@ def main() -> None:
         "audit_zero_invalid_admissions": audit["invalid_admissions"] == 0,
         "audit_zero_false_rejections": audit["valid_rejections"] == 0,
         "audit_zero_dominated_selections": audit["dominated_selections"] == 0,
-        "external_does_not_beat_global": external["beats_global_best"] is False,
-        "external_regret_matches_text": abs(
-            external["metrics"]["mean_selection_regret"] - 0.005920932863359341
-        )
-        < 1e-12,
+        "authoritative_manuscript_has_no_loocv_validation": not any(
+            token in (main_tex + "\n" + supp_tex).lower()
+            for token in ("loocv", "leave-one-out", "leave-one-dataset")
+        ),
+        "historical_external_landscape_is_descriptive_only": (
+            "historical five-study oracle" in main_tex.lower()
+            and "contributes no evidence" in main_tex.lower()
+        ),
         "wu_negative": wu["success"] is False and wu["decision"] == "independent_test_fail",
         "wu_mean_matches_text": abs(wu["mean_frozen_policy_regret"] - 0.13126117338422785)
         < 1e-12,
@@ -111,6 +126,35 @@ def main() -> None:
         == 0.0,
         "her2st_locked_global_is_spagcn": her2["locked_global_default"] == "spagcn",
         "her2st_n_donors_seven": her2["n_donors"] == 7,
+        "crc_strict_nine_method_patients_seven": crc["n_strict_nine_method_patients"]
+        == 7,
+        "crc_policy_fail_closed": crc["policy_endpoint_status"] == "evidence_required",
+        "crc_all_methods_available_seven_patients": set(
+            crc["method_patient_availability"].values()
+        )
+        == {7},
+        "crc_runtime_skips_disclosed": crc["runtime_skip_failures"] == 15
+        and crc["prediction_failures"] == 17,
+        "multistudy_same_mask_complete": multistudy["multistudy_complete"] is True
+        and [study["n_strict_nine_method_units"] for study in multistudy["studies"]]
+        == [6, 7],
+        "synthetic_v22_success": synthetic["success"] is True,
+        "synthetic_v22_signal_coverage": abs(
+            synthetic["signal_test"]["coverage"] - 0.45
+        )
+        < 1e-12,
+        "synthetic_v22_signal_superiority": synthetic["signal_test"][
+            "bootstrap_95_interval_regret_difference"
+        ][1]
+        < 0.0,
+        "synthetic_v22_null_safe": synthetic["null_test"]["coverage"] == 0.0
+        and synthetic["null_test"]["mean_regret_difference"] == 0.0,
+        "synthetic_negative_runs_retained": (
+            ROOT / "synthetic_validation_v2" / "results" / "INVALID_RUN_v2_0.md"
+        ).is_file()
+        and (
+            ROOT / "synthetic_validation_v2" / "results" / "FAILED_RUN_v2_1.md"
+        ).is_file(),
     }
 
     diagnostics_path = (
@@ -153,7 +197,7 @@ def main() -> None:
     result = {
         "schema_version": "histoweave.manuscript_audit.v1",
         "article_type": "Bioinformatics Original Paper",
-        "checked_on": "2026-07-27",
+        "checked_on": "2026-08-01",
         "abstract_word_count_including_headings_and_urls": abstract_word_count,
         "abstract_within_recommended_150_words": abstract_word_count <= 150,
         "main_body_word_count_excluding_references": body_word_count,

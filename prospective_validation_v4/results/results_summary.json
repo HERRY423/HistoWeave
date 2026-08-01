@@ -1,0 +1,58 @@
+{
+  "aggregation": "ARI per section/seed; mean seeds within section; mean sections within patient",
+  "aligned_sota_status": "complete",
+  "claim_boundary": "The same-mask method panel is descriptive. An evidence_required action does not support personalised-policy efficacy.",
+  "method_mean_ari_same_patient_mask": {
+    "agglomerative": 0.18756098091165052,
+    "banksy": 0.1752602004327036,
+    "bayesspace": 0.1450535302566819,
+    "gaussian_mixture": 0.17262596559812124,
+    "graphst": 0.18312998007325548,
+    "kmeans": 0.2002071827828713,
+    "spagcn": 0.19248536730038363,
+    "spectral": 0.1724945009496203,
+    "stagate": 0.17247850494971145
+  },
+  "method_patient_availability": {
+    "agglomerative": 7,
+    "banksy": 7,
+    "bayesspace": 7,
+    "gaussian_mixture": 7,
+    "graphst": 7,
+    "kmeans": 7,
+    "spagcn": 7,
+    "spectral": 7,
+    "stagate": 7
+  },
+  "n_registered_patients": 7,
+  "n_registered_sections": 14,
+  "n_strict_nine_method_patients": 7,
+  "no_section_or_seed_pseudoreplication": true,
+  "patient_best_method": {
+    "A120838": "stagate",
+    "A121573": "spagcn",
+    "A416371": "banksy",
+    "A551763": "kmeans",
+    "A595688": "kmeans",
+    "A798015": "spagcn",
+    "A938797": "gaussian_mixture"
+  },
+  "policy_endpoint_status": "evidence_required",
+  "policy_status": "evidence_required",
+  "prediction_failures": 17,
+  "protocol_id": "histoweave-crc-patient-nonoracle-2026-07",
+  "runtime_skip_failures": 15,
+  "schema_version": "histoweave.crc.scored_results.v4",
+  "scored_utc": "2026-08-01T16:46:24.947127+00:00",
+  "strict_patient_ids": [
+    "A120838",
+    "A121573",
+    "A416371",
+    "A551763",
+    "A595688",
+    "A798015",
+    "A938797"
+  ],
+  "truth_table_sha256": "141e5c774bf7aa52ae05336a9028f2590f78846e4319e309b143e1793fee7d8e",
+  "truth_unseal_authorization_sha256": "259ff792ec1ab41f71dd64e8477ee82ff10e8273144eee454263de71337acf35"
+}

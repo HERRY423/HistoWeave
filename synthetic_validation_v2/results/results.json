@@ -1,0 +1,529 @@
+{
+  "calibration": {
+    "selected_threshold": 0.05,
+    "selection_rule": "Among thresholds with signal-calibration coverage at least 0.20, signal point deployed regret below always-global, signal upper 95% paired-bootstrap bound at most 0.02, and null-calibration upper bound at most 0.02, choose highest signal coverage; break ties by lower signal deployed regret then higher threshold.",
+    "threshold_rows": [
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.07037344928152897,
+            0.1534648883324738
+          ],
+          "coverage": 0.25,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.1103865071009181,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.1103865071009181,
+          "n_covered": 20,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.0
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.17189328914952864,
+            -0.1066397549904389
+          ],
+          "coverage": 0.475,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.13941517112442187,
+          "n_covered": 38,
+          "non_global_opportunity_recall": 1.0,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.0
+        },
+        "threshold": 0.0
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.05633629753924685,
+            0.13674950454059642
+          ],
+          "coverage": 0.2125,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.0950904507968098,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0950904507968098,
+          "n_covered": 17,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.005
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.17283567040008938,
+            -0.10663908821587392
+          ],
+          "coverage": 0.475,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.13941517112442187,
+          "n_covered": 38,
+          "non_global_opportunity_recall": 1.0,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.005
+        },
+        "threshold": 0.005
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0343841208677298,
+            0.10566763830477975
+          ],
+          "coverage": 0.15,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.06806253019569673,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.06806253019569673,
+          "n_covered": 12,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.01
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.16853429203020762,
+            -0.10270081956210914
+          ],
+          "coverage": 0.4625,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.0038015422886137165,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.13561362883580816,
+          "n_covered": 37,
+          "non_global_opportunity_recall": 0.9736842105263158,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.01
+        },
+        "threshold": 0.01
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.025772726556298368,
+            0.08887932612055967
+          ],
+          "coverage": 0.125,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.05547156097735748,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.05547156097735748,
+          "n_covered": 10,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.02
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.16833825560405263,
+            -0.1037020851670489
+          ],
+          "coverage": 0.4625,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.0038015422886137165,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.13561362883580816,
+          "n_covered": 37,
+          "non_global_opportunity_recall": 0.9736842105263158,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.02
+        },
+        "threshold": 0.02
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.005639086269113557,
+            0.0517500273011654
+          ],
+          "coverage": 0.0625,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.02691695113597791,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.02691695113597791,
+          "n_covered": 5,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.03
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.16479245824951988,
+            -0.09921374537301277
+          ],
+          "coverage": 0.45,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.007786733814201458,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.13162843731022042,
+          "n_covered": 36,
+          "non_global_opportunity_recall": 0.9473684210526315,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.03
+        },
+        "threshold": 0.03
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.016775841281626225
+          ],
+          "coverage": 0.0125,
+          "covered_action_accuracy": 0.0,
+          "deployed_regret": 0.005591947093875408,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.005591947093875408,
+          "n_covered": 1,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.05
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.15186325199715817,
+            -0.08816060284579284
+          ],
+          "coverage": 0.4125,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.01937413692117567,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.12004103420324622,
+          "n_covered": 33,
+          "non_global_opportunity_recall": 0.868421052631579,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.05
+        },
+        "threshold": 0.05
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.0
+          ],
+          "coverage": 0.0,
+          "covered_action_accuracy": null,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0,
+          "n_covered": 0,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [],
+          "threshold": 0.08
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.13173633134246543,
+            -0.07107232810067708
+          ],
+          "coverage": 0.35,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.03847615128853233,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.10093901983588953,
+          "n_covered": 28,
+          "non_global_opportunity_recall": 0.7368421052631579,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.08
+        },
+        "threshold": 0.08
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.0
+          ],
+          "coverage": 0.0,
+          "covered_action_accuracy": null,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0,
+          "n_covered": 0,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [],
+          "threshold": 0.1
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.13005176821806982,
+            -0.06882147973283077
+          ],
+          "coverage": 0.3375,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.04063932676772415,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.09877584435669773,
+          "n_covered": 27,
+          "non_global_opportunity_recall": 0.7105263157894737,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.1
+        },
+        "threshold": 0.1
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.0
+          ],
+          "coverage": 0.0,
+          "covered_action_accuracy": null,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0,
+          "n_covered": 0,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [],
+          "threshold": 0.15
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.10884655802663805,
+            -0.05160944210467246
+          ],
+          "coverage": 0.275,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.05987735957423903,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.07953781155018284,
+          "n_covered": 22,
+          "non_global_opportunity_recall": 0.5789473684210527,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.15
+        },
+        "threshold": 0.15
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.0
+          ],
+          "coverage": 0.0,
+          "covered_action_accuracy": null,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0,
+          "n_covered": 0,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [],
+          "threshold": 0.2
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.08237895435565722,
+            -0.03288212446777145
+          ],
+          "coverage": 0.2,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.08250063280882705,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.05691453831559481,
+          "n_covered": 16,
+          "non_global_opportunity_recall": 0.42105263157894735,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.2
+        },
+        "threshold": 0.2
+      },
+      {
+        "null": {
+          "always_global_regret": 0.0,
+          "bootstrap_95_interval_regret_difference": [
+            0.0,
+            0.0
+          ],
+          "coverage": 0.0,
+          "covered_action_accuracy": null,
+          "deployed_regret": 0.0,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": 0.0,
+          "n_covered": 0,
+          "non_global_opportunity_recall": null,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [],
+          "threshold": 0.3
+        },
+        "signal": {
+          "always_global_regret": 0.13941517112442187,
+          "bootstrap_95_interval_regret_difference": [
+            -0.0422146166324338,
+            -0.00717222459023689
+          ],
+          "coverage": 0.075,
+          "covered_action_accuracy": 1.0,
+          "deployed_regret": 0.11659738324397728,
+          "global_index": 0,
+          "global_method": "spectral",
+          "mean_regret_difference": -0.0228177878804446,
+          "n_covered": 6,
+          "non_global_opportunity_recall": 0.15789473684210525,
+          "same_mask_complete": true,
+          "selected_methods_on_covered_units": [
+            "stagate"
+          ],
+          "threshold": 0.3
+        },
+        "threshold": 0.3
+      }
+    ]
+  },
+  "claim_boundary": "This is a software and construct-validity experiment. It is not biological validation and cannot support a personalised-superiority claim on real studies.",
+  "failed_v2_1_run_retained": true,
+  "global_method": "spectral",
+  "invalid_v2_0_run_retained": true,
+  "null_checks": {
+    "noninferior_deployed_regret": true,
+    "same_mask_complete": true
+  },
+  "null_test": {
+    "always_global_regret": 0.0,
+    "bootstrap_95_interval_regret_difference": [
+      0.0,
+      0.0
+    ],
+    "coverage": 0.0,
+    "covered_action_accuracy": null,
+    "deployed_regret": 0.0,
+    "global_index": 0,
+    "global_method": "spectral",
+    "mean_regret_difference": 0.0,
+    "n_covered": 0,
+    "non_global_opportunity_recall": null,
+    "same_mask_complete": true,
+    "selected_methods_on_covered_units": [],
+    "threshold": 0.05
+  },
+  "protocol_sha256": "2c91107759036f54ade1a1d97b9f7b0ed2eb4fa0b074082cdf955d946009408e",
+  "protocol_status": "locally_locked_construct_validity_only_after_model_correction",
+  "schema_version": "histoweave.synthetic_selection.results.v2.2",
+  "signal_checks": {
+    "coverage": true,
+    "covered_action_accuracy": true,
+    "opportunity_recall": true,
+    "same_mask_complete": true,
+    "superior_deployed_regret": true
+  },
+  "signal_test": {
+    "always_global_regret": 0.15478688292329093,
+    "bootstrap_95_interval_regret_difference": [
+      -0.16023761984787582,
+      -0.10725526083207268
+    ],
+    "coverage": 0.45,
+    "covered_action_accuracy": 1.0,
+    "deployed_regret": 0.02143763834441317,
+    "global_index": 0,
+    "global_method": "spectral",
+    "mean_regret_difference": -0.13334924457887773,
+    "n_covered": 54,
+    "non_global_opportunity_recall": 0.8571428571428571,
+    "same_mask_complete": true,
+    "selected_methods_on_covered_units": [
+      "stagate"
+    ],
+    "threshold": 0.05
+  },
+  "success": true,
+  "v3_failure_retained": true
+}

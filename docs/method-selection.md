@@ -404,7 +404,10 @@ the selected configuration.
 4. Is uncertainty low enough and support broad enough to justify the rank?
 5. Does the recommendation survive a spatial-weight and seed sensitivity panel?
 
-The benchmark LOOCV results justify caution:
+The historical LOOCV diagnostic audit below is retained only to explain why
+the recommender is not validation evidence. It must not be promoted into the
+authoritative manuscript or used to tune, validate, or claim improved method
+selection:
 
 | Knowledge base | Top-1 | Top-3 | Mean regret | Global-default regret | Random regret |
 |---|---:|---:|---:|---:|---:|

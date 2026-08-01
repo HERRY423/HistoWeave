@@ -1,0 +1,60 @@
+{
+  "schema_version": "histoweave.synthetic_selection.v2.2",
+  "status": "locally_locked_construct_validity_only_after_model_correction",
+  "purpose": "Test that the selector improves method choice when a label-free feature truly changes the best method, while retaining a no-signal safety check.",
+  "claim_boundary": "This is a software and construct-validity experiment. It is not biological validation and cannot support a personalised-superiority claim on real studies.",
+  "repair_of": "histoweave.positive_control.v3",
+  "repair_reason": "The v3 success predicate was logically impossible because coverage meant choosing a non-global method while success also required the global method among covered units.",
+  "partition": {
+    "training_units": 120,
+    "signal_calibration_units": 80,
+    "null_calibration_units": 80,
+    "signal_test_units": 120,
+    "null_test_units": 120,
+    "independent_generators": true,
+    "test_outcomes_forbidden_during_threshold_selection": true
+  },
+  "seeds": {
+    "generator_base": 20260802,
+    "bootstrap": 8022026
+  },
+  "methods": [
+    "spectral",
+    "stagate",
+    "spagcn",
+    "graphst",
+    "bayesspace",
+    "banksy",
+    "gaussian_mixture",
+    "kmeans",
+    "agglomerative"
+  ],
+  "model": {
+    "family": "multi-output ridge method-score regression with alpha fixed at 1.0",
+    "features": "one independent switch feature plus eight independent noise features",
+    "scaling": "StandardScaler fit on training only",
+    "threshold_semantics": "minimum predicted method-score gain over the training-derived global method",
+    "threshold_grid": [0.0, 0.005, 0.01, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.3],
+    "calibration_rule": "Among thresholds with signal-calibration coverage at least 0.20, signal point deployed regret below always-global, signal upper 95% paired-bootstrap bound at most 0.02, and null-calibration upper bound at most 0.02, choose highest signal coverage; break ties by lower signal deployed regret then higher threshold.",
+    "noninferiority_margin": 0.02
+  },
+  "signal_test_success": {
+    "coverage_floor": 0.25,
+    "covered_action_accuracy_floor": 0.80,
+    "non_global_opportunity_recall_floor": 0.50,
+    "deployed_regret_superiority": "upper 95% paired-bootstrap bound of selector minus always-global regret is below zero"
+  },
+  "null_test_success": {
+    "data_generating_rule": "The training-derived global method is uniformly best; the switch feature is fixed at zero and contains no local method-switch information.",
+    "deployed_regret_noninferiority": "upper 95% paired-bootstrap bound of selector minus always-global regret is at most 0.02",
+    "coverage": "descriptive; not forced to zero"
+  },
+  "integrity": {
+    "same_unit_mask_for_all_methods": true,
+    "missing_values_permitted": false,
+    "no_test_threshold_tuning": true,
+    "retain_v3_failure": true,
+    "retain_invalid_v2_0_run": true,
+    "retain_failed_v2_1_run": true
+  }
+}

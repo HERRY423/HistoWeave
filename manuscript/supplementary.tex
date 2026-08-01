@@ -50,14 +50,15 @@ Tier & Material & Supports \\
 T0 & 11 adversarial decision-card cases & Fail-closed contract path \\
 T1 & DLPFC 5 sections $\times$ 20 configs; oracle vs estimated \(K\) &
 Oracle-\(K\) sensitivity (not deployment ranking) \\
-T2 & 5 external datasets; leave-one-out vs training-fold global &
-Diagnostic ranking only (not independent confirmation) \\
+T2 & Historical five-study oracle-\(K\) landscape &
+Descriptive rank heterogeneity only; no validation split \\
 T3 & 20 study-grouped selective queries &
 Whether personalisation improves regret--coverage \\
-T4 & HER2ST donor-level prospective external (non-oracle \(K\)) &
-Primary external: does evidence justify personalisation? \\
-T5 & Synthetic reliable-signal construct-validity panel &
-Non-degeneracy of personalisation when a true signal exists \\
+T4 & HER2ST donors and CRC patients; two registered prospective external
+studies (non-oracle \(K\)) &
+Across untouched studies, does evidence justify personalisation? \\
+T5 & Fixed-split synthetic signal and null panels &
+Positive selection plus no-signal safety (construct validity only) \\
 Secondary & Wu 2021 six-section oracle-\(K\) stress test &
 Negative stress only; not non-oracle prospective confirmation \\
 \bottomrule
@@ -117,8 +118,8 @@ Claim boundary & Explicit statement of what the card does \emph{not} establish \
   \item \textbf{T1 DLPFC} \citep{maynard2021}: five sections, one study;
         oracle-\(K\) development and sensitivity only.
   \item \textbf{T2 external panel}: five independent studies; oracle-\(K\);
-        leave-one-dataset-out is a \emph{diagnostic} of the candidate generator
-        versus the training-fold global method.
+        descriptive landscape only. It is excluded from selector training,
+        cross-validation, external validation, and efficacy claims.
   \item \textbf{T3 selective}: twenty study-grouped queries; frozen selective
         regret--coverage endpoint.
   \item \textbf{T4 HER2ST} \citep{andersson2021}: primary external validation.
@@ -126,14 +127,15 @@ Claim boundary & Explicit statement of what the card does \emph{not} establish \
         2026-07-29T05:34:31Z) and protocol hash preceded outcome access.
         Non-oracle estimated \(K\); donor is the analysis unit; seven evaluable
         donors after locked exclusion of G2.
-  \item \textbf{T5 synthetic}: construct validity only; not biological
-        external validation.
+  \item \textbf{T5 synthetic}: disjoint development, calibration, signal-test,
+        and null-test units; construct validity only, not biological external
+        validation. The malformed v3 and failed v2.1 runs remain retained.
   \item \textbf{Secondary Wu} \citep{wu2021}: oracle-\(K\) one-shot stress
         test without independent public timestamp; not the non-oracle gate.
-  \item \textbf{Prospective v2 (Pelka CRC Visium)}: registration-ready
-        protocol remains \textbf{execution-blocked} until an independent public
-        timestamp is recorded (\texttt{prospective\_validation\_v2/}); it is
-        \emph{not} used as a result in this paper.
+  \item \textbf{T4 CRC v4}: public issue~20 preceded data access. All 378
+        attempts and seven \texttt{evidence\_required} actions were frozen before
+        annotation download. The seven-patient nine-method same mask is complete;
+        15 A120838 runtime skips are retained without imputation.
 \end{itemize}
 
 \section{Supplementary methods detail}
@@ -284,7 +286,7 @@ Section & True \(K\) & Estimated \(K\) & Oracle ARI & Estimated ARI & Difference
 \end{tabular}
 \end{table}
 
-\subsection{T2: external diagnostic panel and LOOCV}
+\subsection{T2: historical external landscape (descriptive only)}
 
 \begin{table}[ht]
 \centering
@@ -314,25 +316,6 @@ OPTICS & 0.012 & 0.035 & 0.003 & 0.010 & 0.022 \\
 \end{tabular}}
 \end{table}
 
-\begin{table}[ht]
-\centering
-\caption{External leave-one-dataset-out \textbf{diagnostic} (not independent
-confirmation of personalisation).
-\label{tab:loocv}}
-\begin{tabular}{@{}lr@{}}
-\toprule
-Metric & Value \\
-\midrule
-Held-out datasets & 5 \\
-Top-1 accuracy & 0.80 \\
-Candidate-generator mean regret & 0.005921 \\
-Training-fold global mean regret & 0.005921 \\
-Random expected mean regret & 0.233815 \\
-Regret reduction versus global & 0.0 \\
-Role in paper & diagnostic ranking proxy only \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \subsection{T3: selective regret--coverage}
 
@@ -358,23 +341,22 @@ Main-figure panel & Fig.~4A \\
 
 \begin{table}[ht]
 \centering
-\caption{HER2ST aligned non-oracle panel: mean donor ARI versus pathologist
-regions (estimated \(K\), three seeds). Descriptive only; not a universal
-ranking.
+\caption{HER2ST aligned non-oracle panel on the strict nine-method six-donor
+mask (estimated \(K\), three seeds). Descriptive only.
 \label{tab:si-her2-methods}}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
 Method & Donors & Mean donor ARI & SD \\
 \midrule
-BANKSY & 7 & 0.2149 & 0.1226 \\
-STAGATE & 7 & 0.1770 & 0.1085 \\
-GraphST & 7 & 0.1747 & 0.0991 \\
-\(k\)-means & 7 & 0.1529 & 0.1077 \\
+BANKSY & 6 & 0.2199 & 0.1336 \\
+STAGATE & 6 & 0.1857 & 0.1161 \\
+GraphST & 6 & 0.1823 & 0.1063 \\
+Agglomerative & 6 & 0.1540 & 0.1487 \\
 Gaussian mixture & 6 & 0.1516 & 0.1428 \\
-Agglomerative & 7 & 0.1451 & 0.1378 \\
-SpaGCN (locked global) & 7 & 0.1337 & 0.0964 \\
-Spectral & 7 & 0.1190 & 0.1360 \\
-BayesSpace & 7 & 0.1115 & 0.1471 \\
+SpaGCN (locked global) & 6 & 0.1514 & 0.0924 \\
+\(k\)-means & 6 & 0.1500 & 0.1176 \\
+Spectral & 6 & 0.1457 & 0.1274 \\
+BayesSpace & 6 & 0.1312 & 0.1506 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -403,22 +385,53 @@ HistoWeave $-$ ungated 3-NN & --- & 0.0002 & $-0.0893$--$0.0922$ \\
 all three Gaussian-mixture seeds failed; failures retained without imputation.}
 \end{table}
 
+\subsection{T4: CRC second prospective external validation}
+
+\begin{table}[ht]
+\centering
+\caption{CRC strict nine-method seven-patient same-mask summary. ARI is
+averaged over successful seeds within section and sections within patient.
+\label{tab:si-crc-methods}}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Method & Patients & Mean patient ARI & SD \\
+\midrule
+\(k\)-means & 7 & 0.2002 & 0.1202 \\
+SpaGCN & 7 & 0.1925 & 0.1320 \\
+Agglomerative & 7 & 0.1876 & 0.1186 \\
+GraphST & 7 & 0.1831 & 0.1176 \\
+BANKSY & 7 & 0.1753 & 0.0951 \\
+Gaussian mixture & 7 & 0.1726 & 0.1323 \\
+Spectral & 7 & 0.1725 & 0.0995 \\
+STAGATE & 7 & 0.1725 & 0.1392 \\
+BayesSpace & 7 & 0.1451 & 0.1080 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+{\footnotesize All seven policy actions were frozen as
+\texttt{evidence\_required}; this descriptive ranking is not a policy efficacy
+endpoint. The failure ledger contains 15 user-authorized A120838 runtime skips,
+one GraphST memory failure, and one Gaussian-mixture numerical failure.}
+\end{table}
+
 \subsection{T5: construct validity (synthetic)}
 
 \begin{table}[ht]
 \centering
-\caption{Synthetic reliable-signal panel (mechanism non-degeneracy only).
+\caption{Repaired fixed-split synthetic signal/null panel (construct validity only).
 \label{tab:si-t5}}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Metric & Value \\
 \midrule
-Threshold & 0.25 \\
-Personalisation coverage & 23/60 $=0.383$ \\
-Deployed regret (HistoWeave) & 0.0362 \\
-Deployed regret (always-global) & 0.1215 \\
-Difference (HW $-$ global) & $-0.0853$ (95\% CI $-0.129$--$-0.042$) \\
-Locked compound success flag & false (malformed joint predicate retained) \\
+Calibration-selected predicted-gain threshold & 0.05 \\
+Signal-test personalisation coverage & 54/120 $=0.450$ \\
+Covered-action accuracy & 1.000 \\
+Non-global opportunity recall & 0.857 \\
+Signal regret difference (HW $-$ global) & $-0.1333$ (95\% CI $-0.160$--$-0.107$) \\
+Null-test coverage / regret difference & 0/120 / 0.000 \\
+Repaired compound success flag & true (v3 and v2.1 failures retained) \\
 Role in paper & not a substitute for biological external personalisation \\
 \bottomrule
 \end{tabular}
@@ -460,10 +473,11 @@ Mean & & & & 0.131 \\
 Panel & Units & Methods/configurations & \(K\) policy \\
 \midrule
 DLPFC development (T1) & 5 & 20 & oracle \\
-External diagnostic (T2) & 5 & 15 prespecified / 13 finite & oracle \\
+Historical descriptive landscape (T2) & 5 & 15 prespecified / 13 finite & oracle \\
 Selective queries (T3) & 20 & landscape-dependent & mixed / declared \\
 HER2ST prospective (T4) & 7 donors & 9 aligned & estimate \\
-Construct validity (T5) & 60 test units & synthetic switch & estimate \\
+CRC prospective (T4) & 7 patients & 9 aligned & estimate \\
+Construct validity (T5) & 120 signal + 120 null test units & 9 methods & fixed split \\
 Wu secondary stress & 6 & 7 locked & oracle \\
 Adversarial audit (T0) & 11 & not applicable & not applicable \\
 \bottomrule
@@ -531,7 +545,7 @@ Endpoint & Coverage & Interpretation \\
 Selective T3 & recommended 0 & Minimum regret at full abstention \\
 HER2ST T4 & 0/7 at all locked thresholds & Degenerate frontier: validates refusal,
 not safer positive-coverage personalisation \\
-Synthetic T5 & 0.383 at thr 0.25 & Non-degeneracy of implementation only \\
+Synthetic T5 signal / null & 0.450 / 0 at thr 0.05 & Improved-choice construct validity only \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -654,7 +668,7 @@ Authors must re-upload a freeze-aligned release after substantive manuscript
 changes so that the Zenodo version notes match
 \texttt{submission\_freeze\_v3/REPORT.md}. Raw public datasets are not
 redistributed; HER2ST data DOI 10.5281/zenodo.5511762; Wu data DOI
-10.5281/zenodo.4739739.
+10.5281/zenodo.4739739; CRC data DOI 10.5281/zenodo.7760264.
 
 \section{AI-assisted preparation: mandatory author action}
 

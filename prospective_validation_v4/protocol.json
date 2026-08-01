@@ -1,0 +1,163 @@
+{
+  "schema_version": "histoweave.prospective_validation.v4",
+  "protocol_id": "histoweave-crc-patient-nonoracle-2026-07",
+  "status": "locked_before_outcome_access",
+  "objective": "Test whether a development-only, evidence-gated HistoWeave policy yields non-zero patient-level personalization coverage and lower deployed regret than always-global on a second untouched external study.",
+  "claim_boundary": "The protocol can test transport to one new seven-patient CRC study and can update a sequential evidence record containing the earlier HER2ST study. It cannot establish universal method superiority, clinical utility, or transport to untested assays and tissues.",
+  "public_lock": {
+    "required_before_outcome_access": true,
+    "required_objects": [
+      "protocol commit on a public GitHub branch",
+      "public GitHub issue containing the protocol commit SHA and protocol SHA-256"
+    ],
+    "unlock_rule": "Both objects must be independently visible before any CRC count matrix, image, spot label, prediction, score, or derived outcome is downloaded or opened."
+  },
+  "external_study": {
+    "name": "Valdeolivas colorectal cancer spatial transcriptomics cohort",
+    "paper_doi": "10.1038/s41698-023-00488-4",
+    "data_doi": "10.5281/zenodo.7760264",
+    "repository_record": "https://zenodo.org/records/7760264",
+    "technology": "10x Genomics Visium fresh frozen",
+    "species": "human",
+    "organ": "colorectum",
+    "condition": "colorectal cancer and one non-neoplastic patient sample",
+    "expected_patients": 7,
+    "expected_sections": 14,
+    "ground_truth": "pathologist-authored spot anatomical-compartment labels distributed by the source study"
+  },
+  "patient_mapping_from_public_paper_metadata": {
+    "A551763": "S1_Cec",
+    "A595688": "S2_Col_R",
+    "A416371": "S3_Col_R",
+    "A120838": "S4_Col_Sig",
+    "A121573": "S5_Rec",
+    "A938797": "S6_Rec",
+    "A798015": "S7_Rec_Sig"
+  },
+  "independence": {
+    "audit_file": "independence_audit.json",
+    "allowed_before_lock": [
+      "bibliographic and public cohort metadata",
+      "patient and technical-replicate structure",
+      "Zenodo filenames, file sizes, URLs, and checksums"
+    ],
+    "forbidden_before_lock": [
+      "expression matrices",
+      "images",
+      "spot-level pathology labels",
+      "method outputs",
+      "performance values"
+    ]
+  },
+  "independent_unit": {
+    "primary_unit": "patient",
+    "section_role": "technical replicate nested within patient",
+    "aggregation": "Compute ARI per section and seed, average seeds within section, then average the two serial sections within patient. Resampling and policy contrasts use patients only.",
+    "minimum_evaluable_patients": 5,
+    "no_section_or_seed_pseudoreplication": true
+  },
+  "data_inclusion": {
+    "include": "All 14 Space Ranger outputs and all corresponding pathologist spot annotations in the locked Zenodo record.",
+    "spot_filter": "Use source in-tissue spots with non-zero total counts and a uniquely matched pathologist label. Do not remove difficult or rare pathology categories after seeing method performance.",
+    "replicate_failure": "A patient-method score is available when at least one of the two sections and at least one seed succeeds. Availability and all failures remain explicit.",
+    "failed_primary_panel": "If any fixed-panel method is available on fewer than five patients, the aligned-panel primary endpoint is evidence_required."
+  },
+  "non_oracle_contract": {
+    "labels_hidden_from_preparation_and_runners": true,
+    "histology_used_by_methods": false,
+    "true_k_forbidden": true,
+    "k_estimator": "histoweave.benchmark.k_selection.estimate_n_domains ensemble",
+    "k_range": [2, 12],
+    "pca_components": 15,
+    "seeds": [42, 1, 2],
+    "shared_input": "raw counts and spatial coordinates from the same included spots",
+    "prediction_freeze": "All attempts, failures, actions, output paths, and SHA-256 prediction hashes must be frozen before pathology labels are unsealed."
+  },
+  "fixed_method_panel": [
+    {"method": "SpaGCN", "implementation": "SpaGCN 1.2.7"},
+    {"method": "STAGATE", "implementation": "official STAGATE_pyG upstream locked by commit"},
+    {"method": "GraphST", "implementation": "GraphST 1.1.1"},
+    {"method": "BayesSpace", "implementation": "BayesSpace 1.20.2"},
+    {"method": "Banksy", "implementation": "Banksy 1.6.0"},
+    {"method": "spectral", "implementation": "scikit-learn"},
+    {"method": "gaussian_mixture", "implementation": "scikit-learn"},
+    {"method": "kmeans", "implementation": "scikit-learn"},
+    {"method": "agglomerative", "implementation": "scikit-learn"}
+  ],
+  "development_meta_panel": {
+    "outcomes_available_before_lock": true,
+    "studies": [
+      {"study": "DLPFC", "unit": "donor", "expected_units": 3},
+      {"study": "Wu 2021 breast cancer", "unit": "patient_section", "expected_units": 6},
+      {"study": "HER2ST", "unit": "donor", "expected_units": 7}
+    ],
+    "alignment_requirement": "Every included development unit is rerun with the same inputs, methods, K estimator, seed set, failure semantics, and score aggregation used for CRC.",
+    "minimum_for_policy_training": "At least two studies, at least 12 independent units in total, and every method available on at least 10 units.",
+    "crc_exclusion": "No CRC expression, coordinate, image, label, prediction, or score may enter development, feature scaling, policy selection, gate calibration, or global-default selection."
+  },
+  "label_free_meta_features": [
+    "log1p_n_spots",
+    "log1p_n_detected_genes",
+    "log1p_median_library_size",
+    "library_size_coefficient_of_variation",
+    "matrix_sparsity",
+    "estimated_k",
+    "pca_pc1_variance_ratio",
+    "pca_top10_variance_ratio",
+    "median_normalized_six_neighbor_distance",
+    "coordinate_anisotropy_ratio",
+    "six_neighbor_pc_embedding_smoothness"
+  ],
+  "policy_search_space": {
+    "comparators": [
+      "always_global selected from development only",
+      "existing target-free three-nearest-neighbour rule",
+      "published SRTBenchmark rule with locked fallback",
+      "ungated selected meta-learner"
+    ],
+    "candidate_models_in_simplicity_order": [
+      "one-nearest-neighbour on robust-scaled meta-features",
+      "three-nearest-neighbour distance-weighted on robust-scaled meta-features",
+      "ridge method-score regression with alpha in [0.1, 1, 10, 100]"
+    ],
+    "gate_grid_predicted_gain": [0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.1],
+    "validation": "Nested leave-one-study-out. Hyperparameters and robust scaling are fit without the held-out study. Study is never represented in both training and validation folds.",
+    "selection_rule": "Choose the simplest model and highest-coverage gate whose nested held-out deployed regret is non-inferior to always-global at margin 0.02 and whose point deployed regret is no higher than always-global. Break remaining ties by lower deployed regret, then fixed model order, then higher gate threshold.",
+    "freeze_before_crc_labels": "Freeze development score and feature hashes, fitted policy parameters, development-only global action, and CRC patient actions computed from label-free CRC inputs."
+  },
+  "endpoints": {
+    "unit_regret": "best available fixed-panel patient ARI minus policy-selected patient ARI",
+    "coverage": "fraction of evaluable patients on which the policy selects a method different from the development-only global action",
+    "selective_risk": "mean regret among covered patients",
+    "deployed_risk": "mean regret after global fallback on uncovered patients",
+    "primary_contrast": "HistoWeave v4 deployed patient regret minus always-global deployed patient regret",
+    "confidence_interval": "paired percentile bootstrap with 10000 replicates and seed 20260729, resampling patients only",
+    "noninferiority_margin": 0.02,
+    "noninferiority_success": "upper 95 percent bootstrap bound is at most 0.02",
+    "personalized_value_success": "coverage is at least 2/7, point deployed-risk difference is below zero, and the upper 95 percent bootstrap bound is below zero",
+    "risk_coverage_outputs": [
+      "coverage and deployed risk over the locked gate grid",
+      "difference from existing rule at common patient availability",
+      "difference from published rule at common patient availability",
+      "area under the deployed risk-coverage curve"
+    ]
+  },
+  "real_positive_scenario": {
+    "primary": "The untouched CRC endpoint itself; success requires the personalized_value_success rule and therefore cannot be manufactured by a synthetic generator.",
+    "secondary_construct_check": "A retrospective real-unit panel may show that the code can emit personalized actions, but it is not confirmatory efficacy evidence.",
+    "corrected_predicate": "Coverage is defined only by selecting a non-global action. No success condition may require the global method to appear among covered units.",
+    "synthetic_role": "diagnostic unit test only"
+  },
+  "sensitivity_and_scope": {
+    "post_hoc_power_forbidden": true,
+    "report": "Report the paired effect estimate and interval at achieved n. State that seven patients can exclude zero only for a large and consistent advantage and cannot establish universal transport.",
+    "sequential_external_record": "Interpret CRC jointly with the earlier seven-donor prospective HER2ST study as two outcome-sealed studies, while keeping their different locked policy versions explicit."
+  },
+  "failure_and_reporting": {
+    "retain_all_negative_results": true,
+    "no_relabeling_after_outcome_access": true,
+    "no_method_or_feature_changes_after_outcome_access": true,
+    "no_personalized_superiority_claim_without_success": true,
+    "descriptive_best_method_is_not_a_recommendation": true
+  }
+}

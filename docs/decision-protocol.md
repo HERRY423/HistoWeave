@@ -149,14 +149,12 @@ The bundled external validation is normalised to this schema in
 current negative result and therefore forces `global_default`; it is not a demo
 fabricated to unlock personalisation.
 
-The strict same-task extension in
+The older strict same-task extension in
 [benchmark_external_validation/n8_strict_region/](https://github.com/HERRY423/Histoweave/tree/main/benchmark_external_validation/n8_strict_region/)
-raises the independent-unit count from five to eight (three DLPFC donors plus
-five external studies). The gated policy remains exactly tied with the
-training-fold global best on mean regret (0.01089 versus 0.01089), so its
-validation record deliberately keeps beats_global_best false. The observed
-cortex-versus-tumour/brain oracle winner flip is labelled exploratory, and a
-within-condition LOOCV negative control performs worse than the global rule.
+is retained as a historical oracle-\(K\) landscape only. Its resampling
+outputs do not train, calibrate, or validate the current selector and are not
+used for an efficacy claim. Current selection uses explicit, disjoint
+development, calibration, and external-test roles.
 
 ## Claim boundary
 
@@ -189,7 +187,7 @@ The paper-level contribution should be evaluated with predeclared endpoints:
 |---|---|---|
 | Invalid evidence is blocked | Incompatible-evidence admission rate = 0 | Adversarial task/GT/oracle-K contract corpus |
 | Set decisions avoid dominated choices | Dominated-selection rate = 0 | Matched objectives at the same sample size and hardware |
-| Abstention improves safety | Selective regret versus coverage | Leave-one-study-out, not cell-level resampling |
+| Abstention improves safety | Selective regret versus coverage | Fixed grouped calibration and independent external test; not cell-level resampling |
 | Personalisation adds value | Regret non-inferior or superior to global-best | At least 15-20 independent study/donor queries |
 | Pareto membership is stable | Frontier inclusion probability | Donor/bootstrap and compute-replicate perturbations |
 | Oracle-K must not silently inflate SOTA | Mean ARI(oracle) − mean ARI(estimate) on dual-track long tables | ≥2 SOTA methods × ≥5 slices; both tracks reported |
@@ -204,16 +202,14 @@ git** under `protocol_endpoints_results/` (summaries only; see
 `non_oracle_k_sota/` (`histoweave.non_oracle_k_sota.v1` → endpoint
 `histoweave.oracle_k_leakage.v1`).
 
-**Donor/study-level personalisation (stricter independence).** Slice-level LOO
-overcounts DLPFC sections from the same donor. The independent panel collapses
-slices to biological donors, keeps external/cross-platform studies as one unit
-each, and expands **real** public corpora until ≥15 independent study units
-(see `scripts/expand_real_independent_studies.py`). Evaluation uses a **gated**
-policy (personalise only when the local proxy clears a non-inferiority gate;
-otherwise global-default). Summary artefacts are **in-repo** under
-`independent_personalisation_results/`
-(`histoweave.benchmark.independent_personalisation`); inventory:
-`reference_artefacts/MANIFEST.json`.
+**Donor/study-level personalisation (stricter independence).** Sections and
+seeds are nested technical units, never independent queries. The current
+selector in `histoweave.benchmark.fixed_split_selection` fits ridge method
+scores on development studies, selects one predicted-gain threshold on a
+disjoint grouped calibration set, and freezes actions before independent-test
+outcomes are opened. Calibration failure returns `evidence_required`; it does
+not force a method label. Prospective study summaries use one within-study
+nine-method complete-case mask and remain stratified by study.
 
 **Relative to Squidpy / SpatialData.** Analysis grammar and data models remain
 with those libraries; HistoWeave's irreplaceable layer is the evidence-governed

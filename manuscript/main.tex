@@ -49,10 +49,11 @@ rarely refuse personalisation when evidence is insufficient.
 benchmark evidence and returns a method set, global default, evidence request,
 or abstention. An 11-case audit admitted no incompatible evidence. Oracle
 access to \(K\) cut SpaGCN ARI by more than half on one DLPFC section.
-Diagnostic leave-one-out ranking tied the global comparator (mean regret
-0.006). Across 20 grouped queries, always-personalising raised regret
+Across 20 grouped queries, always-personalising raised regret
 (0.047 versus 0.029), so the protocol retained the global default. On
 time-stamped non-oracle HER2ST donors, personalisation coverage was zero.
+A second outcome-sealed CRC study completed a same-mask nine-method panel in
+seven patients, but its frozen actions remained evidence requests.
 Evidence supports fail-closed governance, not validated personalised selection.
 \textbf{Availability and Implementation:} BSD-3-Clause source, tests, and
 frozen artefacts: \url{https://github.com/HERRY423/Histoweave};
@@ -285,17 +286,17 @@ Does the implemented path fail closed for enumerated contract violations? \\
 T1 & Five DLPFC sections, 20 configurations;
 oracle-\(K\) versus estimated-\(K\) ablations &
 How does access to true \(K\) change ranking and ARI interpretation? \\
-T2 & Five external datasets; leave-one-dataset-out
-ranking versus training-fold global &
-Does the candidate generator beat a deployable global default?
-(diagnostic only) \\
+T2 & Historical five-study oracle-\(K\) landscape &
+How heterogeneous are descriptive method rankings across platforms?
+(not a validation split) \\
 T3 & 20 study-grouped selective queries &
 Does personalisation improve regret--coverage over always-global? \\
-T4 & HER2ST donor-level prospective external study
-(non-oracle \(K\); public registration) &
-On an untouched study, does admissible evidence justify personalisation? \\
-T5 & Synthetic reliable-signal construct-validity panel &
-Can the protocol personalise when a true target-free switch signal exists? \\
+T4 & Two registered prospective external studies: HER2ST donors and CRC
+patients (non-oracle \(K\)) &
+Across untouched studies, does admissible evidence justify personalisation? \\
+T5 & Fixed development/calibration/test synthetic construct panel &
+Can the selector improve choices under a true switch while remaining safe
+under an independent no-signal condition? \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -308,16 +309,15 @@ Oracle-\(K\) runs support bounded benchmarking and sensitivity analysis only.
 Silhouette, spatial-silhouette, and ensemble estimates of \(K\) provide the
 non-oracle track for SpaGCN and STAGATE at seed 42.
 
-\paragraph{Diagnostic ranking (T2).}
+\paragraph{Historical descriptive landscape (T2).}
 A separate external panel contains five datasets from independent studies
 spanning Visium HD, Xenium, Xenium Prime, Visium, and MERFISH. Fifteen methods
 were prespecified; 13 produced finite results on all five datasets. Only
 BANKSY overlaps the five spatially informed DLPFC families, so the two panels
-are never pooled as an aligned state-of-the-art comparison. Leave-one-dataset-out
-analysis is retained solely as a diagnostic of whether the candidate generator
-beats a training-fold global comparator. It is not presented as independent
-confirmation of personalised selection and is not used as the primary external
-claim.
+are never pooled as an aligned state-of-the-art comparison. This historical
+oracle-\(K\) landscape is descriptive only: it is not a cross-validation
+estimate, does not train or validate the selector, and contributes no evidence
+to the personalised-selection claim.
 
 \paragraph{Selective regret--coverage (T3).}
 A frozen selective endpoint comprises 20 study-grouped queries. For each
@@ -341,11 +341,25 @@ were retained without silent substitution. Registration-time development
 evidence selected SpaGCN as the global default. An ungated 3-NN rule was
 frozen as an existing-rule comparator.
 
+A second public registration (GitHub issue~20) locked 14 CRC Visium sections
+from seven patients, the same nine methods, three seeds, patient-level
+aggregation, and one shared non-oracle \(K\) per section before data access.
+All policy actions were frozen as \texttt{evidence\_required} because the
+registered development meta-panel minimum was not met. Predictions and
+failures were frozen before the official pathologist annotations were
+downloaded. The strict descriptive endpoint uses one seven-patient complete
+mask across all nine methods. Fifteen A120838 deep-method attempts were stopped
+for repeated infrastructure/runtime limits after outcome sealing and retained
+as failures without imputation; the patient remained evaluable from Rep1 seed
+42, as permitted by the registered replicate-failure rule.
+
 \paragraph{Construct validity (T5).}
-A separately locked synthetic panel injects an independent target-free feature
-that truly switches the better method on a subset of units. This tests whether
-the implementation can return non-global actions when a reliable signal is
-present; it is not biological external validation.
+A fixed-split synthetic experiment separates development fitting, threshold
+calibration, and two independent test panels. A target-free feature truly
+switches the better method in the signal panel; the null panel contains no
+local switch and keeps the training-derived global method optimal. A ridge
+method-score model and predicted-gain gate are fitted without test outcomes.
+This tests improved choices and no-signal safety, not biological validity.
 
 \paragraph{Secondary oracle stress test.}
 A six-section breast-cancer Visium cohort from Wu \textit{et al.}
@@ -365,6 +379,10 @@ interval is descriptive because all units arise from one study. Non-inferiority
 to always-global is reported only when actions differ; action identity yields
 zero regret difference by definition and is not interpreted as selection
 advantage.
+For CRC, ARI is calculated per section and seed, successful seeds are averaged
+within section, and sections are averaged within patient. Same-mask summaries
+remain stratified by study; no pooled donor/patient bootstrap treats studies as
+exchangeable. Runtime skips and backend failures remain in the failure ledger.
 
 The adversarial audit exercises the complete decision-card path. Nine invalid
 cases independently introduce cross-task evidence, cluster-proxy truth,
@@ -441,19 +459,16 @@ lines denote method means.}
 \label{fig:dlpfc}
 \end{figure}
 
-\subsection{Diagnostic ranking ties the global comparator}
+\subsection{Historical external landscape is descriptive only}
 
 The five external datasets differed strongly in absolute difficulty and
 method ranking (Fig.~\ref{fig:external}). Spectral clustering led four
 datasets, with mean ARI ranging from 0.282 on MERFISH mouse brain to 0.676 on
 Visium HD colorectal cancer. Mean shift led the Xenium lung dataset at 0.183.
-The candidate generator selected the held-out oracle-best method for four of
-five datasets and achieved mean regret 0.0059. The training-fold global
-comparator achieved the same mean regret. Random expected regret was 0.2338.
-Beating random choice is therefore not evidence of value over the deployable
-default. Because this analysis uses leave-one-dataset-out on five units and an
-incomplete aligned SOTA panel, it is retained only as a diagnostic of the
-ranking proxy (tier T2), not as independent confirmation of personalisation.
+The panel is incomplete for aligned SOTA comparison and uses oracle \(K\).
+Consequently it is reported only to show rank heterogeneity across platforms;
+no cross-validation accuracy, regret, or candidate-generator comparison from
+these five units is used as validation evidence.
 
 \begin{figure}[t]
 \centering
@@ -481,31 +496,30 @@ demonstrating that the ranking heuristic was successful.
 coverage}
 
 On HER2ST, every method used the same non-oracle estimated \(K\), spots, and
-seeds. Mean donor ARI for pathologist regions ranged from 0.215 (BANKSY) to
-0.112 (BayesSpace); SpaGCN, the locked global default from registration-time
-development evidence, had mean donor ARI 0.134 (Table~\ref{tab:her2st}).
-Seven donors cannot establish a universal ranking; the table is descriptive
-context for the decision comparison only.
+seeds. On the strict nine-method six-donor mask, mean donor ARI ranged from
+0.220 (BANKSY) to 0.131 (BayesSpace); SpaGCN, the locked global default from
+registration-time development evidence, averaged 0.151
+(Table~\ref{tab:her2st}). Seven available donors cannot establish a universal
+ranking; the table is descriptive context for the decision comparison only.
 
 \begin{table}[t]
 \centering
-\caption{\textbf{HER2ST aligned non-oracle panel (descriptive).} Mean donor
-ARI versus pathologist regions; estimated \(K\); three seeds. Not a claim of
-cross-study superiority.}
+\caption{\textbf{HER2ST aligned non-oracle panel (descriptive).} Strict
+nine-method six-donor mask; estimated \(K\); three seeds.}
 \label{tab:her2st}
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Method & Donors & Mean donor ARI \\
 \midrule
-BANKSY & 7 & 0.215 \\
-STAGATE & 7 & 0.177 \\
-GraphST & 7 & 0.175 \\
-\(k\)-means & 7 & 0.153 \\
+BANKSY & 6 & 0.220 \\
+STAGATE & 6 & 0.186 \\
+GraphST & 6 & 0.182 \\
+Agglomerative & 6 & 0.154 \\
 Gaussian mixture & 6 & 0.152 \\
-Agglomerative & 7 & 0.145 \\
-SpaGCN (locked global default) & 7 & 0.134 \\
-Spectral & 7 & 0.119 \\
-BayesSpace & 7 & 0.112 \\
+SpaGCN (locked global default) & 6 & 0.151 \\
+\(k\)-means & 6 & 0.150 \\
+Spectral & 6 & 0.146 \\
+BayesSpace & 6 & 0.131 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -523,6 +537,39 @@ Passing a 0.02 non-inferiority margin under action identity is not evidence of
 better selection. The result validates fail-closed behaviour on a publicly
 time-stamped external study: the protocol refused personalisation because the
 evidence needed to justify it was absent.
+
+The second outcome-sealed CRC study completed the nine-method common mask for
+all seven patients (Table~\ref{tab:crc}). Mean patient ARI ranged from 0.145
+(BayesSpace) to 0.200 (\(k\)-means); SpaGCN averaged 0.192. Patient-level
+winners were heterogeneous: \(k\)-means led two patients, SpaGCN two, and
+STAGATE, BANKSY, and Gaussian mixture one each. This differs from HER2ST, where
+BANKSY led the strict six-donor common mask (0.220). Thus the two studies supply
+13 independent same-mask units and a genuine cross-study rank reversal, not a
+universal winner. All seven CRC actions were already frozen as
+\texttt{evidence\_required}; the descriptive winner table cannot be converted
+post hoc into a personalised-policy success.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{CRC aligned non-oracle panel (descriptive).} Seven-patient
+same mask; sections and seeds are nested technical units.}
+\label{tab:crc}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Method & Patients & Mean patient ARI \\
+\midrule
+\(k\)-means & 7 & 0.200 \\
+SpaGCN & 7 & 0.192 \\
+Agglomerative & 7 & 0.188 \\
+GraphST & 7 & 0.183 \\
+BANKSY & 7 & 0.175 \\
+Gaussian mixture & 7 & 0.173 \\
+Spectral & 7 & 0.172 \\
+STAGATE & 7 & 0.172 \\
+BayesSpace & 7 & 0.145 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 A secondary oracle-\(K\) Wu stress test failed its locked 0.02-ARI margin
 (mean regret 0.131, 95\% bootstrap CI 0.034--0.236) and is consistent with not
@@ -547,20 +594,20 @@ is reported in the text only.}
 \label{fig:validation}
 \end{figure}
 
-\subsection{Construct validity: personalisation is possible when a reliable signal
-exists}
+\subsection{Construct validity: fixed-split selection improves under a reliable signal}
 
-In the locked synthetic construct-validity panel, an independent target-free
-feature truly switched the better method. At threshold 0.25 the protocol
-selected non-global STAGATE on 23/60 independent test units (coverage 0.383).
-Deployed regret was 0.036 versus 0.122 for always-global (difference
-\(-0.085\); 95\% CI \(-0.129\) to \(-0.042\)). The implementation is therefore
-not hard-coded to refuse. A compound success predicate registered before
-unsealing remains failed because coverage was below 0.50 and the predicate
-also required the global method among covered units---a malformed joint
-condition that was left unrepaired. This positive scenario demonstrates
-mechanism non-degeneracy only; it does not substitute for biological
-personalisation on an external study.
+The repaired T5 protocol retained the original malformed-predicate failure and
+an intermediate null-safety failure, changed all generator/bootstrap seeds,
+and evaluated a fixed ridge selector on new test units. The calibration rule
+selected a predicted-gain threshold of 0.05 without test outcomes. On 120
+signal-test units, coverage was 54/120 (0.45), every covered action chose the
+planted best method, and recall among non-global opportunities was 0.857.
+Deployed regret improved relative to always-global by \(-0.133\) (95\% paired
+bootstrap CI \(-0.160\) to \(-0.107\)). On 120 independent no-signal units,
+coverage and regret difference were both zero. Thus the corrected
+implementation can improve selection under an identifiable switch and fail
+closed without it. T5 remains construct validity only and does not substitute
+for biological personalisation on an external study.
 
 \subsection{Action frequencies and threshold sensitivity}
 
@@ -641,20 +688,21 @@ for interspersed immune-cell identities. The present external results use
 spatial-region labels only and do not establish cell-type performance.
 
 Several limitations are substantial and define the next evidence needed.
-First, the five-dataset leave-one-out analysis is small and remains
-editorially sensitive under machine-learning validation policies; we retain it
-only as a ranking diagnostic. Second, HER2ST provides genuine independence but
-limited transport breadth (one assay family, one organ construct, seven
-donors); confidence intervals are wide, and generalisation to Visium,
-single-cell-resolution assays, other organs, or other annotation semantics is
-untested. Third, the external oracle panel lacks SpaGCN, STAGATE, GraphST, and
-BayesSpace; only BANKSY overlaps the DLPFC spatial-method set. Fourth, zero
-external personalisation coverage means risk--coverage frontiers cannot yet
-demonstrate safer personalised operating points. Fifth, registration is
-repository-timestamped rather than independently DOI-stamped. Sixth, the
-adversarial corpus enumerates known contract violations but cannot measure all
-future failure modes. Seventh, ISUS remains descriptive: the current DLPFC
-calibration shows no reliable positive association with spatial ARI gain.
+First, the historical five-dataset oracle-\(K\) landscape is descriptive and
+is excluded from model validation and efficacy claims. Second, HER2ST and CRC
+provide two outcome-sealed studies and 13 strict common-mask units, improving
+independence but remaining below the 15--20 units sought for a strong positive
+personalisation claim; confidence intervals remain wide. Third, 15 CRC
+deep-method attempts were user-authorized runtime skips, leaving A120838 deep
+scores based on one section and one seed and exposing substantial computational
+reproducibility risk. Fourth, the external oracle panel lacks SpaGCN, STAGATE,
+GraphST, and BayesSpace; only BANKSY overlaps the DLPFC spatial-method set.
+Fifth, zero external personalisation coverage means risk--coverage frontiers
+cannot yet demonstrate safer personalised operating points. Sixth,
+registration is repository-timestamped rather than independently DOI-stamped.
+Seventh, the adversarial corpus enumerates known contract violations but cannot
+measure all future failure modes. Eighth, ISUS remains descriptive: the current
+DLPFC calibration shows no reliable positive association with spatial ARI gain.
 
 A defensible positive personalisation claim would require (i)~an aligned,
 grouped, non-oracle development meta-panel that validates nonzero coverage
@@ -675,7 +723,9 @@ locations, checksums where available, inclusion rules, and transformations.
 HER2ST source data are available from Zenodo at
 \url{https://doi.org/10.5281/zenodo.5511762}. The Wu \textit{et al.} dataset
 is available from Zenodo at
-\url{https://doi.org/10.5281/zenodo.4739739}.
+\url{https://doi.org/10.5281/zenodo.4739739}. CRC Visium counts and pathologist
+annotations are available from Zenodo at
+\url{https://doi.org/10.5281/zenodo.7760264}.
 
 \section*{Code availability}
 
@@ -691,6 +741,10 @@ BSD-3-Clause and the package is distributed on PyPI as
 dataset download). Prospective protocol registration for HER2ST is recorded at
 \url{https://github.com/HERRY423/HistoWeave/issues/19}
 (server time 2026-07-29T05:34:31Z; protocol commit and SHA-256 in the SI).
+CRC registration is recorded at
+\url{https://github.com/HERRY423/HistoWeave/issues/20}; prediction/action
+freezes, truth-import hashes, the patient matrix, and the failure ledger are in
+\texttt{prospective\_validation\_v4/results/}.
 
 \section*{Acknowledgements}
 

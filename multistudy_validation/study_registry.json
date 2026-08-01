@@ -1,0 +1,40 @@
+{
+  "schema_version": "histoweave.multistudy_registry.v1",
+  "analysis_unit_rule": "donor or patient; never spot, section, or seed",
+  "same_mask_rule": "Within each study, every method summary and paired comparison uses the one complete-case unit mask across all nine fixed methods.",
+  "cross_study_rule": "Studies are summarized separately; units from different studies are not pooled as exchangeable observations.",
+  "methods": [
+    "spagcn",
+    "stagate",
+    "graphst",
+    "bayesspace",
+    "banksy",
+    "spectral",
+    "gaussian_mixture",
+    "kmeans",
+    "agglomerative"
+  ],
+  "studies": [
+    {
+      "study_id": "HER2ST",
+      "status": "complete",
+      "role": "prospective_external_1_then_future_development_only",
+      "unit": "donor",
+      "matrix": "multistudy_validation/her2st_donor_method_matrix.csv",
+      "source_commit": "68c0b95",
+      "registration_url": "https://github.com/HERRY423/HistoWeave/issues/19",
+      "k_policy": "estimate",
+      "locked_global_method": "spagcn"
+    },
+    {
+      "study_id": "CRC_V4",
+      "status": "complete_policy_evidence_required",
+      "role": "prospective_external_2",
+      "unit": "patient",
+      "matrix": "prospective_validation_v4/results/patient_method_matrix.csv",
+      "registration_url": "https://github.com/HERRY423/HistoWeave/issues/20",
+      "k_policy": "estimate",
+      "locked_global_method": null
+    }
+  ]
+}

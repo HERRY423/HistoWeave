@@ -1,0 +1,83 @@
+{
+  "schema_version": "histoweave.crc.execution_incident.v4",
+  "observed_utc": "2026-08-01T13:18:43.3966294Z",
+  "truth_accessed": false,
+  "affected_processes": [
+    {
+      "pid": 25632,
+      "sample_id": "SN84_A120838_Rep1",
+      "methods": ["spagcn", "stagate", "graphst"],
+      "seeds": [42, 1, 2],
+      "first_missing_cell": "SN84_A120838_Rep1/spagcn/seed1"
+    },
+    {
+      "pid": 36384,
+      "sample_id": "SN84_A120838_Rep2",
+      "methods": ["spagcn", "stagate", "graphst"],
+      "seeds": [42, 1, 2],
+      "first_missing_cell": "SN84_A120838_Rep2/spagcn/seed42"
+    }
+  ],
+  "evidence": {
+    "status_cells_before_intervention": 363,
+    "target_status_files_present": false,
+    "processes_responding": true,
+    "threads_per_process": 3,
+    "ten_second_sample": {
+      "pid_25632_user_seconds": 0.531,
+      "pid_25632_kernel_seconds": 7.797,
+      "pid_36384_user_seconds": 0.891,
+      "pid_36384_kernel_seconds": 7.766
+    },
+    "cumulative_main_thread_kernel_time": "approximately 3h44m per process",
+    "free_physical_memory_gb": 20.13,
+    "diagnosis": "operational kernel-spin hang; not an outcome- or memory-dependent method failure"
+  },
+  "disposition": {
+    "interrupted_attempt_has_no_prediction_or_status": true,
+    "restart_policy": "same source hashes, code, method parameters, and seeds; sequential foreground execution",
+    "no_hyperparameter_or_endpoint_change": true,
+    "retain_incident_with_final_failure_ledger": true
+  },
+  "followup_incidents": [
+    {
+      "sample_id": "SN84_A120838_Rep1",
+      "first_missing_cell": "SN84_A120838_Rep1/spagcn/seed1",
+      "disposition": "execution wrapper terminated the foreground process at its 600-second tool timeout before a status or prediction was written",
+      "truth_accessed": false,
+      "target_status_file_present_after_termination": false,
+      "restart_policy": "repeat unchanged cell under a non-binding long execution timeout"
+    },
+    {
+      "sample_id": "SN84_A120838_Rep1",
+      "first_missing_cell": "SN84_A120838_Rep1/spagcn/seed1",
+      "disposition": "execution wrapper terminated the unchanged foreground process at its 7200-second tool timeout before a status or prediction was written",
+      "truth_accessed": false,
+      "target_status_file_present_after_termination": false,
+      "restart_policy": "repeat unchanged cell in a detached hidden process with independent stdout and stderr logs and no interaction timeout"
+    }
+  ],
+  "final_runtime_disposition": {
+    "authorized_by_user": true,
+    "authorization_context": "Rep1 21/27 persisted too long; skip and advance",
+    "truth_accessed": false,
+    "uncompleted_spagcn_cells_recorded_as_failed_not_imputed": [
+      "SN84_A120838_Rep1/spagcn/seed1",
+      "SN84_A120838_Rep1/spagcn/seed2",
+      "SN84_A120838_Rep2/spagcn/seed42",
+      "SN84_A120838_Rep2/spagcn/seed1",
+      "SN84_A120838_Rep2/spagcn/seed2",
+      "SN84_A120838_Rep1/stagate/seed1",
+      "SN84_A120838_Rep1/stagate/seed2",
+      "SN84_A120838_Rep1/graphst/seed1",
+      "SN84_A120838_Rep1/graphst/seed2",
+      "SN84_A120838_Rep2/stagate/seed42",
+      "SN84_A120838_Rep2/stagate/seed1",
+      "SN84_A120838_Rep2/stagate/seed2",
+      "SN84_A120838_Rep2/graphst/seed42",
+      "SN84_A120838_Rep2/graphst/seed1",
+      "SN84_A120838_Rep2/graphst/seed2"
+    ],
+    "claim_boundary": "runtime skips are execution failures, not method-performance observations"
+  }
+}

@@ -94,16 +94,24 @@ See [docs/roadmap.md](docs/roadmap.md).
 Submission-facing freeze artifacts live in
 [`submission_freeze_v1/`](submission_freeze_v1/): five locked main figures, one
 supplement benchmark table, one reproduction script, and the data/code
-availability checklist for the Bioinformatics paper track. The additive strict
-panel v2 under `benchmark_external_validation/strict_external_panel_v2/` aligns
-n=9 domain LOOCV, a two-dataset TLS transport test, and explicit SOTA coverage
-on one task-aware registry; the TLS transport result is negative and the global
-default remains locked. A separate, preregistered one-shot test on all six
+availability checklist for the Bioinformatics paper track. The older strict
+panel v2 under `benchmark_external_validation/strict_external_panel_v2/` is a
+historical oracle-\(K\) landscape and SOTA-coverage audit, not selector
+validation. A separate, preregistered one-shot test on all six
 Wu 2021 breast-cancer Visium patients is genuinely study-independent: the
 frozen spectral policy failed its 0.02-ARI regret margin (mean 0.1313,
 95% bootstrap CI 0.0340-0.2363; top-1 in 2/6 sections). This negative
 result is retained, and the test cohort is prohibited from entering training
 or threshold selection.
+
+Two registered non-oracle prospective studies now provide a study-stratified,
+same-mask nine-method comparison: HER2ST contributes six strict donors and CRC
+v4 contributes seven strict patients. BANKSY leads HER2ST (mean ARI 0.220),
+whereas k-means leads CRC (0.200), so the descriptive panel supports no
+universal winner. CRC policy actions were frozen as `evidence_required` before
+annotation access; 15 A120838 runtime skips are retained without imputation.
+Machine-readable matrices, hashes, and the failure ledger are under
+`multistudy_validation/` and `prospective_validation_v4/results/`.
 
 ## Community
 

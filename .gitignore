@@ -49,6 +49,10 @@ histoweave_report.html
 *.zarr/
 *.h5ad
 results/
+!synthetic_validation_v2/results/
+!synthetic_validation_v2/results/**
+!prospective_validation_v4/results/
+!prospective_validation_v4/results/**
 *.params.json
 pipeline_trace.tsv
 
