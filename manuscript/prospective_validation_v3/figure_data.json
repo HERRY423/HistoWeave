@@ -1,0 +1,68 @@
+{
+  "schema_version": "histoweave.her2st_figure_data.v1",
+  "study": "HER2ST",
+  "paper_doi": "10.1038/s41467-021-26271-2",
+  "data_doi": "10.5281/zenodo.5511762",
+  "registration_url": "https://github.com/HERRY423/HistoWeave/issues/19",
+  "registration_server_time_utc": "2026-07-29T05:34:31Z",
+  "protocol_commit": "a1ea59e2a8e305f86ef3bb3c118721786868fc60",
+  "protocol_sha256": "2fe030ddd11656bfd43a9f399bd1a82e361bc8b881a51c31fd7550a629c0c7dc",
+  "k_policy": "estimate",
+  "ground_truth": "pathologist_regions",
+  "evaluable_donors": ["A", "B", "C", "D", "E", "F", "H"],
+  "excluded_donors": {
+    "G2": "locked one-to-one rule; duplicated label coordinates"
+  },
+  "n_donors": 7,
+  "method_mean_donor_ari": [
+    {"method": "banksy", "donors": 7, "mean_ari": 0.2149, "sd": 0.1226},
+    {"method": "stagate", "donors": 7, "mean_ari": 0.1770, "sd": 0.1085},
+    {"method": "graphst", "donors": 7, "mean_ari": 0.1747, "sd": 0.0991},
+    {"method": "kmeans", "donors": 7, "mean_ari": 0.1529, "sd": 0.1077},
+    {"method": "gaussian_mixture", "donors": 6, "mean_ari": 0.1516, "sd": 0.1428},
+    {"method": "agglomerative", "donors": 7, "mean_ari": 0.1451, "sd": 0.1378},
+    {"method": "spagcn", "donors": 7, "mean_ari": 0.1337, "sd": 0.0964, "role": "locked_global_default"},
+    {"method": "spectral", "donors": 7, "mean_ari": 0.1190, "sd": 0.1360},
+    {"method": "bayesspace", "donors": 7, "mean_ari": 0.1115, "sd": 0.1471}
+  ],
+  "locked_global_default": "spagcn",
+  "policies": {
+    "histoweave": {
+      "action": "global_default",
+      "selected_method": "spagcn",
+      "coverage_at_0.25": 0.0,
+      "n_personalised": 0,
+      "n_donors": 7,
+      "deployed_regret": 0.1247,
+      "ci95": [0.0647, 0.1827]
+    },
+    "always_global": {
+      "action": "always_global",
+      "selected_method": "spagcn",
+      "coverage": 0.0,
+      "deployed_regret": 0.1247,
+      "ci95": [0.0647, 0.1827]
+    },
+    "ungated_3nn": {
+      "action": "always_personalised_proxy",
+      "selected_method": "gaussian_mixture@sw0.8",
+      "coverage_available_donors": 1.0,
+      "n_common_mask_donors": 6,
+      "deployed_regret": 0.1190,
+      "ci95": [0.0237, 0.2311]
+    }
+  },
+  "contrasts": {
+    "histoweave_minus_always_global": {
+      "deployed_regret_delta": 0.0,
+      "ci95": [0.0, 0.0],
+      "note": "action identity; not selection advantage"
+    },
+    "histoweave_minus_ungated_3nn": {
+      "deployed_regret_delta": 0.0002,
+      "ci95": [-0.0893, 0.0922],
+      "n_donors_common_mask": 6
+    }
+  },
+  "claim_boundary": "fail_closed_zero_coverage_not_personalised_superiority"
+}

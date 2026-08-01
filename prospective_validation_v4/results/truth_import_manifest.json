@@ -1,0 +1,155 @@
+{
+  "annotation_archive_md5": "92882eb0db7c2cacc5077cb5fc9578fd",
+  "annotation_archive_sha256": "2468ad1208468277eaa7693cbaf92735e76d52207e87d534e0ac8fe77fcacb47",
+  "filter": "retain unique non-empty annotations except case-insensitive label 'exclude'",
+  "imported_utc": "2026-08-01T16:45:07.396504+00:00",
+  "label_harmonization": "none",
+  "n_samples": 14,
+  "n_truth_rows": 19484,
+  "protocol_id": "histoweave-crc-patient-nonoracle-2026-07",
+  "records": [
+    {
+      "n_truth_categories": 7,
+      "rows_excluded_label": 151,
+      "rows_missing": 0,
+      "rows_retained": 2052,
+      "rows_total": 2203,
+      "sample_id": "SN048_A121573_Rep1",
+      "source_csv": "Pathologist_Annotations_SN048_A121573_Rep1.csv",
+      "source_csv_sha256": "47cf1e063f8e12ba9a9f5254f6bb5f39c127a54d72c252ac79f7ac05877f6cba"
+    },
+    {
+      "n_truth_categories": 6,
+      "rows_excluded_label": 94,
+      "rows_missing": 0,
+      "rows_retained": 2291,
+      "rows_total": 2385,
+      "sample_id": "SN048_A121573_Rep2",
+      "source_csv": "Pathologist_Annotations_SN048_A121573_Rep2.csv",
+      "source_csv_sha256": "4766d39b616227cece5062f5b66b307e425464a663f2068d156a74720243a4dc"
+    },
+    {
+      "n_truth_categories": 4,
+      "rows_excluded_label": 0,
+      "rows_missing": 0,
+      "rows_retained": 2317,
+      "rows_total": 2317,
+      "sample_id": "SN048_A416371_Rep1",
+      "source_csv": "Pathologist_Annotations_SN048_A416371_Rep1.csv",
+      "source_csv_sha256": "4d5ce0dcb039d624a449fce756560ff8c21623c7f1055427c6b637fb2d4be0ec"
+    },
+    {
+      "n_truth_categories": 4,
+      "rows_excluded_label": 0,
+      "rows_missing": 1,
+      "rows_retained": 1802,
+      "rows_total": 1803,
+      "sample_id": "SN048_A416371_Rep2",
+      "source_csv": "Pathologist_Annotations_SN048_A416371_Rep2.csv",
+      "source_csv_sha256": "4626a05bd778548f3acbdf99e73dd2457d6a6eb423eabfc13e22516e1a30fa1e"
+    },
+    {
+      "n_truth_categories": 4,
+      "rows_excluded_label": 26,
+      "rows_missing": 0,
+      "rows_retained": 665,
+      "rows_total": 691,
+      "sample_id": "SN123_A551763_Rep1",
+      "source_csv": "Pathologist_Annotations_SN123_A551763_Rep1.csv",
+      "source_csv_sha256": "87224e9f52789bb22315ba70f14952ca443b039e6cca75eb94ac49b97b516b8a"
+    },
+    {
+      "n_truth_categories": 10,
+      "rows_excluded_label": 81,
+      "rows_missing": 0,
+      "rows_retained": 1111,
+      "rows_total": 1192,
+      "sample_id": "SN123_A595688_Rep1",
+      "source_csv": "Pathologist_Annotations_SN123_A595688_Rep1.csv",
+      "source_csv_sha256": "3f3dedf0769e97abe9ebaa2f05bc5e872fd5244899d813bffadaac1d0aadc2ea"
+    },
+    {
+      "n_truth_categories": 12,
+      "rows_excluded_label": 50,
+      "rows_missing": 3,
+      "rows_retained": 1632,
+      "rows_total": 1685,
+      "sample_id": "SN123_A798015_Rep1",
+      "source_csv": "Pathologist_Annotations_SN123_A798015_Rep1.csv",
+      "source_csv_sha256": "95577532aa3736ff7ff314fa7c1b09642ce8b9261d801fa01ee2a7b1ee6cb1a2"
+    },
+    {
+      "n_truth_categories": 12,
+      "rows_excluded_label": 183,
+      "rows_missing": 1,
+      "rows_retained": 1944,
+      "rows_total": 2128,
+      "sample_id": "SN123_A938797_Rep1_X",
+      "source_csv": "Pathologist_Annotations_SN123_A938797_Rep1_X.csv",
+      "source_csv_sha256": "47cfd363513a024f804e54e719db2088088d51f04d91b609141da102d129d89c"
+    },
+    {
+      "n_truth_categories": 4,
+      "rows_excluded_label": 54,
+      "rows_missing": 3,
+      "rows_retained": 1162,
+      "rows_total": 1219,
+      "sample_id": "SN124_A551763_Rep2",
+      "source_csv": "Pathologist_Annotations_SN124_A551763_Rep2.csv",
+      "source_csv_sha256": "168ecdb6af2cc092e38ce63b13a1b833346dbe11b18828118d62b582d9836128"
+    },
+    {
+      "n_truth_categories": 8,
+      "rows_excluded_label": 31,
+      "rows_missing": 0,
+      "rows_retained": 356,
+      "rows_total": 387,
+      "sample_id": "SN124_A595688_Rep2",
+      "source_csv": "Pathologist_Annotations_SN124_A595688_Rep2.csv",
+      "source_csv_sha256": "1d0f676573b2acfbd0b7af2d91bafb8f0e019ea335a5e28879c2a645856ba3b6"
+    },
+    {
+      "n_truth_categories": 12,
+      "rows_excluded_label": 82,
+      "rows_missing": 0,
+      "rows_retained": 1574,
+      "rows_total": 1656,
+      "sample_id": "SN124_A798015_Rep2",
+      "source_csv": "Pathologist_Annotations_SN124_A798015_Rep2.csv",
+      "source_csv_sha256": "ad1394153540f7a87b722e05948988c48295f79e6e7dfcd7597f5e317a33c7d3"
+    },
+    {
+      "n_truth_categories": 12,
+      "rows_excluded_label": 206,
+      "rows_missing": 0,
+      "rows_retained": 1485,
+      "rows_total": 1691,
+      "sample_id": "SN124_A938797_Rep2",
+      "source_csv": "Pathologist_Annotations_SN124_A938797_Rep2.csv",
+      "source_csv_sha256": "95ce89b9bd983f0c4202e61c9975e8b4ce276f7e3e6ef11b5c7731c191edaa81"
+    },
+    {
+      "n_truth_categories": 6,
+      "rows_excluded_label": 88,
+      "rows_missing": 0,
+      "rows_retained": 240,
+      "rows_total": 328,
+      "sample_id": "SN84_A120838_Rep1",
+      "source_csv": "Pathologist_Annotations_SN84_A120838_Rep1.csv",
+      "source_csv_sha256": "94ba5ad8e42c14bbde4d2d42ed59fc213e704dcc40b6d2ce0f25960a9f32f45b"
+    },
+    {
+      "n_truth_categories": 7,
+      "rows_excluded_label": 195,
+      "rows_missing": 0,
+      "rows_retained": 853,
+      "rows_total": 1048,
+      "sample_id": "SN84_A120838_Rep2",
+      "source_csv": "Pathologist_Annotations_SN84_A120838_Rep2.csv",
+      "source_csv_sha256": "06f6a338a9bd015e4915c28e8b1cd7edde350a167861ca436b71b8d6f9cfb9af"
+    }
+  ],
+  "schema_version": "histoweave.crc.truth_import.v4",
+  "truth_table_sha256": "141e5c774bf7aa52ae05336a9028f2590f78846e4319e309b143e1793fee7d8e",
+  "truth_unseal_authorization_sha256": "259ff792ec1ab41f71dd64e8477ee82ff10e8273144eee454263de71337acf35"
+}

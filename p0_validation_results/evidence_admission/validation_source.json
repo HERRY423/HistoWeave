@@ -1,0 +1,6 @@
+{
+  "mean_global_regret": 0.03,
+  "mean_personalised_regret": 0.01,
+  "n_queries": 12,
+  "protocol": "synthetic_adversarial_validation_source.v1"
+}

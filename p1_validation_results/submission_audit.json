@@ -1,0 +1,146 @@
+{
+  "abstract_within_recommended_150_words": true,
+  "abstract_word_count_including_headings_and_urls": 139,
+  "all_evidence_checks_passed": true,
+  "all_figure_files_exist": true,
+  "all_figures_at_least_350_dpi": true,
+  "article_type": "Bioinformatics Original Paper",
+  "author_required_placeholders": 9,
+  "bibliography_keys": [
+    "andersson2021",
+    "casacuberta2025selective",
+    "chen2022",
+    "chen2025imeta",
+    "dong2022",
+    "geifman2017selective",
+    "hu2021",
+    "hubert1985",
+    "jiang2025ood",
+    "long2023",
+    "marconato2025",
+    "maynard2021",
+    "moses2022",
+    "palla2022",
+    "pedregosa2011",
+    "ross2014",
+    "singhal2024",
+    "stahl2016",
+    "wu2021",
+    "yuan2024",
+    "zhao2021"
+  ],
+  "checked_on": "2026-08-01",
+  "citation_keys": [
+    "andersson2021",
+    "casacuberta2025selective",
+    "chen2022",
+    "chen2025imeta",
+    "dong2022",
+    "geifman2017selective",
+    "hu2021",
+    "hubert1985",
+    "jiang2025ood",
+    "long2023",
+    "marconato2025",
+    "maynard2021",
+    "moses2022",
+    "palla2022",
+    "pedregosa2011",
+    "ross2014",
+    "singhal2024",
+    "stahl2016",
+    "wu2021",
+    "yuan2024",
+    "zhao2021"
+  ],
+  "evidence_checks": {
+    "audit_all_cases_passed": true,
+    "audit_zero_dominated_selections": true,
+    "audit_zero_false_rejections": true,
+    "audit_zero_invalid_admissions": true,
+    "authoritative_manuscript_has_no_loocv_validation": true,
+    "crc_all_methods_available_seven_patients": true,
+    "crc_policy_fail_closed": true,
+    "crc_runtime_skips_disclosed": true,
+    "crc_strict_nine_method_patients_seven": true,
+    "diagnostics_evidence_required_modal": true,
+    "diagnostics_her2_risk_coverage_degenerate": true,
+    "diagnostics_no_personalised_under_default": true,
+    "dlpfc_top_method_stagate": true,
+    "her2st_action_is_global_default": true,
+    "her2st_locked_global_is_spagcn": true,
+    "her2st_matches_always_global_by_identity": true,
+    "her2st_n_donors_seven": true,
+    "her2st_zero_personalisation_coverage": true,
+    "historical_external_landscape_is_descriptive_only": true,
+    "multistudy_same_mask_complete": true,
+    "selective_global_default": true,
+    "synthetic_negative_runs_retained": true,
+    "synthetic_v22_null_safe": true,
+    "synthetic_v22_signal_coverage": true,
+    "synthetic_v22_signal_superiority": true,
+    "synthetic_v22_success": true,
+    "wu_mean_matches_text": true,
+    "wu_negative": true
+  },
+  "figures": {
+    "figure1_workflow.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 2081,
+      "passes_350_dpi": true,
+      "width": 3924
+    },
+    "figure2_dlpfc_oracle_k.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 2126,
+      "passes_350_dpi": true,
+      "width": 5247
+    },
+    "figure3_external_panel.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 1926,
+      "passes_350_dpi": true,
+      "width": 4445
+    },
+    "figure4_validation.png": {
+      "dpi": [
+        400.0,
+        400.0
+      ],
+      "exists": true,
+      "height": 1886,
+      "passes_350_dpi": true,
+      "width": 5806
+    }
+  },
+  "latex_compile_status": "not_run_no_engine_available",
+  "latex_engine_available": false,
+  "main_body_within_5000_words": true,
+  "main_body_word_count_excluding_references": 4649,
+  "missing_bibliography_keys": [],
+  "missing_labels": [],
+  "schema_version": "histoweave.manuscript_audit.v1",
+  "static_audit_passed": true,
+  "structured_abstract_headings": {
+    "Availability and Implementation:": true,
+    "Contact:": true,
+    "Motivation:": true,
+    "Results:": true,
+    "Supplementary information:": true
+  },
+  "submission_status": "editorial_draft_complete_author_and_policy_actions_required",
+  "uncited_bibliography_keys": [],
+  "unreferenced_labels": []
+}

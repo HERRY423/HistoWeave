@@ -38,7 +38,15 @@ def _dlpfc_cache_path():
 def _cached_or_skip():
     path = _dlpfc_cache_path()
     if not os.path.exists(path):
-        pytest.skip("DLPFC data not cached — run scripts/dlpfc_cell2location_reference.py first")
+        pytest.skip("DLPFC data not cached; run the real-data test first")
+    try:
+        import h5py
+
+        with h5py.File(path, "r") as handle:
+            if "matrix/data" not in handle:
+                pytest.skip("DLPFC cache lacks the expected 10x matrix")
+    except OSError:
+        pytest.skip("DLPFC cache is truncated; run the real-data test to repair it")
     return path
 
 

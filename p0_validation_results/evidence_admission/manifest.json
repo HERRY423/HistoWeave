@@ -1,0 +1,37 @@
+{
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 705,
+      "sha256": "fd62111aee5bcc16bb4b9a93ac5aefa579591579880238366570d5c1b3d0686c"
+    },
+    "adversarial_corpus_results.json": {
+      "bytes": 23682,
+      "sha256": "1ae9285c8f26617b7cb2d053f1e38d42a05ef3c9561e2ed3f43becbb693c4c8f"
+    },
+    "audit_summary.json": {
+      "bytes": 401,
+      "sha256": "d9c6a4b4302f73b99c7b118c449f05756b0351b9e7a95681868e3aacb74f17b1"
+    },
+    "validation_oracle_k.json": {
+      "bytes": 595,
+      "sha256": "d3b814da2759dc35ed3ff973290323ca98216551546663bb181d489fa34e1672"
+    },
+    "validation_panel_mismatch.json": {
+      "bytes": 577,
+      "sha256": "6caaf63ee25f6434b3c095cbd18e3894d858f80074c6c5801f992fd7ab9e027d"
+    },
+    "validation_source.json": {
+      "bytes": 154,
+      "sha256": "a71561ca8bd1a0d9aa8b6693288a53a8c7c6e78e0a7a4901bfd0b4cc1f3fe312"
+    },
+    "validation_task_mismatch.json": {
+      "bytes": 592,
+      "sha256": "8135f00d30e87aeeb521c54f334e45e7f13b6f08c644299381f53f46bc54a66a"
+    },
+    "validation_valid.json": {
+      "bytes": 597,
+      "sha256": "a1b324b6ea63dae26c773be8c6589c278976bf494fc714747c1fbe9c509df451"
+    }
+  },
+  "protocol": "histoweave.evidence_admission_audit.v1"
+}

@@ -38,10 +38,10 @@ def test_intercept_scenarios_match_protocol_contract(tmp_path):
         for c in by_id["A"].intercept_checks
     )
 
-    assert by_id["B"].action == DecisionAction.GLOBAL_DEFAULT.value
-    assert by_id["B"].primary_set  # global comparator retained
+    assert by_id["B"].action == DecisionAction.EVIDENCE_REQUIRED.value
+    assert by_id["B"].primary_set == []
     assert any(
-        c["name"] == "heldout_validation" and c["status"] == "fail"
+        c["name"] == "heldout_validation" and c["status"] == "warn"
         for c in by_id["B"].intercept_checks
     )
 
@@ -67,11 +67,11 @@ def test_example_main_writes_report_and_json(tmp_path):
     assert md.is_file()
     assert js.is_file()
     payload = json.loads(js.read_text(encoding="utf-8"))
-    assert payload["protocol"] == "histoweave.case_study.intercepted_recommendation.v1"
+    assert payload["protocol"] == "histoweave.case_study.intercepted_recommendation.v2"
     assert payload["n_scenarios"] == 4
     actions = {row["scenario_id"]: row["action"] for row in payload["scenarios"]}
     assert actions["A"] == "evidence_required"
-    assert actions["B"] == "global_default"
+    assert actions["B"] == "evidence_required"
     assert actions["C"] == "abstain"
     assert actions["D"] != "personalised_set"
     text = md.read_text(encoding="utf-8")

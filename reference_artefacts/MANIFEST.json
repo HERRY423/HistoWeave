@@ -1,6 +1,6 @@
 {
   "schema": "histoweave.reference_artefacts.manifest.v1",
-  "generated_utc": "2026-07-22T13:46:41Z",
+  "generated_utc": "2026-07-26T09:41:15Z",
   "policy": {
     "track_summaries": true,
     "ignore_raw_h5ad": true,
@@ -25,7 +25,7 @@
     "parallel_experiment_table/report_parallel_experiment.md"
   ],
   "n_files": 158,
-  "total_bytes": 5071544,
+  "total_bytes": 5073079,
   "files": [
     {
       "path": "independent_personalisation_results/cross_lab_reproducibility.json",
@@ -610,8 +610,8 @@
     },
     {
       "path": "benchmark_external_validation/decision_validation.json",
-      "bytes": 1107,
-      "sha256": "530ab890c70f7c2701b4c0bae140a125d28ce7e8789653c83cfb8759d40db89c",
+      "bytes": 1703,
+      "sha256": "2c61fb8251d8eef026e8d47ac49ab2a547c362eadcf09d2f33843132353fd95b",
       "protocol_family": "histoweave.external_validation.recommender_loocv.v1",
       "required": true
     },
@@ -995,8 +995,8 @@
     },
     {
       "path": "benchmark_external_validation/strict_external_panel_v2/fig_strict_external_panel_v2.svg",
-      "bytes": 83421,
-      "sha256": "090f27ac2f5eaf29990712705f813cd597ba2d3ca1f85a2f8917e13052d61ef5",
+      "bytes": 84360,
+      "sha256": "b3c72fcd7632af451f04b02128f0d990272cd6cc4a674ab7498e9aef1e48ce08",
       "protocol_family": "histoweave.external_validation.recommender_loocv.v1",
       "required": false
     },
@@ -1024,7 +1024,7 @@
     {
       "path": "benchmark_external_validation/strict_external_panel_v2/manifest.json",
       "bytes": 2742,
-      "sha256": "c3fdb752480a23506467f0dd92cacad9ade77f63a6e4a10ce42c798f0119e5c7",
+      "sha256": "ab39a764e9795348e6e90a770b12518f59fc60f0771104de1ebd57994cf298f2",
       "protocol_family": "histoweave.external_validation.recommender_loocv.v1",
       "required": false
     },

@@ -26,11 +26,34 @@ _DLPFC_MATRIX_URL = (
 )
 
 
+def _valid_dlpfc_h5(path: str) -> bool:
+    """Return whether the cache is a complete readable 10x HDF5 matrix."""
+    if not os.path.exists(path):
+        return False
+    try:
+        import h5py
+
+        with h5py.File(path, "r") as handle:
+            return all(
+                key in handle
+                for key in (
+                    "matrix/barcodes",
+                    "matrix/data",
+                    "matrix/features/name",
+                    "matrix/indices",
+                    "matrix/indptr",
+                    "matrix/shape",
+                )
+            )
+    except OSError:
+        return False
+
+
 def _dlpfc_available() -> bool:
     """True when the DLPFC matrix is already cached or the network is reachable."""
     cache = os.path.join(tempfile.gettempdir(), "histoweave_dlpfc_cache",
                          "151507_filtered_feature_bc_matrix.h5")
-    if os.path.exists(cache):
+    if _valid_dlpfc_h5(cache):
         return True
     # Fall back to network check for first-time download
     import urllib.request
@@ -56,8 +79,12 @@ def _download_dlpfc() -> tuple[str, str]:
     h5_path = os.path.join(cache_dir, "151507_filtered_feature_bc_matrix.h5")
     meta_path = os.path.join(cache_dir, "151507_feature_names.json")
 
-    if not os.path.exists(h5_path):
-        urlretrieve(_DLPFC_MATRIX_URL, h5_path)
+    if not _valid_dlpfc_h5(h5_path):
+        download_path = h5_path + ".download"
+        urlretrieve(_DLPFC_MATRIX_URL, download_path)
+        if not _valid_dlpfc_h5(download_path):
+            raise OSError("Downloaded DLPFC HDF5 failed structural validation")
+        os.replace(download_path, h5_path)
 
     if not os.path.exists(meta_path):
         import h5py

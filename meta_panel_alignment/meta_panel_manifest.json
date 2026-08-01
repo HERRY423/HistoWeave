@@ -1,0 +1,1654 @@
+{
+  "backlog_cells": 135,
+  "compliance_definition": "cell is seed-complete only when all three declared estimate-K seeds (42,1,2) have explicit non-oracle ARI evidence on admissible ground truth",
+  "compliance_fraction": 0.0,
+  "contract": {
+    "excluded_locked_test_set": [
+      "wu2021_breast"
+    ],
+    "ground_truth_kind": "spatial_domain",
+    "higher_is_better": true,
+    "k_policy": "estimate",
+    "method_panel": [
+      "banksy",
+      "spagcn",
+      "graphst",
+      "stagate",
+      "bayesspace",
+      "spectral",
+      "kmeans",
+      "gaussian_mixture",
+      "agglomerative"
+    ],
+    "metric": "ARI",
+    "oracle_k_allowed": false,
+    "seeds": [
+      42,
+      1,
+      2
+    ],
+    "split_unit": "study_or_donor",
+    "task": "spatial_domain"
+  },
+  "coverage": [
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5595"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br8100"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [
+        "42"
+      ],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [
+        "42"
+      ],
+      "partial_seeds": [
+        "42"
+      ],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "dlpfc_donor_Br5292"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_hd_crc"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_lung_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "xenium_ovarian_cancer"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "visium_mouse_brain"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [
+        "1",
+        "2",
+        "42"
+      ],
+      "unit": "allen_merfish_brain_section"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "HER2ST"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "10x_xenium_prime_lymph_node"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Gut2018_4i"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Hartmann2020_MIBI_TOF"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Jackson2020_IMC"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Lohoff2022_seqFISH_embryo"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "banksy",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spagcn",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "graphst",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "stagate",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "bayesspace",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "spectral",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "kmeans",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "gaussian_mixture",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    },
+    {
+      "estimate_seeds": [],
+      "inadmissible_seeds": [],
+      "method": "agglomerative",
+      "oracle_seeds": [],
+      "partial_seeds": [],
+      "seed_complete": false,
+      "undeclared_seeds": [],
+      "unit": "Stickels2021_SlideSeqV2"
+    }
+  ],
+  "evidence_sources": {
+    "5x10_dlpfc_benchmark/benchmark_long.csv": 60,
+    "5x15_spatial_aware/benchmark_long.csv": 180,
+    "benchmark_external_validation/benchmark_long.csv": 75,
+    "benchmark_external_validation/independent_test_wu2021/benchmark_long.csv": 90,
+    "non_oracle_k_sota/benchmark_long.csv": 40
+  },
+  "partial_seed_cells": 6,
+  "protocol": "histoweave.aligned_meta_panel.v1",
+  "seed_complete_cells": 0,
+  "source_hashes": {
+    "5x10_dlpfc_benchmark/benchmark_long.csv": "b3ef65ec0971e17e48788bfb1840e6d78d490da1a3db2d496b32edcbc239a7ba",
+    "5x15_spatial_aware/benchmark_long.csv": "03f5c16bab6647964966aa36d6973e7de42b32b9abfc3fe07ac3d117884a59d9",
+    "7x15_cross_platform/benchmark_long.csv": "4ba2179389f07bb30ba5fbf4694a3b8fc1094a4319eda7abdc485e3148803b04",
+    "benchmark_external_validation/benchmark_long.csv": "f3b8cf3196a997faea259f314aca2aec4160f4e16a6f6946fa00d7b0c8c04a0c",
+    "benchmark_external_validation/independent_test_wu2021/benchmark_long.csv": "b7d906dff90f6ed2f3c9988cb0c1ddba888328b7e1227d1d69bdbb03803f59db",
+    "figure3_results/benchmark_long.csv": "23f3a07cba1a3cb4ea9b0d4ab9b07a2c7907ac926a432088dce50a34c05e04a1",
+    "non_oracle_k_sota/benchmark_long.csv": "d3601dd05e13d6da28b48c2e239fb9833b27e9eed71d64ad50a59e5c1647ac46"
+  },
+  "total_cells": 135,
+  "units": [
+    "dlpfc_donor_Br5595",
+    "dlpfc_donor_Br8100",
+    "dlpfc_donor_Br5292",
+    "visium_hd_crc",
+    "xenium_lung_cancer",
+    "xenium_ovarian_cancer",
+    "visium_mouse_brain",
+    "allen_merfish_brain_section",
+    "HER2ST",
+    "10x_xenium_prime_lymph_node",
+    "Gut2018_4i",
+    "Hartmann2020_MIBI_TOF",
+    "Jackson2020_IMC",
+    "Lohoff2022_seqFISH_embryo",
+    "Stickels2021_SlideSeqV2"
+  ]
+}

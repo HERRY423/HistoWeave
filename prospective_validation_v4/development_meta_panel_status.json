@@ -1,0 +1,25 @@
+{
+  "schema_version": "histoweave.development_meta_panel.status.v4",
+  "status": "incomplete_fail_closed",
+  "same_contract": false,
+  "n_studies": 1,
+  "n_independent_units": 7,
+  "min_method_units": 6,
+  "policy_frozen": false,
+  "completed_studies": [
+    {
+      "study": "HER2ST",
+      "role": "previous prospective study reused as development evidence only for the future CRC policy",
+      "units": 7,
+      "strict_nine_method_complete_units": 6
+    }
+  ],
+  "missing_requirements": [
+    "at least one additional study rerun with the same nine-method non-oracle contract",
+    "at least 12 independent units total",
+    "each method available on at least 10 units",
+    "fixed development/calibration split and frozen CRC actions"
+  ],
+  "decision": "evidence_required",
+  "truth_accessed": false
+}

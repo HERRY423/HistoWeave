@@ -1,0 +1,18 @@
+sample_id,patient_id,method,seed,status,error
+SN048_A416371_Rep1,A416371,graphst,2,failed,"MemoryError: Unable to allocate 68.7 MiB for an array with shape (3000, 3000) and data type float64"
+SN124_A595688_Rep2,A595688,gaussian_mixture,1,failed,"ValueError: Fitting the mixture model failed because some components have ill-defined empirical covariance (for instance caused by singleton or collapsed samples). Try to decrease the number of components, increase reg_covar, or scale the input data. The numerical accuracy can also be improved by passing float64 data instead of float32."
+SN84_A120838_Rep1,A120838,spagcn,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep1,A120838,spagcn,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep1,A120838,stagate,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep1,A120838,stagate,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep1,A120838,graphst,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep1,A120838,graphst,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,spagcn,42,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,spagcn,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,spagcn,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,stagate,42,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,stagate,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,stagate,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,graphst,42,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,graphst,1,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed
+SN84_A120838_Rep2,A120838,graphst,2,failed,RuntimeSkip: outcome-sealed execution was stopped after repeated infrastructure timeouts; no prediction was produced or imputed

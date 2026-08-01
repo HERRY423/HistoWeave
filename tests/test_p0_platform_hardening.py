@@ -203,7 +203,7 @@ def test_recommender_v2_reports_baselines_and_priors():
         platform="visium",
         spatial_context_policy="high",
     )
-    assert rec.schema_version == 3
+    assert rec.schema_version == 4
     assert rec.platform == "visium"
     assert rec.global_best_method is not None
     assert rec.beats_global_best_baseline is not None

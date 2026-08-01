@@ -1,0 +1,12 @@
+{
+  "schema_version": "histoweave.registration_receipt.v4",
+  "protocol_id": "histoweave-crc-patient-nonoracle-2026-07",
+  "protocol_commit": "4f0fbd743a2cceb2dbecb9132c9dce08449aa38f",
+  "protocol_sha256": "BBA4FF8DF16D4741229F556FB97CC319F833C4261E75F1FF1E64B8BF12CC832F",
+  "public_branch": "agent/prospective-crc-v4",
+  "public_issue": "https://github.com/HERRY423/HistoWeave/issues/20",
+  "github_created_at_utc": "2026-07-29T08:44:11Z",
+  "remote_ref_verified": "4f0fbd743a2cceb2dbecb9132c9dce08449aa38f",
+  "outcome_access_status_at_receipt": "not_started",
+  "unlock_status": "satisfied"
+}

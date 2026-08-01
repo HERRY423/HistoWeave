@@ -136,7 +136,7 @@ def test_run_spatial_automl_end_to_end(tmp_path: Path):
     assert "AutoML" in text or "Pareto" in text
     assert result.neighbours
     assert result.decision_card is not None
-    assert result.decision_card["action"] in {"global_default", "evidence_required"}
+    assert result.decision_card["action"] in {"global_default", "evidence_required", "abstain"}
     assert (tmp_path / "automl" / "decision_card.json").is_file()
 
 

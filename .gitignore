@@ -49,6 +49,10 @@ histoweave_report.html
 *.zarr/
 *.h5ad
 results/
+!synthetic_validation_v2/results/
+!synthetic_validation_v2/results/**
+!prospective_validation_v4/results/
+!prospective_validation_v4/results/**
 *.params.json
 pipeline_trace.tsv
 
@@ -101,6 +105,12 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+
+# Session-local Claude configuration (may contain local settings / keys — never commit)
+.claude/
+
+# Manuscript TIFF artwork — regenerable via manuscript/make_submission_assets.py
+manuscript/figures/*.tif
 
 # Failure-boundary mapping generated artifacts (keep source scripts trackable)
 /failure_boundary_mapping/figures/

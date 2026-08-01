@@ -1,0 +1,352 @@
+{
+  "claim_boundary": "A same-mask SOTA table is descriptive. Personalised efficacy requires the separately frozen policy contrast and cannot be inferred from the best method.",
+  "cross_study_inference": "study-stratified_only_no_pooled_unit_bootstrap",
+  "methods": [
+    "spagcn",
+    "stagate",
+    "graphst",
+    "bayesspace",
+    "banksy",
+    "spectral",
+    "gaussian_mixture",
+    "kmeans",
+    "agglomerative"
+  ],
+  "multistudy_complete": true,
+  "n_completed_studies": 2,
+  "n_registered_studies": 2,
+  "pending": [],
+  "schema_version": "histoweave.multistudy_same_mask.results.v1",
+  "studies": [
+    {
+      "excluded_from_strict_mask": [
+        "C"
+      ],
+      "method_summary": [
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.08565775017305022,
+            0.21795205741029502
+          ],
+          "mean_ari_same_mask": 0.15138844102664276,
+          "method": "spagcn",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.09236004869563746
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.10161327598877024,
+            0.26985125127828513
+          ],
+          "mean_ari_same_mask": 0.18573226363352768,
+          "method": "stagate",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.1160527794471806
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.10376730553951881,
+            0.2532328001183171
+          ],
+          "mean_ari_same_mask": 0.18230405745463515,
+          "method": "graphst",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.10628229340081072
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.02503033982974327,
+            0.2334113310392846
+          ],
+          "mean_ari_same_mask": 0.1312412707703302,
+          "method": "bayesspace",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.1506216201863222
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.11435547435745869,
+            0.30726609693399326
+          ],
+          "mean_ari_same_mask": 0.21987672905676173,
+          "method": "banksy",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.13355421711866605
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.05365811065826006,
+            0.239178460110179
+          ],
+          "mean_ari_same_mask": 0.1456500030157204,
+          "method": "spectral",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.12739555192117086
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.049783458964494876,
+            0.2518598111505033
+          ],
+          "mean_ari_same_mask": 0.15158057371259212,
+          "method": "gaussian_mixture",
+          "n_available_all_units": 6,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.14283125037071667
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.0655372482420137,
+            0.23325870788064965
+          ],
+          "mean_ari_same_mask": 0.15000078658033983,
+          "method": "kmeans",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.11764782687411884
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.04535554731196639,
+            0.25744292289939175
+          ],
+          "mean_ari_same_mask": 0.15400991309129172,
+          "method": "agglomerative",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 6,
+          "sd_ari_same_mask": 0.14874306338460572
+        }
+      ],
+      "n_all_units": 7,
+      "n_strict_nine_method_units": 6,
+      "paired_vs_locked_global": [
+        {
+          "bootstrap_95_interval": [
+            0.0,
+            0.0
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": 0.0,
+          "method": "spagcn",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.05724318816301913,
+            -0.009810671510914769
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": -0.03434382260688492,
+          "method": "stagate",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.07375617517495335,
+            0.009063560072946673
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": -0.030915616427992367,
+          "method": "graphst",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.0713602519622565,
+            0.11646866838815016
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": 0.020147170256312557,
+          "method": "bayesspace",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.11347401895704075,
+            -0.014685699139650718
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": -0.06848828803011899,
+          "method": "banksy",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.10435770808239496,
+            0.09779795915919663
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": 0.005738438010922377,
+          "method": "spectral",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.09216050348288586,
+            0.089618451754292
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": -0.00019213268594937363,
+          "method": "gaussian_mixture",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.061968996644875624,
+            0.06448752147729418
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": 0.0013876544463029272,
+          "method": "kmeans",
+          "n_same_mask": 6
+        },
+        {
+          "bootstrap_95_interval": [
+            -0.10727974266537123,
+            0.08455678888480837
+          ],
+          "comparator": "spagcn",
+          "mean_regret_difference_vs_global": -0.002621472064648934,
+          "method": "agglomerative",
+          "n_same_mask": 6
+        }
+      ],
+      "same_mask_applied_to_every_method": true,
+      "strict_unit_ids": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "F",
+        "H"
+      ],
+      "study_id": "HER2ST",
+      "unit": "donor"
+    },
+    {
+      "excluded_from_strict_mask": [],
+      "method_summary": [
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.10082341482864147,
+            0.28452737835673514
+          ],
+          "mean_ari_same_mask": 0.1924853673003836,
+          "method": "spagcn",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.13200990546659727
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.08084388646352328,
+            0.2730323866588003
+          ],
+          "mean_ari_same_mask": 0.17247850494971137,
+          "method": "stagate",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.1392377514331058
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.10800457857514525,
+            0.2658563445609999
+          ],
+          "mean_ari_same_mask": 0.1831299800732554,
+          "method": "graphst",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.11757507087219686
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.07222295585340371,
+            0.21932469449552813
+          ],
+          "mean_ari_same_mask": 0.14505353025668186,
+          "method": "bayesspace",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.10801813734770088
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.11359052510342406,
+            0.24380529187939853
+          ],
+          "mean_ari_same_mask": 0.17526020043270357,
+          "method": "banksy",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.09511678584674849
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.10299437997833193,
+            0.2397077001030414
+          ],
+          "mean_ari_same_mask": 0.17249450094962024,
+          "method": "spectral",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.09953030246775582
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.08479977082590602,
+            0.2636934891941081
+          ],
+          "mean_ari_same_mask": 0.17262596559812124,
+          "method": "gaussian_mixture",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.13227799593313092
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.12631206912786275,
+            0.290472369007598
+          ],
+          "mean_ari_same_mask": 0.2002071827828713,
+          "method": "kmeans",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.12019375854400478
+        },
+        {
+          "bootstrap_95_interval_mean_ari": [
+            0.11214392147040325,
+            0.27517165254351045
+          ],
+          "mean_ari_same_mask": 0.1875609809116505,
+          "method": "agglomerative",
+          "n_available_all_units": 7,
+          "n_strict_same_mask": 7,
+          "sd_ari_same_mask": 0.11855758465796071
+        }
+      ],
+      "n_all_units": 7,
+      "n_strict_nine_method_units": 7,
+      "paired_vs_locked_global": [],
+      "same_mask_applied_to_every_method": true,
+      "strict_unit_ids": [
+        "A120838",
+        "A121573",
+        "A416371",
+        "A551763",
+        "A595688",
+        "A798015",
+        "A938797"
+      ],
+      "study_id": "CRC_V4",
+      "unit": "patient"
+    }
+  ]
+}

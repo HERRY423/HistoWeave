@@ -4,14 +4,21 @@
 
 - Repository: `https://github.com/HERRY423/Histoweave`
 - License: BSD-3-Clause (`LICENSE`)
+- Software archive DOI: 10.5281/zenodo.21586217
 - Python package name: `histoweave-spatial`
 - Submission freeze entry point:
-  `submission_freeze_v1/reproduce_submission_freeze.py`
+  `submission_freeze_v2/reproduce_submission_freeze.py`
 - Required pre-submission action: create a stable release tag and archive it in
   Zenodo, Figshare, Software Heritage, or an equivalent repository. Add the DOI
   here before journal submission.
 
-## Reproducing the frozen figures and table
+## Verifying the P0 freeze
+
+```bash
+python submission_freeze_v2/reproduce_submission_freeze.py --check
+```
+
+## Reproducing the legacy frozen figures and table
 
 Run from the repository root:
 
@@ -77,7 +84,8 @@ cohort remains excluded from training and model selection.
 - TLS second-dataset negative transport result:
   `research/phaseB_tls_consensus/second_dataset_xenium_lymph/tls_second_dataset_summary.json`,
   `research/phaseB_tls_consensus/second_dataset_xenium_lymph/REPORT_tls_second_dataset.md`.
-- Preregistered independent study test (negative result retained):
+- Prospectively specified in-repository independent stress test (negative
+  result retained; no independent public timestamp; oracle K):
   `benchmark_external_validation/independent_test_wu2021/preregistered_protocol.json`,
   `benchmark_external_validation/independent_test_wu2021/independent_test_summary.json`,
   `benchmark_external_validation/independent_test_wu2021/sample_regret.csv`,
@@ -98,7 +106,7 @@ cohort remains excluded from training and model selection.
 ## Raw and third-party data
 
 Raw spatial transcriptomics datasets are not redistributed in this repository.
-The sealed independent test uses Wu et al. 2021 (`10.5281/zenodo.4739739`),
+The analyzed independent stress test uses Wu et al. 2021 (`10.5281/zenodo.4739739`),
 downloaded from the official Zenodo record; local archives are checksum-verified
 and ignored by version control.
 The preparation scripts under `benchmark_external_validation/` and
