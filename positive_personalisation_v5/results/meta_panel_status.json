@@ -1,0 +1,53 @@
+{
+  "schema_version": "histoweave.development_meta_panel.status.v5",
+  "status": "complete",
+  "same_contract": true,
+  "n_studies": 2,
+  "n_independent_units": 13,
+  "min_method_units": 13,
+  "method_availability": {
+    "spagcn": 13,
+    "stagate": 13,
+    "graphst": 13,
+    "bayesspace": 13,
+    "banksy": 13,
+    "spectral": 13,
+    "gaussian_mixture": 13,
+    "kmeans": 13,
+    "agglomerative": 13
+  },
+  "studies": [
+    {
+      "study_id": "CRC_V4",
+      "n_strict_nine_method_units": 7,
+      "unit_ids": [
+        "A120838",
+        "A121573",
+        "A416371",
+        "A551763",
+        "A595688",
+        "A798015",
+        "A938797"
+      ]
+    },
+    {
+      "study_id": "HER2ST",
+      "n_strict_nine_method_units": 6,
+      "unit_ids": [
+        "A",
+        "B",
+        "D",
+        "E",
+        "F",
+        "H"
+      ]
+    }
+  ],
+  "source_hashes": {
+    "her2st_matrix": "a70cdedac84663cf6f0d77bff692fdc04940a958f55ee39b176039cdc176054b",
+    "crc_matrix": "726725732408ab0e19bdaa4e45df8b05b7f37fece656550486ac9fc827d69eae",
+    "benchmark_long": "a7cfc3b12ca9084e223d8c70e3e8a6c32f0daeda8039e806b5aa712e3a44547c"
+  },
+  "decision": "policy_training_permitted",
+  "claim_boundary": "Meta-panel completeness permits gated policy training under the v5 aligned non-oracle contract. It does not by itself prove personalised superiority."
+}

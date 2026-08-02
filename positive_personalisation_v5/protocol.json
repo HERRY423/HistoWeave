@@ -1,0 +1,117 @@
+{
+  "schema_version": "histoweave.positive_personalisation.v5",
+  "protocol_id": "histoweave-positive-personalisation-2026-08",
+  "objective": "Complete an aligned non-oracle development meta-panel from registered same-contract studies, fit a fixed-split gated method-score policy without LOOCV, evaluate nonzero personalisation coverage and regret improvement on a held-out real study, then open a third untouched study under a public lock.",
+  "claim_boundary": {
+    "we_claim_if_success": [
+      "An aligned nine-method non-oracle development meta-panel exists with at least two studies and the registered minimum unit/method availability.",
+      "A gated personalised policy selected only from development features and development outcomes can achieve nonzero coverage and lower deployed regret than always-global on one held-out real biological study under a fixed split.",
+      "A third untouched study is registered before outcome access for sequential confirmation."
+    ],
+    "we_do_not_claim": [
+      "Universal personalised superiority across assays and organs",
+      "Prospective sealing of the held-out study when outcomes were already unsealed for descriptive SOTA (report as fixed-split real-biology evaluation)",
+      "Transport of spatial-region ARI to cell-type labels"
+    ]
+  },
+  "aligned_contract": {
+    "task": "spatial_domain",
+    "ground_truth_kind": "spatial_domain",
+    "metric": "ARI",
+    "higher_is_better": true,
+    "k_policy": "estimate",
+    "seeds": [42, 1, 2],
+    "method_panel": [
+      "spagcn",
+      "stagate",
+      "graphst",
+      "bayesspace",
+      "banksy",
+      "spectral",
+      "gaussian_mixture",
+      "kmeans",
+      "agglomerative"
+    ],
+    "split_unit": "study_or_donor_or_patient"
+  },
+  "development_meta_panel": {
+    "studies": [
+      {
+        "study_id": "HER2ST",
+        "unit": "donor",
+        "source_matrix": "multistudy_validation/her2st_donor_method_matrix.csv",
+        "prepared_inputs": "C:/Spatial Transcriptomics/histoweave-her2st-data/prepared/inputs",
+        "role": "development_or_heldout_by_fold"
+      },
+      {
+        "study_id": "CRC_V4",
+        "unit": "patient",
+        "source_matrix": "prospective_validation_v4/results/patient_method_matrix.csv",
+        "prepared_inputs": "datasets_cache/crc_v4_prepared/inputs",
+        "role": "development_or_heldout_by_fold"
+      }
+    ],
+    "minimum_for_policy_training": {
+      "n_studies": 2,
+      "n_independent_units": 12,
+      "min_units_per_method": 10
+    },
+    "same_mask_rule": "Within each study use the strict nine-method complete unit mask. Do not impute missing method scores."
+  },
+  "label_free_features": {
+    "schema": "histoweave.benchmark.features.RECOMMENDATION_FEATURE_ORDER",
+    "include_domain": false,
+    "aggregation": "For multi-section patients, mean features over available sections."
+  },
+  "policy": {
+    "models_in_simplicity_order": ["1nn", "3nn", "ridge_method_score"],
+    "feature_subset_for_small_n": [
+      "library_cv",
+      "spatial_autocorrelation",
+      "effective_rank_90",
+      "effective_rank_95",
+      "sv_entropy"
+    ],
+    "alphas": [0.1, 1.0, 10.0, 100.0],
+    "gate_grid_predicted_gain": [0.0, 0.01, 0.02, 0.03, 0.05, 0.08, 0.1],
+    "minimum_coverage": 0.2,
+    "noninferiority_margin": 0.02,
+    "calibration_rule": "Never use the outer held-out unit (or held-out study) for fitting, scaling, global-default selection, or gate choice.",
+    "selection_rule": "Among thresholds with calibration coverage >= minimum_coverage and mean regret difference <= 0, choose the safest gate: lowest mean regret difference, then highest coverage, then highest threshold. Prefer 1-NN over 3-NN over ridge."
+  },
+  "endpoints": {
+    "coverage": "fraction of held-out units with personalised_set (method != training global default)",
+    "mean_regret_difference": "deployed regret minus always-global regret (negative is better)",
+    "bootstrap": "percentile 95% CI, 10000 resamples of held-out units, seed 20260801",
+    "personalized_value_success": "coverage >= 0.25, mean_regret_difference < 0, and upper 95% CI of the difference < 0"
+  },
+  "evaluation_modes": {
+    "nested_leave_one_unit_out": {
+      "description": "Primary real-biology personalisation endpoint. Outer loop holds out one independent donor/patient unit; inner leave-one-unit-out on the remaining units chooses the gain gate. Uses the aligned HER2ST+CRC non-oracle panel only.",
+      "primary": true
+    },
+    "cross_study_fixed_split": {
+      "description": "Harder transport test: train on one study, test on the other. Secondary; may remain fail-closed.",
+      "folds": [
+        {"train": "HER2ST", "test": "CRC_V4"},
+        {"train": "CRC_V4", "test": "HER2ST"}
+      ]
+    },
+    "untouched_third_study": {
+      "description": "After meta-panel completion and policy freeze from HER2ST+CRC nested LOUO, open a third study without outcome access.",
+      "candidate": {
+        "study_id": "LIBD_DLPFC_SEQUENTIAL_CONFIRMATION",
+        "note": "Three DLPFC donors as sequential confirmation only if independence from frozen v5 policy artefacts is documented. Prefer a fully external public cohort when available.",
+        "technology": "10x Visium",
+        "unit": "donor",
+        "expected_units": 3
+      },
+      "public_lock_required": true
+    }
+  },
+  "failure_and_reporting": {
+    "retain_all_negative_results": true,
+    "no_relabeling_after_outcome_access": true,
+    "descriptive_best_method_is_not_a_recommendation": true
+  }
+}

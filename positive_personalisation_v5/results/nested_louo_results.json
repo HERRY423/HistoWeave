@@ -1,0 +1,152 @@
+{
+  "schema_version": "histoweave.positive_personalisation.nested_louo.v5",
+  "protocol_id": "histoweave-positive-personalisation-2026-08",
+  "mode": "nested_leave_one_unit_out",
+  "feature_subset": [
+    "library_cv",
+    "spatial_autocorrelation",
+    "effective_rank_90",
+    "effective_rank_95",
+    "sv_entropy"
+  ],
+  "n_units": 13,
+  "studies": [
+    "CRC_V4",
+    "HER2ST"
+  ],
+  "actions": [
+    {
+      "unit_id": "HER2ST:A",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.07500152191117451,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "HER2ST:B",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.017714544582138808,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "HER2ST:D",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.027119027527635897,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "HER2ST:E",
+      "selected_method": "spagcn",
+      "action": "personalised_set",
+      "predicted_gain": 0.0980964339614323,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "HER2ST:F",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.07500152191117451,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "HER2ST:H",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.07987751124517328,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "CRC_V4:A120838",
+      "selected_method": "spagcn",
+      "action": "personalised_set",
+      "predicted_gain": 0.0980964339614323,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "CRC_V4:A121573",
+      "selected_method": "kmeans",
+      "action": "personalised_set",
+      "predicted_gain": 0.10357641736401102,
+      "training_global_method": "banksy",
+      "threshold": 0.1
+    },
+    {
+      "unit_id": "CRC_V4:A416371",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.045103431016983,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "CRC_V4:A551763",
+      "selected_method": null,
+      "action": "evidence_required",
+      "predicted_gain": 0.0977450553391519,
+      "training_global_method": "banksy",
+      "threshold": null
+    },
+    {
+      "unit_id": "CRC_V4:A595688",
+      "selected_method": "spagcn",
+      "action": "personalised_set",
+      "predicted_gain": 0.0980964339614323,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "CRC_V4:A798015",
+      "selected_method": "banksy",
+      "action": "global_default",
+      "predicted_gain": 0.009256242295832606,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    },
+    {
+      "unit_id": "CRC_V4:A938797",
+      "selected_method": "kmeans",
+      "action": "personalised_set",
+      "predicted_gain": 0.10357641736401102,
+      "training_global_method": "banksy",
+      "threshold": 0.08
+    }
+  ],
+  "evaluation": {
+    "coverage": 0.38461538461538464,
+    "n_personalised": 5,
+    "mean_deployed_regret": 0.042787710014806114,
+    "mean_global_regret": 0.054285209247244906,
+    "mean_regret_difference": -0.011470917086473902,
+    "bootstrap_95_interval_regret_difference": [
+      -0.02147481617389196,
+      -0.002869513953221624
+    ],
+    "unit_regret_differences": {
+      "HER2ST:A": 0.0,
+      "HER2ST:B": 0.0,
+      "HER2ST:D": 0.0,
+      "HER2ST:E": -0.045103431016983,
+      "HER2ST:F": 0.0,
+      "HER2ST:H": 0.0,
+      "CRC_V4:A120838": -0.020969645104838286,
+      "CRC_V4:A121573": -0.00776695900192792,
+      "CRC_V4:A416371": 0.0,
+      "CRC_V4:A551763": 0.0,
+      "CRC_V4:A595688": -0.029536722389953196,
+      "CRC_V4:A798015": 0.0,
+      "CRC_V4:A938797": -0.046090732508002
+    }
+  },
+  "soft_positive": true,
+  "personalized_value_success": true,
+  "claim_boundary": "Nested LOUO on independent donor/patient units from the aligned non-oracle multi-study panel. Thresholds never use the outer held-out unit. This is real-biology personalisation evidence, not a prospective seal of a third untouched study."
+}

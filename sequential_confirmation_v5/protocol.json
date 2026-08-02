@@ -1,0 +1,80 @@
+{
+  "schema_version": "histoweave.sequential_confirmation.v5",
+  "protocol_id": "histoweave-dlpfc-sequential-confirmation-2026-08",
+  "objective": "After completing the aligned HER2ST+CRC non-oracle meta-panel and nested unit-holdout personalisation endpoint, apply the frozen gated 1-NN policy to three LIBD DLPFC donors under the same nine-method estimate-K contract without using DLPFC outcomes for gate or global-default selection.",
+  "claim_boundary": {
+    "we_claim_if_success": [
+      "Sequential confirmation that the frozen v5 policy yields nonzero donor-level personalisation coverage and lower deployed regret than always-global on DLPFC donors under non-oracle K."
+    ],
+    "we_do_not_claim": [
+      "That DLPFC is fully independent of all prior HistoWeave descriptive analyses (T1 dual-track used five DLPFC sections for SpaGCN/STAGATE oracle-K sensitivity).",
+      "Cross-study transport from HER2ST to CRC or the reverse.",
+      "Universal personalised superiority."
+    ],
+    "independence_disclosure": "DLPFC layer annotations and some oracle-K SpaGCN/STAGATE scores were previously used for T1 dual-track reporting. The frozen v5 policy parameters were fit only on HER2ST+CRC outcomes and label-free features; DLPFC outcomes are used only for sequential scoring after public lock."
+  },
+  "public_lock": {
+    "required_before_outcome_scoring": true,
+    "required_objects": [
+      "public Git commit containing this protocol and frozen policy hash",
+      "public GitHub issue citing commit SHA, protocol_id, and frozen policy SHA-256"
+    ],
+    "unlock_rule": "Both objects must be visible before DLPFC method ARI outcomes are used to score the sequential policy contrast. Label-free preparation, K estimation, and method runs may start after the lock only if predictions are frozen before scoring."
+  },
+  "external_study": {
+    "study_id": "LIBD_DLPFC_SEQUENTIAL_CONFIRMATION",
+    "paper_doi": "10.1038/s41593-020-00787-0",
+    "technology": "10x Visium",
+    "species": "human",
+    "organ": "dorsolateral prefrontal cortex",
+    "unit": "donor",
+    "donors": {
+      "Br5595": ["151507", "151508", "151509", "151510"],
+      "Br8100": ["151669", "151670", "151671", "151672"],
+      "Br5292": ["151673", "151674", "151675", "151676"]
+    },
+    "ground_truth": "manual laminar annotations (spatialLIBD_layer / domain_truth)",
+    "aggregation": "ARI per section and seed; mean seeds within section; mean sections within donor"
+  },
+  "non_oracle_contract": {
+    "k_policy": "estimate",
+    "k_estimator": "histoweave.benchmark.k_selection.estimate_n_domains ensemble",
+    "k_range": [2, 12],
+    "seeds": [42, 1, 2],
+    "method_panel": [
+      "spagcn",
+      "stagate",
+      "graphst",
+      "bayesspace",
+      "banksy",
+      "spectral",
+      "gaussian_mixture",
+      "kmeans",
+      "agglomerative"
+    ],
+    "shared_input": "raw counts and spatial coordinates; labels stripped during prediction"
+  },
+  "frozen_policy": {
+    "source": "positive_personalisation_v5 nested unit-holdout endpoint",
+    "model": "1nn",
+    "k": 1,
+    "feature_subset": [
+      "library_cv",
+      "spatial_autocorrelation",
+      "effective_rank_90",
+      "effective_rank_95",
+      "sv_entropy"
+    ],
+    "global_method_mode_from_source": "banksy",
+    "threshold_set_from_source": [0.08, 0.1],
+    "deployment_threshold": 0.08,
+    "neighbor_bank": "HER2ST+CRC strict same-mask units only (no DLPFC in bank)",
+    "rule": "Personalise to the 1-NN training unit best method only if predicted gain over banksy >= 0.08; otherwise global_default=banksy."
+  },
+  "endpoints": {
+    "coverage": "fraction of three donors with personalised_set",
+    "mean_regret_difference": "deployed regret minus always-global (banksy) regret",
+    "bootstrap": "percentile 95% CI over donors when n permits; otherwise report point estimates with n=3 disclosure",
+    "success": "coverage >= 1/3, mean_regret_difference < 0 (with n=3 CI disclosed as descriptive)"
+  }
+}

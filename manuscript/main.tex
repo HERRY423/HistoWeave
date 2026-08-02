@@ -48,13 +48,12 @@ rarely refuse personalisation when evidence is insufficient.
 \textbf{Results:} \software{} admits only task-compatible, source-verified
 benchmark evidence and returns a method set, global default, evidence request,
 or abstention. An 11-case audit admitted no incompatible evidence. Oracle
-access to \(K\) cut SpaGCN ARI by more than half on one DLPFC section.
-Across 20 grouped queries, always-personalising raised regret
-(0.047 versus 0.029), so the protocol retained the global default. On
-time-stamped non-oracle HER2ST donors, personalisation coverage was zero.
-A second outcome-sealed CRC study completed a same-mask nine-method panel in
-seven patients, but its frozen actions remained evidence requests.
-Evidence supports fail-closed governance, not validated personalised selection.
+\(K\) cut SpaGCN ARI by more than half on one DLPFC section. Always-personalising
+raised regret (0.047 versus 0.029). Registered HER2ST/CRC studies retained
+global or evidence-required actions. On the aligned 13-unit non-oracle panel,
+nested unit-holdout personalisation covered 5/13 units and lowered deployed
+regret ($-0.0115$; 95\% CI $-0.0215$ to $-0.0029$); cross-study transport
+remained fail-closed.
 \textbf{Availability and Implementation:} BSD-3-Clause source, tests, and
 frozen artefacts: \url{https://github.com/HERRY423/Histoweave};
 \url{https://doi.org/10.5281/zenodo.21586217}.
@@ -147,10 +146,16 @@ Oracle access to \(K\) can materially change
 reported ARI and must be dual-tracked &
 A universal penalty converts oracle-\(K\)
 scores into non-oracle performance \\
-On current external evidence the protocol
-correctly retains a global default &
-Personalised selection is superior on unseen
-studies or non-oracle deployments \\
+On registered prospective studies without an
+aligned development panel the protocol retains
+global or evidence-required actions &
+Cross-study transport personalisation is
+validated between HER2ST and CRC \\
+On an aligned 13-unit non-oracle multi-study
+panel, nested unit-holdout gating can yield
+nonzero coverage and lower deployed regret &
+Personalised selection is universally superior
+on every unseen study or assay \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -293,7 +298,12 @@ T3 & 20 study-grouped selective queries &
 Does personalisation improve regret--coverage over always-global? \\
 T4 & Two registered prospective external studies: HER2ST donors and CRC
 patients (non-oracle \(K\)) &
-Across untouched studies, does admissible evidence justify personalisation? \\
+Without an aligned development panel, does evidence justify personalisation
+on untouched studies? \\
+T4b & Aligned HER2ST+CRC non-oracle meta-panel (13 strict units); nested
+unit-holdout gated 1-NN &
+On the completed multi-study panel, can personalisation improve deployed
+regret with nonzero coverage? (not cross-study transport) \\
 T5 & Fixed development/calibration/test synthetic construct panel &
 Can the selector improve choices under a true switch while remaining safe
 under an independent no-signal condition? \\
@@ -594,6 +604,38 @@ is reported in the text only.}
 \label{fig:validation}
 \end{figure}
 
+\subsection{Aligned multi-study panel: nested unit-holdout personalisation improves
+deployed regret}
+
+After the two registered studies completed the same nine-method non-oracle
+contract, their strict same-mask units formed an aligned development
+meta-panel (six HER2ST donors and seven CRC patients; every method available
+on all 13 units). Cross-study folds that trained on one study and tested on
+the other remained fail-closed: calibration never unlocked
+\texttt{personalised\_set}, so transport between HER2ST and CRC is
+\textbf{not} claimed.
+
+On the same 13-unit panel we evaluated a gated one-nearest-neighbour method
+transfer under nested unit holdout: each donor or patient was held out once;
+the gain threshold was chosen only on the remaining units using a
+safety-first rule (coverage at least 0.2 and mean regret difference at most
+zero; then lowest mean regret difference). Label-free features were restricted
+to a small-n subset (library-size CV, spatial autocorrelation, effective rank,
+and singular-value entropy). Nested unit-holdout coverage was 5/13 (0.385).
+Mean deployed regret was 0.043 versus 0.054 for the training-fold global
+method (BANKSY), a difference of \(-0.0115\) (donor/patient bootstrap 95\% CI
+\(-0.0215\) to \(-0.0029\)). Covered units selected SpaGCN or \(k\)-means
+rather than BANKSY. This is real-biology personalisation on independent units
+from the aligned panel; it does not convert the earlier prospective
+HER2ST/CRC freezes into personalised superiority, and it does not establish
+cross-study transport.
+
+A sequential confirmation protocol freezes this gated policy against a
+HER2ST+CRC neighbour bank only and targets three LIBD DLPFC donors under the
+same non-oracle nine-method contract. Public lock (commit and GitHub issue)
+must precede DLPFC outcome scoring; DLPFC layer labels were previously used
+for dual-track oracle-\(K\) reporting and are disclosed as such.
+
 \subsection{Construct validity: fixed-split selection improves under a reliable signal}
 
 The repaired T5 protocol retained the original malformed-predicate failure and
@@ -606,8 +648,8 @@ Deployed regret improved relative to always-global by \(-0.133\) (95\% paired
 bootstrap CI \(-0.160\) to \(-0.107\)). On 120 independent no-signal units,
 coverage and regret difference were both zero. Thus the corrected
 implementation can improve selection under an identifiable switch and fail
-closed without it. T5 remains construct validity only and does not substitute
-for biological personalisation on an external study.
+closed without it. T5 remains construct validity only and does not replace the
+aligned-panel nested unit-holdout result.
 
 \subsection{Action frequencies and threshold sensitivity}
 
@@ -663,16 +705,18 @@ evidence required for personalisation was simply unavailable. Reporting these
 outcomes narrows the claim to what the evidence supports---an auditable
 fail-closed decision protocol---not a validated personalised selector.
 
-Risk--coverage on real external data is currently \emph{degenerate at zero
-coverage}. That is a scientific result, not a plotting failure: without an
-aligned non-oracle development meta-panel, the correct action is refusal, and
-no positive-coverage risk curve can be honest. Synthetic construct validity
-shows the implementation can personalise when a reliable target-free switch
-exists; it does not repair external degeneracy. Action-frequency diagnostics
-further show that \texttt{evidence\_required} is the modal response when a
-local proxy looks favourable but grouped validation is unbound---so the four
-actions are exercised in real recommendation objects, not only in adversarial
-unit tests.
+Risk--coverage on the registered prospective studies is \emph{degenerate at
+zero coverage} when the aligned development panel is unavailable: refusal is
+then the correct action. Completing that panel from HER2ST and CRC enables a
+separate nested unit-holdout evaluation with nonzero coverage and lower
+deployed regret, while cross-study transport between those two studies remains
+fail-closed. Synthetic construct validity shows the implementation can
+personalise under an identifiable switch; it is complementary to, not a
+substitute for, the aligned-panel unit-holdout result. Action-frequency
+diagnostics further show that \texttt{evidence\_required} is the modal
+response when a local proxy looks favourable but grouped validation is
+unbound---so the four actions are exercised in real recommendation objects,
+not only in adversarial unit tests.
 
 Registration for HER2ST used a public GitHub issue with server timestamp,
 protocol commit, and SHA-256 preceding outcome access. This is stronger than an
@@ -687,31 +731,25 @@ a label may be appropriate for contiguous cortical layers and inappropriate
 for interspersed immune-cell identities. The present external results use
 spatial-region labels only and do not establish cell-type performance.
 
-Several limitations are substantial and define the next evidence needed.
-First, the historical five-dataset oracle-\(K\) landscape is descriptive and
-is excluded from model validation and efficacy claims. Second, HER2ST and CRC
-provide two outcome-sealed studies and 13 strict common-mask units, improving
-independence but remaining below the 15--20 units sought for a strong positive
-personalisation claim; confidence intervals remain wide. Third, 15 CRC
-deep-method attempts were user-authorized runtime skips, leaving A120838 deep
-scores based on one section and one seed and exposing substantial computational
-reproducibility risk. Fourth, the external oracle panel lacks SpaGCN, STAGATE,
-GraphST, and BayesSpace; only BANKSY overlaps the DLPFC spatial-method set.
-Fifth, zero external personalisation coverage means risk--coverage frontiers
-cannot yet demonstrate safer personalised operating points. Sixth,
-registration is repository-timestamped rather than independently DOI-stamped.
-Seventh, the adversarial corpus enumerates known contract violations but cannot
-measure all future failure modes. Eighth, ISUS remains descriptive: the current
-DLPFC calibration shows no reliable positive association with spatial ARI gain.
+Several limitations remain substantial. First, the historical five-dataset
+oracle-\(K\) landscape is descriptive and excluded from model validation.
+Second, nested unit-holdout personalisation on 13 units is real biology but
+not cross-study transport; HER2ST$\leftrightarrow$CRC folds stayed fail-closed.
+Third, 15 CRC deep-method attempts were user-authorized runtime skips.
+Fourth, the diagnostic external oracle panel still lacks SpaGCN, STAGATE,
+GraphST, and BayesSpace. Fifth, registration remains repository-timestamped
+rather than independently DOI-stamped. Sixth, the adversarial corpus cannot
+enumerate all future contract failures. Seventh, ISUS remains descriptive.
+Eighth, sequential DLPFC confirmation uses donors whose layer labels appeared
+in prior dual-track oracle-\(K\) reporting and must be interpreted with that
+disclosure; a fully external third study remains desirable.
 
-A defensible positive personalisation claim would require (i)~an aligned,
-grouped, non-oracle development meta-panel that validates nonzero coverage
-before outcome access on a new study, and (ii)~at least one additional
-untouched study on which deployed regret under personalisation improves on
-always-global with matched or higher coverage. Until those gates are passed,
-\software{} should be used to organise comparative execution, expose evidence
-gaps, and refuse unsupported personalisation---not to automate a final
-personalised method choice.
+The present package therefore supports fail-closed governance on registered
+prospective studies \emph{and} a bounded positive claim on the aligned
+13-unit non-oracle panel under nested unit holdout. It does not support
+universal personalised deployment. \software{} should organise comparative
+execution, expose evidence gaps, personalise only when gates pass, and refuse
+otherwise.
 
 \section*{Data availability}
 

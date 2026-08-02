@@ -1,0 +1,197 @@
+{
+  "schema_version": "histoweave.positive_personalisation.results.v5",
+  "protocol_id": "histoweave-positive-personalisation-2026-08",
+  "n_units_total": 13,
+  "studies": [
+    "CRC_V4",
+    "HER2ST"
+  ],
+  "cross_study_folds": [
+    {
+      "train_study": "HER2ST",
+      "test_study": "CRC_V4",
+      "status": "calibration_failed_evidence_required",
+      "n_train": 6,
+      "n_test": 7,
+      "global_method": "banksy",
+      "calibration_choices": [],
+      "actions": [
+        {
+          "unit_id": "A120838",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A121573",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A416371",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A551763",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A595688",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A798015",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "A938797",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        }
+      ],
+      "evaluation": {
+        "status": "evidence_required",
+        "coverage": 0.0,
+        "mean_regret_difference": null
+      },
+      "personalized_value_success": false
+    },
+    {
+      "train_study": "CRC_V4",
+      "test_study": "HER2ST",
+      "status": "calibration_failed_evidence_required",
+      "n_train": 7,
+      "n_test": 6,
+      "global_method": "kmeans",
+      "calibration_choices": [],
+      "actions": [
+        {
+          "unit_id": "A",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "B",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "D",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "E",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "F",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        },
+        {
+          "unit_id": "H",
+          "selected_method": null,
+          "action": "evidence_required",
+          "predicted_gain": null
+        }
+      ],
+      "evaluation": {
+        "status": "evidence_required",
+        "coverage": 0.0,
+        "mean_regret_difference": null
+      },
+      "personalized_value_success": false
+    }
+  ],
+  "unit_fixed_split": {
+    "mode": "unit_fixed_split",
+    "status": "scored",
+    "n_fit": 7,
+    "n_cal": 3,
+    "n_test": 3,
+    "fit_unit_ids": [
+      "CRC_V4:A120838",
+      "HER2ST:H",
+      "CRC_V4:A938797",
+      "HER2ST:F",
+      "CRC_V4:A798015",
+      "HER2ST:B",
+      "HER2ST:E"
+    ],
+    "cal_unit_ids": [
+      "HER2ST:D",
+      "CRC_V4:A121573",
+      "CRC_V4:A416371"
+    ],
+    "test_unit_ids": [
+      "CRC_V4:A551763",
+      "CRC_V4:A595688",
+      "HER2ST:A"
+    ],
+    "chosen": {
+      "model": "1nn",
+      "k": 1,
+      "alpha": null,
+      "threshold": 0.05,
+      "calibration_coverage": 0.6666666666666666,
+      "calibration_mean_regret_difference": -0.005976387185188311
+    },
+    "global_method": "banksy",
+    "actions": [
+      {
+        "unit_id": "CRC_V4:A551763",
+        "selected_method": "spectral",
+        "action": "personalised_set",
+        "predicted_gain": 0.15221753497065052
+      },
+      {
+        "unit_id": "CRC_V4:A595688",
+        "selected_method": "banksy",
+        "action": "global_default",
+        "predicted_gain": 0.027119027527635897
+      },
+      {
+        "unit_id": "HER2ST:A",
+        "selected_method": "spectral",
+        "action": "personalised_set",
+        "predicted_gain": 0.15221753497065052
+      }
+    ],
+    "evaluation": {
+      "status": "scored",
+      "n_units": 3,
+      "coverage": 0.6666666666666666,
+      "mean_deployed_regret": 0.14221556755420608,
+      "mean_global_regret": 0.0921076648714458,
+      "mean_regret_difference": 0.050107902682760275,
+      "bootstrap_95_interval_regret_difference": [
+        -0.0463697941771797,
+        0.19669350222546048
+      ]
+    },
+    "soft_positive": false,
+    "personalized_value_success": false,
+    "claim_boundary": "Unit-level fixed split on the aligned multi-study panel. Development/calibration units never include test units. This is real-biology evidence, not cross-study prospective sealing."
+  },
+  "any_personalized_value_success": false,
+  "any_soft_positive": false,
+  "soft_positive_definition": "coverage > 0 and mean_regret_difference < 0 (CI may include 0)",
+  "claim_boundary": "Primary positive claim uses personalized_value_success on either a cross-study held-out fold or the unit fixed split of the aligned panel. Cross-study folds are the harder transport test; unit fixed split is real-biology personalisation on held-out units. Neither retroactively creates a prospective seal for previously unsealed descriptive SOTA studies."
+}

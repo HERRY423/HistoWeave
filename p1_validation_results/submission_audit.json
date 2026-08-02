@@ -1,6 +1,6 @@
 {
   "abstract_within_recommended_150_words": true,
-  "abstract_word_count_including_headings_and_urls": 139,
+  "abstract_word_count_including_headings_and_urls": 122,
   "all_evidence_checks_passed": true,
   "all_figure_files_exist": true,
   "all_figures_at_least_350_dpi": true,
@@ -80,6 +80,11 @@
     "synthetic_v22_signal_coverage": true,
     "synthetic_v22_signal_superiority": true,
     "synthetic_v22_success": true,
+    "v5_cross_study_not_claimed": true,
+    "v5_louo_coverage": true,
+    "v5_louo_regret_improved": true,
+    "v5_louo_success": true,
+    "v5_meta_panel_complete": true,
     "wu_mean_matches_text": true,
     "wu_negative": true
   },
@@ -128,7 +133,7 @@
   "latex_compile_status": "not_run_no_engine_available",
   "latex_engine_available": false,
   "main_body_within_5000_words": true,
-  "main_body_word_count_excluding_references": 4649,
+  "main_body_word_count_excluding_references": 4922,
   "missing_bibliography_keys": [],
   "missing_labels": [],
   "schema_version": "histoweave.manuscript_audit.v1",

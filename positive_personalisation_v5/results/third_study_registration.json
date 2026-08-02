@@ -1,0 +1,105 @@
+{
+  "schema_version": "histoweave.third_study_registration.v5",
+  "protocol_id": "histoweave-positive-personalisation-2026-08",
+  "registered_utc": "2026-08-02T06:44:48Z",
+  "execution_permitted": false,
+  "public_lock": {
+    "required": true,
+    "required_objects": [
+      "commit containing this receipt on a public branch",
+      "public GitHub issue citing protocol_id, receipt SHA-256, and meta-panel/policy hashes"
+    ],
+    "unlock_rule": "Both objects must be visible before any third-study labels or method ARI outcomes are used to update the policy."
+  },
+  "third_study": {
+    "study_id": "LIBD_DLPFC_SEQUENTIAL_CONFIRMATION",
+    "paper_doi": "10.1038/s41593-020-00787-0",
+    "technology": "10x Visium",
+    "species": "human",
+    "organ": "dorsolateral prefrontal cortex",
+    "unit": "donor",
+    "expected_units": 3,
+    "donor_ids": [
+      "Br5595",
+      "Br8100",
+      "Br5292"
+    ],
+    "ground_truth": "manual laminar annotations from the source study",
+    "k_policy": "estimate",
+    "method_panel": [
+      "spagcn",
+      "stagate",
+      "graphst",
+      "bayesspace",
+      "banksy",
+      "spectral",
+      "gaussian_mixture",
+      "kmeans",
+      "agglomerative"
+    ],
+    "independence_requirements": [
+      "frozen v5 policy parameters must not have been fit on DLPFC outcomes",
+      "DLPFC may not enter feature scaling, global-default selection, or gate calibration for the sequential confirmation fold",
+      "if DLPFC was used in any prior descriptive landscape, report that limitation and prefer a fully external cohort when available"
+    ],
+    "forbidden_before_public_lock": [
+      "re-using DLPFC ARI tables to choose thresholds",
+      "opening pathologist/manual labels for policy tuning",
+      "selective exclusion of difficult donors after seeing method rankings"
+    ]
+  },
+  "meta_panel_status_sha256": "c794a952bb2dacd79058cddf4f016ac50898016ecf6de4809886d0fcad2bb0f2",
+  "policy_results_sha256": "aafdfa63ca59c9fc34ed05c473bf1eb65b04f269ea5eb1d5742a76d5f30c8e65",
+  "louo_results_sha256": "8d84176ddd1ad3c1d5011aac0c318ca7dfc6b34929e5b805befb7b6dda9e5362",
+  "frozen_policy": {
+    "status": "policy_frozen_from_nested_louo",
+    "source": {
+      "kind": "nested_leave_one_unit_out"
+    },
+    "model": "1nn",
+    "k": 1,
+    "feature_subset": [
+      "library_cv",
+      "spatial_autocorrelation",
+      "effective_rank_90",
+      "effective_rank_95",
+      "sv_entropy"
+    ],
+    "threshold_median": 0.08,
+    "threshold_set": [
+      0.08,
+      0.1
+    ],
+    "global_method_mode": "banksy",
+    "personalized_value_success_on_source": true,
+    "soft_positive_on_source": true,
+    "source_evaluation": {
+      "coverage": 0.38461538461538464,
+      "n_personalised": 5,
+      "mean_deployed_regret": 0.042787710014806114,
+      "mean_global_regret": 0.054285209247244906,
+      "mean_regret_difference": -0.011470917086473902,
+      "bootstrap_95_interval_regret_difference": [
+        -0.02147481617389196,
+        -0.002869513953221624
+      ],
+      "unit_regret_differences": {
+        "HER2ST:A": 0.0,
+        "HER2ST:B": 0.0,
+        "HER2ST:D": 0.0,
+        "HER2ST:E": -0.045103431016983,
+        "HER2ST:F": 0.0,
+        "HER2ST:H": 0.0,
+        "CRC_V4:A120838": -0.020969645104838286,
+        "CRC_V4:A121573": -0.00776695900192792,
+        "CRC_V4:A416371": 0.0,
+        "CRC_V4:A551763": 0.0,
+        "CRC_V4:A595688": -0.029536722389953196,
+        "CRC_V4:A798015": 0.0,
+        "CRC_V4:A938797": -0.046090732508002
+      }
+    }
+  },
+  "claim_boundary": "Registration opens a sequential confirmation study. It does not retroactively convert prior fixed-split evaluations into prospective seals.",
+  "receipt_sha256": "18bf4ee51eda0db377af4e0ba5bdc9ff642f91352e9052b1dbd71be046e0692a"
+}

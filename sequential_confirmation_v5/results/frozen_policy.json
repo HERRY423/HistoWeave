@@ -1,0 +1,348 @@
+{
+  "schema_version": "histoweave.sequential_confirmation.frozen_policy.v5",
+  "protocol_id": "histoweave-dlpfc-sequential-confirmation-2026-08",
+  "frozen_utc": "2026-08-02T06:56:16Z",
+  "model": "1nn",
+  "k": 1,
+  "global_method": "banksy",
+  "deployment_threshold": 0.08,
+  "threshold_set_observed_on_source": [
+    0.08,
+    0.1
+  ],
+  "feature_subset": [
+    "library_cv",
+    "spatial_autocorrelation",
+    "effective_rank_90",
+    "effective_rank_95",
+    "sv_entropy"
+  ],
+  "neighbor_bank_studies": [
+    "HER2ST",
+    "CRC_V4"
+  ],
+  "neighbor_bank_units": [
+    "HER2ST:A",
+    "HER2ST:B",
+    "HER2ST:D",
+    "HER2ST:E",
+    "HER2ST:F",
+    "HER2ST:H",
+    "CRC_V4:A120838",
+    "CRC_V4:A121573",
+    "CRC_V4:A416371",
+    "CRC_V4:A551763",
+    "CRC_V4:A595688",
+    "CRC_V4:A798015",
+    "CRC_V4:A938797"
+  ],
+  "source_hashes": {
+    "louo": "8d84176ddd1ad3c1d5011aac0c318ca7dfc6b34929e5b805befb7b6dda9e5362",
+    "meta_panel_units": "eabadd159deca793da9d66fd447d21c2d81ec8e56251c1786b19924cea138e9d",
+    "unit_features": "2065f0bf804171cd2f958ed86cdbfa29cf5ae56991ae16ac45c4ec9c0f84c74f"
+  },
+  "source_evaluation": {
+    "coverage": 0.38461538461538464,
+    "n_personalised": 5,
+    "mean_deployed_regret": 0.042787710014806114,
+    "mean_global_regret": 0.054285209247244906,
+    "mean_regret_difference": -0.011470917086473902,
+    "bootstrap_95_interval_regret_difference": [
+      -0.02147481617389196,
+      -0.002869513953221624
+    ],
+    "unit_regret_differences": {
+      "HER2ST:A": 0.0,
+      "HER2ST:B": 0.0,
+      "HER2ST:D": 0.0,
+      "HER2ST:E": -0.045103431016983,
+      "HER2ST:F": 0.0,
+      "HER2ST:H": 0.0,
+      "CRC_V4:A120838": -0.020969645104838286,
+      "CRC_V4:A121573": -0.00776695900192792,
+      "CRC_V4:A416371": 0.0,
+      "CRC_V4:A551763": 0.0,
+      "CRC_V4:A595688": -0.029536722389953196,
+      "CRC_V4:A798015": 0.0,
+      "CRC_V4:A938797": -0.046090732508002
+    }
+  },
+  "rule": "Using only HER2ST+CRC neighbour bank features/performance, select the 1-NN unit's best method if predicted gain over the frozen global method is >= deployment_threshold; otherwise return global_default.",
+  "claim_boundary": "Policy freeze uses no DLPFC outcomes. DLPFC is sequential confirmation only.",
+  "neighbor_bank": [
+    {
+      "unit_id": "HER2ST:A",
+      "features": {
+        "library_cv": 0.48258835077285767,
+        "spatial_autocorrelation": 0.3002140942177431,
+        "effective_rank_90": 63.0,
+        "effective_rank_95": 118.0,
+        "sv_entropy": 0.44404464431073226
+      },
+      "performance": {
+        "spagcn": 0.1466672952541265,
+        "stagate": 0.2012540588553014,
+        "graphst": 0.2557448699417406,
+        "bayesspace": 0.2847423836320203,
+        "banksy": 0.2703377437115319,
+        "spectral": 0.0736442414860714,
+        "gaussian_mixture": 0.3391814141927183,
+        "kmeans": 0.2779577259660968,
+        "agglomerative": 0.3680827990506838
+      }
+    },
+    {
+      "unit_id": "HER2ST:B",
+      "features": {
+        "library_cv": 1.4077221155166626,
+        "spatial_autocorrelation": 0.65700008726572,
+        "effective_rank_90": 5.0,
+        "effective_rank_95": 21.0,
+        "sv_entropy": 0.23871617992255456
+      },
+      "performance": {
+        "spagcn": 0.1198361501310562,
+        "stagate": 0.1789793724340864,
+        "graphst": 0.2203295780806045,
+        "bayesspace": 0.2269711105442712,
+        "banksy": 0.2284837479353758,
+        "spectral": 0.2235059597302327,
+        "gaussian_mixture": 0.2227458283193843,
+        "kmeans": 0.1863292383783523,
+        "agglomerative": 0.2150199451972127
+      }
+    },
+    {
+      "unit_id": "HER2ST:D",
+      "features": {
+        "library_cv": 0.6164512634277344,
+        "spatial_autocorrelation": 0.46854682863530106,
+        "effective_rank_90": 21.0,
+        "effective_rank_95": 61.0,
+        "sv_entropy": 0.36758512132604226
+      },
+      "performance": {
+        "spagcn": 0.2481360405027013,
+        "stagate": 0.3173905960315339,
+        "graphst": 0.2602002465898571,
+        "bayesspace": 0.0352394243140777,
+        "banksy": 0.3720971140072253,
+        "spectral": 0.1197187450840683,
+        "gaussian_mixture": 0.1141420128809582,
+        "kmeans": 0.2354891592974999,
+        "agglomerative": 0.1634321037033446
+      }
+    },
+    {
+      "unit_id": "HER2ST:E",
+      "features": {
+        "library_cv": 0.5340407490730286,
+        "spatial_autocorrelation": 0.6478507118117696,
+        "effective_rank_90": 6.0,
+        "effective_rank_95": 28.0,
+        "sv_entropy": 0.24713918405527402
+      },
+      "performance": {
+        "spagcn": 0.0288300978903744,
+        "stagate": 0.0171513041674677,
+        "graphst": 0.0229926441024822,
+        "bayesspace": -0.0474891559541889,
+        "banksy": -0.0162733331266086,
+        "spectral": -0.0450274692814632,
+        "gaussian_mixture": 0.0098878112121121,
+        "kmeans": 0.0177239210462967,
+        "agglomerative": 0.0191338350489409
+      }
+    },
+    {
+      "unit_id": "HER2ST:F",
+      "features": {
+        "library_cv": 0.37708717584609985,
+        "spatial_autocorrelation": 0.3655629323302994,
+        "effective_rank_90": 97.0,
+        "effective_rank_95": 179.0,
+        "sv_entropy": 0.4214577883199127
+      },
+      "performance": {
+        "spagcn": 0.0948914299361849,
+        "stagate": 0.0975718081541491,
+        "graphst": 0.0730960762592047,
+        "bayesspace": 0.003953561604503,
+        "banksy": 0.1718249019502511,
+        "spectral": 0.3240424369209016,
+        "gaussian_mixture": -0.0244277229882405,
+        "kmeans": -0.0082567815464037,
+        "agglomerative": -0.0464992968163863
+      }
+    },
+    {
+      "unit_id": "HER2ST:H",
+      "features": {
+        "library_cv": 0.7259137630462646,
+        "spatial_autocorrelation": 0.46646849618652936,
+        "effective_rank_90": 6.0,
+        "effective_rank_95": 36.0,
+        "sv_entropy": 0.2511833289005592
+      },
+      "performance": {
+        "spagcn": 0.2699696324454133,
+        "stagate": 0.3020464421586276,
+        "graphst": 0.2614609297539217,
+        "bayesspace": 0.2840303004812979,
+        "banksy": 0.292790199862795,
+        "spectral": 0.1780161041545115,
+        "gaussian_mixture": 0.2479540986586204,
+        "kmeans": 0.190761456340197,
+        "agglomerative": 0.2048900923639545
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A120838",
+      "features": {
+        "library_cv": 0.5116016566753387,
+        "spatial_autocorrelation": 0.5636450885924615,
+        "effective_rank_90": 13.0,
+        "effective_rank_95": 51.5,
+        "sv_entropy": 0.3444766747642113
+      },
+      "performance": {
+        "spagcn": 0.2217704088813963,
+        "stagate": 0.2279197913041939,
+        "graphst": 0.2014865477571279,
+        "bayesspace": 0.0847199646423348,
+        "banksy": 0.200800763776558,
+        "spectral": 0.1626991176569421,
+        "gaussian_mixture": 0.0505624880193491,
+        "kmeans": 0.1571185689642199,
+        "agglomerative": 0.1417548230625271
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A121573",
+      "features": {
+        "library_cv": 0.5265533626079559,
+        "spatial_autocorrelation": 0.6082160171150142,
+        "effective_rank_90": 7.5,
+        "effective_rank_95": 15.0,
+        "sv_entropy": 0.33132907654188526
+      },
+      "performance": {
+        "spagcn": 0.3462504377688383,
+        "stagate": 0.2516218175873576,
+        "graphst": 0.2443118864721281,
+        "bayesspace": 0.3009038939413416,
+        "banksy": 0.248154003807406,
+        "spectral": 0.2949107423591787,
+        "gaussian_mixture": 0.2829233291096481,
+        "kmeans": 0.2559209628093339,
+        "agglomerative": 0.2639668672941862
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A416371",
+      "features": {
+        "library_cv": 0.6479116082191467,
+        "spatial_autocorrelation": 0.724459604003848,
+        "effective_rank_90": 5.0,
+        "effective_rank_95": 30.0,
+        "sv_entropy": 0.19630413046863102
+      },
+      "performance": {
+        "spagcn": 0.031326807397457,
+        "stagate": 0.0261385744271962,
+        "graphst": 0.0437244241089267,
+        "bayesspace": 0.0503826517341354,
+        "banksy": 0.0609917289200547,
+        "spectral": 0.0148782123777628,
+        "gaussian_mixture": 0.0441515651733775,
+        "kmeans": 0.0420462127876818,
+        "agglomerative": 0.0387074949117638
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A551763",
+      "features": {
+        "library_cv": 0.45075489580631256,
+        "spatial_autocorrelation": 0.39749848578083824,
+        "effective_rank_90": 76.0,
+        "effective_rank_95": 159.5,
+        "sv_entropy": 0.43592508833780796
+      },
+      "performance": {
+        "spagcn": 0.0301453986726232,
+        "stagate": 0.0224460013584474,
+        "graphst": 0.0709611249437558,
+        "bayesspace": 0.0019275710261836,
+        "banksy": 0.0703137583564781,
+        "spectral": 0.1166835525336578,
+        "gaussian_mixture": 0.0449417511225591,
+        "kmeans": 0.1453152802676526,
+        "agglomerative": 0.108183546527395
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A595688",
+      "features": {
+        "library_cv": 0.5630007535219193,
+        "spatial_autocorrelation": 0.588086891140695,
+        "effective_rank_90": 6.0,
+        "effective_rank_95": 11.0,
+        "sv_entropy": 0.3248950791824406
+      },
+      "performance": {
+        "spagcn": 0.3568554356034366,
+        "stagate": 0.4067590565842368,
+        "graphst": 0.3962514730673256,
+        "bayesspace": 0.247056158270319,
+        "banksy": 0.3273187132134834,
+        "spectral": 0.2911256609997835,
+        "gaussian_mixture": 0.3788930961970684,
+        "kmeans": 0.4308951305774944,
+        "agglomerative": 0.4059351717473032
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A798015",
+      "features": {
+        "library_cv": 0.8389640748500824,
+        "spatial_autocorrelation": 0.5295381771309411,
+        "effective_rank_90": 3.5,
+        "effective_rank_95": 6.0,
+        "sv_entropy": 0.16054221024199877
+      },
+      "performance": {
+        "spagcn": 0.1951599672508654,
+        "stagate": 0.1888886141493303,
+        "graphst": 0.1796554645864273,
+        "bayesspace": 0.1385957470083737,
+        "banksy": 0.1774454226687266,
+        "spectral": 0.1306729093054654,
+        "gaussian_mixture": 0.1852350060334549,
+        "kmeans": 0.1822663792794962,
+        "agglomerative": 0.1815929515543099
+      }
+    },
+    {
+      "unit_id": "CRC_V4:A938797",
+      "features": {
+        "library_cv": 0.6001895666122437,
+        "spatial_autocorrelation": 0.511041628017945,
+        "effective_rank_90": 6.0,
+        "effective_rank_95": 9.5,
+        "sv_entropy": 0.27104511750453764
+      },
+      "performance": {
+        "spagcn": 0.1658891155280683,
+        "stagate": 0.0835756792372175,
+        "graphst": 0.1455189395770965,
+        "bayesspace": 0.1917887251740849,
+        "banksy": 0.1417970122862181,
+        "spectral": 0.1964913114145514,
+        "gaussian_mixture": 0.2216745235313914,
+        "kmeans": 0.1878877447942201,
+        "agglomerative": 0.1727860112840683
+      }
+    }
+  ],
+  "policy_sha256": "c8f15d2a7972eb4068ef924d584255f99a742bbd41ef166ebec3d6e36a4b4106"
+}

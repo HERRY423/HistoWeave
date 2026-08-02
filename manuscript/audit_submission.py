@@ -157,6 +157,39 @@ def main() -> None:
         ).is_file(),
     }
 
+    louo_path = (
+        ROOT / "positive_personalisation_v5" / "results" / "nested_louo_results.json"
+    )
+    meta_status_path = (
+        ROOT / "positive_personalisation_v5" / "results" / "meta_panel_status.json"
+    )
+    if louo_path.is_file() and meta_status_path.is_file():
+        louo = json.loads(louo_path.read_text(encoding="utf-8"))
+        meta_status = json.loads(meta_status_path.read_text(encoding="utf-8"))
+        eval_block = louo.get("evaluation") or {}
+        evidence_checks.update(
+            {
+                "v5_meta_panel_complete": meta_status.get("status") == "complete"
+                and meta_status.get("n_independent_units") == 13,
+                "v5_louo_success": louo.get("personalized_value_success") is True,
+                "v5_louo_coverage": abs(float(eval_block.get("coverage", -1)) - 0.38461538461538464)
+                < 1e-9,
+                "v5_louo_regret_improved": float(eval_block.get("mean_regret_difference", 1))
+                < 0.0
+                and float(
+                    (eval_block.get("bootstrap_95_interval_regret_difference") or [0, 1])[1]
+                )
+                < 0.0,
+                "v5_cross_study_not_claimed": (
+                    "cross-study transport" in main_tex.lower()
+                    and "not} claimed" in main_tex.lower().replace(" ", "")
+                    or "is \\textbf{not} claimed" in main_tex
+                    or "is not claimed" in main_tex.lower()
+                    or "\\textbf{not} claimed" in main_tex
+                ),
+            }
+        )
+
     diagnostics_path = (
         ROOT / "manuscript" / "protocol_diagnostics" / "action_frequency_and_sensitivity.json"
     )

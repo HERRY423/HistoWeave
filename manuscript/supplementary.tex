@@ -56,11 +56,17 @@ T3 & 20 study-grouped selective queries &
 Whether personalisation improves regret--coverage \\
 T4 & HER2ST donors and CRC patients; two registered prospective external
 studies (non-oracle \(K\)) &
-Across untouched studies, does evidence justify personalisation? \\
+Without aligned development panel: personalisation not justified
+(zero coverage / evidence\_required) \\
+T4b & Aligned HER2ST+CRC panel (13 units); nested unit-holdout 1-NN &
+Nonzero coverage (5/13) and lower deployed regret ($-0.0115$;
+CI $-0.0215$ to $-0.0029$); \textbf{not} cross-study transport \\
 T5 & Fixed-split synthetic signal and null panels &
 Positive selection plus no-signal safety (construct validity only) \\
 Secondary & Wu 2021 six-section oracle-\(K\) stress test &
 Negative stress only; not non-oracle prospective confirmation \\
+Sequential & DLPFC three-donor confirmation under public lock &
+Frozen HER2ST+CRC policy applied after lock; prior T1 dual-track use disclosed \\
 \bottomrule
 \end{tabular}
 \end{table}

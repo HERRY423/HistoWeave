@@ -1,0 +1,127 @@
+{
+  "schema_version": "histoweave.positive_personalisation.pack.v5",
+  "protocol_id": "histoweave-positive-personalisation-2026-08",
+  "meta_panel": {
+    "schema_version": "histoweave.development_meta_panel.status.v5",
+    "status": "complete",
+    "same_contract": true,
+    "n_studies": 2,
+    "n_independent_units": 13,
+    "min_method_units": 13,
+    "method_availability": {
+      "spagcn": 13,
+      "stagate": 13,
+      "graphst": 13,
+      "bayesspace": 13,
+      "banksy": 13,
+      "spectral": 13,
+      "gaussian_mixture": 13,
+      "kmeans": 13,
+      "agglomerative": 13
+    },
+    "studies": [
+      {
+        "study_id": "CRC_V4",
+        "n_strict_nine_method_units": 7,
+        "unit_ids": [
+          "A120838",
+          "A121573",
+          "A416371",
+          "A551763",
+          "A595688",
+          "A798015",
+          "A938797"
+        ]
+      },
+      {
+        "study_id": "HER2ST",
+        "n_strict_nine_method_units": 6,
+        "unit_ids": [
+          "A",
+          "B",
+          "D",
+          "E",
+          "F",
+          "H"
+        ]
+      }
+    ],
+    "source_hashes": {
+      "her2st_matrix": "a70cdedac84663cf6f0d77bff692fdc04940a958f55ee39b176039cdc176054b",
+      "crc_matrix": "726725732408ab0e19bdaa4e45df8b05b7f37fece656550486ac9fc827d69eae",
+      "benchmark_long": "a7cfc3b12ca9084e223d8c70e3e8a6c32f0daeda8039e806b5aa712e3a44547c"
+    },
+    "decision": "policy_training_permitted",
+    "claim_boundary": "Meta-panel completeness permits gated policy training under the v5 aligned non-oracle contract. It does not by itself prove personalised superiority."
+  },
+  "primary_endpoint": {
+    "mode": "nested_leave_one_unit_out",
+    "personalized_value_success": true,
+    "soft_positive": true,
+    "evaluation": {
+      "coverage": 0.38461538461538464,
+      "n_personalised": 5,
+      "mean_deployed_regret": 0.042787710014806114,
+      "mean_global_regret": 0.054285209247244906,
+      "mean_regret_difference": -0.011470917086473902,
+      "bootstrap_95_interval_regret_difference": [
+        -0.02147481617389196,
+        -0.002869513953221624
+      ],
+      "unit_regret_differences": {
+        "HER2ST:A": 0.0,
+        "HER2ST:B": 0.0,
+        "HER2ST:D": 0.0,
+        "HER2ST:E": -0.045103431016983,
+        "HER2ST:F": 0.0,
+        "HER2ST:H": 0.0,
+        "CRC_V4:A120838": -0.020969645104838286,
+        "CRC_V4:A121573": -0.00776695900192792,
+        "CRC_V4:A416371": 0.0,
+        "CRC_V4:A551763": 0.0,
+        "CRC_V4:A595688": -0.029536722389953196,
+        "CRC_V4:A798015": 0.0,
+        "CRC_V4:A938797": -0.046090732508002
+      }
+    },
+    "n_personalised_units": 5,
+    "result_sha256": "8d84176ddd1ad3c1d5011aac0c318ca7dfc6b34929e5b805befb7b6dda9e5362"
+  },
+  "secondary_cross_study": {
+    "any_success": false,
+    "any_soft_positive": false,
+    "folds": [
+      {
+        "train": "HER2ST",
+        "test": "CRC_V4",
+        "status": "calibration_failed_evidence_required",
+        "success": false
+      },
+      {
+        "train": "CRC_V4",
+        "test": "HER2ST",
+        "status": "calibration_failed_evidence_required",
+        "success": false
+      }
+    ],
+    "result_sha256": "aafdfa63ca59c9fc34ed05c473bf1eb65b04f269ea5eb1d5742a76d5f30c8e65"
+  },
+  "third_study_registration": {
+    "execution_permitted": false,
+    "registered_utc": "2026-08-02T06:44:48Z",
+    "receipt_sha256": "18bf4ee51eda0db377af4e0ba5bdc9ff642f91352e9052b1dbd71be046e0692a",
+    "study_id": "LIBD_DLPFC_SEQUENTIAL_CONFIRMATION",
+    "path": "positive_personalisation_v5/results/third_study_registration.json"
+  },
+  "claim_boundary": {
+    "achieved": [
+      "Aligned non-oracle development meta-panel complete (2 studies, 13 strict units, 9 methods).",
+      "Nested LOUO personalisation on real donor/patient units with nonzero coverage and lower deployed regret than always-global.",
+      "Third study registered with execution_permitted=false pending public lock."
+    ],
+    "not_achieved": [
+      "Cross-study transport personalisation (HER2ST\u2194CRC) remains fail-closed under the same gate.",
+      "Prospective seal of a third untouched study is not yet executed."
+    ]
+  }
+}
