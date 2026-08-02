@@ -84,6 +84,8 @@ def estimate_k(adata: ad.AnnData) -> dict[str, object]:
         var=adata.var.copy(),
         obsm={"spatial": np.asarray(adata.obsm["spatial"])},
     )
+    # Cap spots and high-variance genes to stay within workstation memory on
+    # full Visium sections (~3–5k spots × 30k genes).
     result = estimate_n_domains(
         table,
         method="ensemble",
@@ -91,7 +93,7 @@ def estimate_k(adata: ad.AnnData) -> dict[str, object]:
         k_max=12,
         n_pcs=15,
         random_state=0,
-        max_obs=4000,
+        max_obs=2500,
         knn=6,
         spatial_weight=0.75,
     )

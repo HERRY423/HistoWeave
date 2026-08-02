@@ -1,0 +1,13 @@
+{
+  "schema_version": "histoweave.public_lock_receipt.v5",
+  "protocol_id": "histoweave-dlpfc-sequential-confirmation-2026-08",
+  "commit_sha": "05813bda75c26d5fbd48e905ba8d51963c9864fe",
+  "branch": "codex/nonoracle-multistudy-validation",
+  "github_issue_url": "https://github.com/HERRY423/HistoWeave/issues/22",
+  "github_issue_number": 22,
+  "frozen_policy_path": "sequential_confirmation_v5/results/frozen_policy.json",
+  "frozen_policy_sha256_embedded": "c8f15d2a7972eb4068ef924d584255f99a742bbd41ef166ebec3d6e36a4b4106",
+  "execution_permitted_for_prediction_runs": true,
+  "execution_permitted_for_outcome_scoring": true,
+  "note": "Issue #22 and commit 05813bd are public. Prediction runs and subsequent ARI scoring are unlocked under the protocol unlock rule."
+}
